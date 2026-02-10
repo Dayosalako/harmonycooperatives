@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corporate Finance Portal | Harmony Cooperative</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+    .bg-coop-green { background-color: #059669; }
+    .text-coop-green { color: #059669; }
+    .hidden-modal { display: none !important; }
+    
+    input, select { 
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid #e2e8f0 !important;
+        font-size: 0.9rem !important;
+    }
+    input:focus, select:focus { 
+        border-color: #059669 !important; 
+        box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.05);
+        outline: none;
+        background-color: #fff;
+    }
+
+    .header-refined {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    .section-indicator {
+        width: 4px; height: 18px; background: #059669; border-radius: 10px;
+    }
+
+    .terms-box {
+        max-height: 120px;
+        overflow-y: auto;
+        font-size: 0.75rem;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        padding: 1rem;
+        border-radius: 0.75rem;
+        color: #64748b;
+    }
+
+    .loader { border-top-color: #ffffff; animation: spinner 0.6s linear infinite; }
+    @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body class="pb-20" onload="initializePortal()">
+
+    <nav class="bg-white/80 backdrop-blur-md border-b sticky top-0 z-[100]">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-2">
+      <div class="bg-emerald-600 p-1.5 rounded-lg text-white">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+      <span class="text-lg font-extrabold tracking-tight text-slate-900">Harmony Cooperative</span>
+    </div>
+    <div class="flex items-center gap-6">
+      <a href="index.html" class="text-xs font-bold text-slate-500 hover:text-emerald-600 transition-colors tracking-widest uppercase">
+        ← Back to Home
+      </a>
+      <div class="hidden md:block h-4 w-px bg-slate-200"></div>
+      <p class="hidden md:block text-[10px] font-black text-slate-400 uppercase tracking-widest">
+        Application Portal v2.0
+      </p>
+    </div>
+  </div>
+</nav>
+
+  <div id="successModal" class="hidden-modal fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-[2rem] p-8 max-w-sm w-full text-center shadow-2xl border border-slate-100">
+      <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>
+      </div>
+      <h2 class="text-xl font-extrabold text-slate-900 mb-1">Request Encrypted</h2>
+      <p class="text-[10px] text-emerald-600 font-bold mb-4 uppercase tracking-widest">Status: Processing</p>
+      
+      <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl mb-6">
+        <p class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">Audit Reference</p>
+        <div class="flex items-center justify-center space-x-2">
+            <p id="displayTrackingID" class="text-base font-mono font-bold text-slate-800">GENERATING...</p>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <button onclick="sendWhatsApp()" class="w-full bg-[#128C7E] text-white text-xs font-bold py-4 rounded-xl shadow-lg flex items-center justify-center gap-2 uppercase tracking-wide">
+            Open WhatsApp Verification
+        </button>
+        <button onclick="generatePDF()" class="w-full bg-slate-900 text-white text-xs font-bold py-4 rounded-xl flex items-center justify-center gap-2 uppercase tracking-wide">
+            Export Signed Voucher
+        </button>
+        <button onclick="location.reload()" class="text-slate-400 font-bold py-2 text-[10px] uppercase tracking-widest">New Session</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-4xl mx-auto mt-10 px-4">
+    <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-200 overflow-hidden">
+      
+      <div class="header-refined p-10 md:p-14 text-white relative overflow-hidden">
+        <div class="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
+                    <span class="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400">Security Level: High</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tighter leading-none">Harmony <br><span class="text-emerald-500">Cooperative Society</span></h1>
+            </div>
+            <div class="text-left md:text-right border-t md:border-t-0 border-white/10 pt-4 md:pt-0">
+                <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Portal System Time</p>
+                <p id="liveClock" class="text-xl font-mono font-bold text-white mb-0 leading-none"></p>
+                <p id="headerDate" class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter mt-1"></p>
+            </div>
+        </div>
+        <div class="absolute -top-20 -right-20 w-64 h-64 bg-emerald-600/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <form id="loanForm" class="p-8 md:p-12 space-y-14">
+        <input type="hidden" id="geoCoords" value="Pending">
+        <input type="hidden" id="deviceMeta" value="Unknown">
+
+        <section>
+          <div class="flex items-center gap-3 mb-8">
+            <div class="section-indicator"></div>
+            <h2 class="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">01. Primary Applicant Details</h2>
+            <span class="text-[9px] text-emerald-500 font-bold ml-auto animate-pulse">● Auto-saving</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="md:col-span-2">
+              <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">Full Legal Name</label>
+              <input type="text" id="fullName" required placeholder="Surname First" class="w-full bg-slate-50/50 p-4 rounded-xl font-semibold text-slate-700">
+            </div>
+            <div>
+              <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">Phone Number</label>
+              <input type="number" id="phone" required placeholder="080..." class="w-full bg-slate-50/50 p-4 rounded-xl font-semibold text-slate-700">
+            </div>
+            <div>
+              <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">Date of Birth</label>
+              <input type="date" id="dob" required class="w-full bg-slate-50/50 p-4 rounded-xl font-semibold text-slate-700">
+            </div>
+            <div>
+              <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">Email</label>
+              <input type="email" id="email" required placeholder="name@domain.com" class="w-full bg-slate-50/50 p-4 rounded-xl font-semibold text-slate-700">
+            </div>
+            <div>
+  <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 block">Employment Status</label>
+  <select id="employment" required onchange="checkEligibility(); saveProgress();" class="w-full bg-slate-50/50 p-4 rounded-xl font-semibold text-slate-700">
+    <option value="Self-Employed">Self-Employed</option>
+    <option value="Salaried">Salaried Employee</option>
+    <option value="Civil Servant">Civil Servant</option>
+  </select>
+</div>
+          </div>
+        </section>
+
+        <section>
+          <div class="flex items-center gap-3 mb-8">
+            <div class="section-indicator"></div>
+            <h2 class="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">02. Financial Specification</h2>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="border border-slate-200 p-6 rounded-2xl bg-slate-50/30">
+  <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block">Principal (₦)</label>
+  <input type="number" id="amt" required placeholder="Min 10,000" 
+         oninput="calculateFinancials(); checkEligibility(); saveProgress();" 
+         class="w-full bg-white p-3 rounded-lg text-2xl font-black text-slate-800 border-none outline-none">
+  
+  <div id="eligibilityFeedback" class="transition-all duration-300"></div> 
+</div>
+            <div class="border border-slate-200 p-6 rounded-2xl bg-slate-50/30">
+              <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block">Tenure</label>
+              <select id="term" onchange="calculateFinancials()" class="w-full bg-white p-3 rounded-lg text-base font-bold text-slate-800 cursor-pointer">
+                <option value="3">3 Months (18.0%)</option>
+                <option value="6">6 Months (36.0%)</option>
+                <option value="12">End of Year (72.0%)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="bg-slate-900 rounded-3xl p-8 text-white grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div><p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Interest</p><p id="liveInterest" class="text-xl font-bold text-emerald-400">₦ 0.00</p></div>
+            <div><p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Total Due</p><p id="liveTotal" class="text-xl font-bold text-white">₦ 0.00</p></div>
+            <div class="col-span-2 md:col-span-1"><p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Monthly</p><p id="liveMonthly" class="text-xl font-bold text-sky-400">₦ 0.00</p></div>
+          </div>
+        </section>
+
+        <section>
+            <div class="flex items-center gap-3 mb-8">
+              <div class="section-indicator"></div>
+              <h2 class="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">03. Verification & Guarantor</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div class="border-2 border-dashed border-slate-200 p-6 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-center">
+                  <p class="text-[10px] font-bold text-slate-500 uppercase mb-3">National ID / Work ID Card</p>
+                  <input type="file" id="idUpload" accept="image/*" class="text-xs text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+              </div>
+              <div class="space-y-4">
+                  <input type="text" id="gName" required placeholder="Guarantor Full Name" class="w-full bg-slate-50/50 p-4 rounded-xl font-semibold text-slate-700">
+                  <input type="number" id="gPhone" required placeholder="Guarantor Mobile" class="w-full bg-slate-50/50 p-4 rounded-xl font-semibold text-slate-700">
+              </div>
+            </div>
+        </section>
+
+        <section>
+          <div class="flex items-center gap-3 mb-8">
+            <div class="section-indicator"></div>
+            <h2 class="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">04. Settlement Bank</h2>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <input type="text" id="bankName" placeholder="Bank Name" required class="bg-slate-50/50 p-4 rounded-xl font-bold text-slate-700">
+            <input type="number" id="accNum" placeholder="Account Number" required class="bg-slate-50/50 p-4 rounded-xl font-bold text-slate-700 tracking-widest">
+            <input type="text" id="accName" placeholder="Account Name" required class="bg-slate-50/50 p-4 rounded-xl font-bold text-slate-700 uppercase text-[10px]">
+          </div>
+        </section>
+
+        <section class="space-y-4">
+            <div class="flex items-center gap-3">
+                <div class="section-indicator"></div>
+                <h2 class="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">Legal Agreement</h2>
+            </div>
+            <div class="terms-box">
+                <strong>1. Repayment:</strong> Applicant agrees to pay the total due within the specified tenure. Default attracts 5% interest weekly. <br>
+                <strong>2. Identity:</strong> By uploading an ID, you authorize Harmony Cooperative to verify your status with national databases. <br>
+                <strong>3. Disclosure:</strong> The society may contact your guarantor immediately if repayment is overdue by 48 hours. <br>
+                <strong>4. Digital Signature:</strong> Submission of this form constitutes a legally binding electronic agreement.
+            </div>
+            <div class="flex items-center gap-3 px-2">
+                <input type="checkbox" id="termsCheck" required class="w-4 h-4 text-emerald-600 rounded">
+                <label for="termsCheck" class="text-[10px] font-bold text-slate-500 uppercase">I accept the terms and certify all data is accurate.</label>
+            </div>
+        </section>
+
+        <button type="submit" id="submitBtn" class="w-full bg-slate-900 text-white font-black py-5 rounded-2xl hover:bg-black transition-all flex items-center justify-center text-sm gap-4 shadow-xl tracking-widest group">
+          <span id="btnText">TRANSMIT APPLICATION</span>
+          <div id="spinner" class="hidden w-4 h-4 border-2 border-white/20 rounded-full loader"></div>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let currentTrackingID = "";
+    let globalTotalValue = 0;
+    let globalInterestValue = 0;
+
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('liveClock').innerText = now.toLocaleTimeString('en-GB', { hour12: false });
+        document.getElementById('headerDate').innerText = now.toLocaleDateString('en-GB', { 
+            day: 'numeric', month: 'long', year: 'numeric' 
+        });
+    }
+
+    function initializePortal() {
+        updateClock();
+        setInterval(updateClock, 1000);
+        loadProgress(); // <--- Add this line
+    // ... rest of your geolocation code
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((pos) => {
+                document.getElementById('geoCoords').value = `${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`;
+            }, () => {
+                document.getElementById('geoCoords').value = "Denied By User";
+            });
+        }
+        document.getElementById('deviceMeta').value = `${navigator.platform} | ${navigator.vendor}`;
+    }
+
+    function calculateFinancials() {
+        const principal = parseFloat(document.getElementById('amt').value) || 0;
+        const tenure = parseInt(document.getElementById('term').value);
+        let rate = (tenure === 3) ? 0.18 : (tenure === 6) ? 0.36 : 0.72;
+        
+        globalInterestValue = principal * rate;
+        globalTotalValue = principal + globalInterestValue;
+        const monthly = globalTotalValue / tenure;
+
+        const fmt = (v) => "₦ " + v.toLocaleString(undefined, {minimumFractionDigits: 2});
+        document.getElementById('liveInterest').innerText = fmt(globalInterestValue);
+        document.getElementById('liveTotal').innerText = fmt(globalTotalValue);
+        document.getElementById('liveMonthly').innerText = fmt(monthly);
+    }
+
+    document.getElementById('loanForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        const spinner = document.getElementById('spinner');
+        btn.disabled = true; spinner.classList.remove('hidden');
+
+        currentTrackingID = "HARM-" + Math.floor(1000 + Math.random() * 9000) + "-TX";
+        
+        // Formatter for Sheet (Ensures Naira Lock)
+        const nairaFmt = (v) => "₦ " + parseFloat(v).toLocaleString(undefined, {minimumFractionDigits: 2});
+
+        const auditData = {
+            fullName: document.getElementById('fullName').value,
+            phone: document.getElementById('phone').value,
+            dob: document.getElementById('dob').value,
+            email: document.getElementById('email').value,
+            employment: document.getElementById('employment').value,
+            amount: (document.getElementById('amt').value),
+            tenure: document.getElementById('term').selectedOptions[0].text,
+            interest: (globalInterestValue), 
+            totalRepayment: (globalTotalValue), // Column G
+            trackingId: currentTrackingID,
+            guarantorName: document.getElementById('gName').value,
+            guarantorPhone: document.getElementById('gPhone').value,
+            bankName: document.getElementById('bankName').value,
+            accNum: document.getElementById('accNum').value,
+            accName: document.getElementById('accName').value,
+            geoCoords: document.getElementById('geoCoords').value,
+            balance: (globalTotalValue), // Column M
+            date: new Date().toLocaleDateString('en-GB'), // Column N
+            timestamp: new Date().toLocaleTimeString('en-GB'), // Column O
+            status: "Processing"
+        };
+
+        try {
+            await fetch('https://sheetdb.io/api/v1/b9cm231d1i0he', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ data: [auditData] })
+            });
+            document.getElementById('displayTrackingID').innerText = currentTrackingID;
+            document.getElementById('successModal').classList.remove('hidden-modal');
+        } catch (error) {
+            alert("Digital Transmission Failed. Check Internet Connection.");
+        } finally {
+            btn.disabled = false; spinner.classList.add('hidden');
+        }
+    };
+
+    function generatePDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        
+        // Watermark
+        doc.saveGraphicsState();
+        doc.setGState(new doc.GState({opacity: 0.1}));
+        doc.setFontSize(55);
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(150, 150, 150);
+        doc.text("HARMONY COOPERATIVE", 35, 150, {angle: 45});
+        doc.restoreGraphicsState();
+
+        // Header Rect
+        doc.setFillColor(15, 23, 42); 
+        doc.rect(0, 0, 210, 45, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(22);
+        doc.text("HARMONY COOPERATIVE SOCIETY", 20, 25);
+        doc.setFontSize(10);
+        doc.text("OFFICIAL FINANCE PROCUREMENT VOUCHER", 20, 32);
+        
+        // Metadata
+        doc.setTextColor(100);
+        doc.setFontSize(9);
+        doc.text(`Ref ID: ${currentTrackingID}`, 20, 55);
+        doc.text(`Issued On: ${new Date().toLocaleString()}`, 20, 60);
+
+        // Table
+        doc.autoTable({
+            startY: 70,
+            head: [['ITEMIZED SECTION', 'RECORDS']],
+            body: [
+                ['Applicant Name', document.getElementById('fullName').value],
+                ['Principal Sum', `NGN ${parseFloat(document.getElementById('amt').value).toLocaleString()}`],
+                ['Interest Calculated', `NGN ${globalInterestValue.toLocaleString()}`],
+                ['Total Repayment Sum', `NGN ${globalTotalValue.toLocaleString()}`],
+                ['Bank Name', document.getElementById('bankName').value],
+                ['Account Number', document.getElementById('accNum').value],
+                ['Audit Status', 'DIGITALLY VERIFIED']
+            ],
+            theme: 'striped',
+            headStyles: { fillColor: [5, 150, 105] }
+        });
+
+        // Restored Professional Signatory Section
+        const finalY = doc.lastAutoTable.finalY + 40;
+        doc.setFontSize(9); doc.setTextColor(0);
+        
+        // Applicant
+        doc.line(20, finalY, 75, finalY);
+        doc.text("Applicant Signature", 20, finalY + 5);
+        doc.setFont("helvetica", "italic");
+        doc.text(document.getElementById('fullName').value, 20, finalY - 2);
+        
+        // Auditor
+        doc.setFont("helvetica", "bold");
+        doc.line(130, finalY, 185, finalY);
+        doc.text("Internal Auditor", 130, finalY + 5);
+        
+        // President (Lower)
+        const presY = finalY + 30;
+        doc.line(75, presY, 135, presY);
+        doc.text("Cooperative President", 85, presY + 5);
+
+        // Stamp Circle
+        doc.setLineWidth(0.5)
+        doc.setDrawColor(200);
+        doc.circle(105, presY - 12, 10);
+        doc.setFontSize(6);
+        doc.text("OFFICIAL", 99, presY - 13);
+        doc.text("STAMP", 100, presY - 10);
+
+        doc.save(`Harmony_Voucher_${currentTrackingID}.pdf`);
+    }
+
+  function sendWhatsApp() {
+    const phone = "2347067580599"; 
+    const memberName = document.getElementById('fullName').value.toUpperCase();
+    const principal = parseFloat(document.getElementById('amt').value) || 0;
+    const tenureText = document.getElementById('term').selectedOptions[0].text;
+
+    const msg = `*HARMONY ELITE | NEW LOAN REQUEST*%0A` +
+                `--------------------------%0A` +
+                `*REF ID:* ${currentTrackingID}%0A` +
+                `*MEMBER:* ${memberName}%0A%0A` +
+                `*FINANCIAL BREAKDOWN*%0A` +
+                `• Principal: ₦${principal.toLocaleString()}%0A` +
+                `• Tenure: ${tenureText}%0A` +
+                `• Interest: ₦${globalInterestValue.toLocaleString()}%0A` +
+                `--------------------------%0A` +
+                `*TOTAL PAYABLE: ₦${globalTotalValue.toLocaleString()}*%0A` +
+                `--------------------------%0A` +
+                `_Status: PENDING VERIFICATION_`;
+
+    window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+}
+
+    // Function to save form data to browser memory
+function saveProgress() {
+    const formData = {
+    fullName: document.getElementById('fullName').value,
+    phone: document.getElementById('phone').value,
+    email: document.getElementById('email').value,
+    amt: document.getElementById('amt').value, // <--- Add this
+    bankName: document.getElementById('bankName').value,
+    accNum: document.getElementById('accNum').value,
+    accName: document.getElementById('accName').value,
+    gName: document.getElementById('gName').value,
+    gPhone: document.getElementById('gPhone').value
+};
+    localStorage.setItem('harmony_draft', JSON.stringify(formData));
+}
+
+// Function to reload data on page start
+function loadProgress() {
+    const saved = localStorage.getItem('harmony_draft');
+    if (saved) {
+        const data = JSON.parse(saved);
+        Object.keys(data).forEach(key => {
+            if (document.getElementById(key)) {
+                document.getElementById(key).value = data[key];
+            }
+        });
+        // Recalculate financial numbers if an amount was saved
+        if(data.amt) calculateFinancials();
+    }
+}
+
+function checkEligibility() {
+    const amount = parseFloat(document.getElementById('amt').value) || 0;
+    const employment = document.getElementById('employment').value;
+    const feedback = document.getElementById('eligibilityFeedback');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    
+    const limits = {
+        "Civil Servant": 2000000,
+        "Salaried": 1000000,
+        "Self-Employed": 500000
+    };
+
+    const max = limits[employment];
+
+    if (amount > max) {
+        feedback.innerHTML = `⚠️ Limit Exceeded: Max for ${employment} is ₦${max.toLocaleString()}`;
+        feedback.className = "text-[10px] font-bold text-rose-500 mt-2 uppercase tracking-tight bg-rose-50 p-2 rounded-lg";
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        btnText.innerText = "LIMIT EXCEEDED";
+    } else {
+        if (amount > 0) {
+            feedback.innerHTML = `✅ Eligible: Within ${employment} credit limit`;
+            feedback.className = "text-[10px] font-bold text-emerald-500 mt-2 uppercase tracking-tight bg-emerald-50 p-2 rounded-lg";
+        } else {
+            feedback.innerHTML = "";
+        }
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        btnText.innerText = "TRANSMIT APPLICATION";
+    }
+}
+
+  </script>
+</body>
+
+</html>
+
+
+

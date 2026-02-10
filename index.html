@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harmony Welfare Cooperative | Empowering Growth</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    section { scroll-margin-top: 100px; }
+    .bg-coop-green { background-color: #059669; }
+    .text-coop-green { color: #059669; }
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    #mobile-menu { transition: max-height 0.4s ease; max-height: 0; overflow: hidden; }
+    #mobile-menu.open { max-height: 600px; }
+    #backToTop { transition: all 0.3s ease; opacity: 0; visibility: hidden; }
+    #backToTop.show { opacity: 1; visibility: visible; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+  <nav class="glass-nav border-b sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <div class="bg-coop-green p-1.5 rounded-lg text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <span class="text-xl font-extrabold tracking-tight">Harmony Cooperative Society Limited</span>
+      </div>
+      <div class="hidden md:flex gap-8 text-xs font-bold text-gray-500 tracking-widest items-center">
+        <a href="#about" class="hover:text-coop-green transition-colors">ABOUT</a>
+        <a href="#values" class="hover:text-coop-green transition-colors">CORE VALUES</a>
+        <a href="#savings" class="hover:text-coop-green transition-colors">SAVINGS</a>
+        <a href="#calculator" class="hover:text-coop-green transition-colors">LOAN CALCULATOR</a>
+        <a href="#contact" class="hover:text-coop-green transition-colors">CONTACT</a>
+        <a href="apply240.html" target="_blank" class="bg-coop-green text-white px-5 py-2.5 rounded-xl hover:bg-green-700 transition-all shadow-md">APPLY NOW</a>
+      </div>
+      <button onclick="toggleMenu()" class="md:hidden text-gray-800"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
+    </div>
+    <div id="mobile-menu" class="md:hidden bg-white border-t px-6 space-y-4">
+      <a href="#about" onclick="toggleMenu()" class="block py-4 font-bold border-b">About Us</a>
+      <a href="#values" onclick="toggleMenu()" class="block py-4 font-bold border-b">Core Values</a>
+      <a href="#savings" onclick="toggleMenu()" class="block py-4 font-bold border-b">Savings Plans</a>
+      <a href="#calculator" onclick="toggleMenu()" class="block py-4 font-bold border-b">Loan Calculator</a>
+      <a href="#contact" onclick="toggleMenu()" class="block py-4 font-bold border-b">Contact</a>
+      <a href="apply240.html" class="block py-4 font-bold text-coop-green">Apply for Loan</a>
+    </div>
+  </nav>
+
+  <header class="bg-coop-green text-white py-24 px-6 text-center">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">Empowering Your Financial Future.</h1>
+      <p class="text-xl text-green-50 mb-10 max-w-2xl mx-auto">Join a community of savers and builders. We provide the tools, support, and capital to help our members achieve their dreams.</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="apply240.html" target="_blank" class="inline-block bg-white text-coop-green px-10 py-5 rounded-2xl font-black text-lg shadow-2xl hover:bg-gray-100 transition-all">Apply for a Loan</a>
+        <a href="#calculator" class="inline-block bg-green-700 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-2xl hover:bg-green-800 transition-all">Loan Calculator</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="py-12 bg-white border-b reveal">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+      <p class="text-sm font-black uppercase tracking-[0.3em] text-gray-400 mb-2">Total Member Loans Disbursed</p>
+      <div id="loanCounter" class="text-5xl md:text-7xl font-black text-coop-green tabular-nums tracking-tighter">
+        ₦0
+      </div>
+    </div>
+  </section>
+
+
+<h2 class="text-4xl font-black text-center mb-16 uppercase tracking-widest">ABOUT US</h2>
+  <section id="about" class="py-24 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 reveal">
+     <div class="bg-white p-12 rounded-[3rem] shadow-xl border border-gray-100">
+      <h2 class="text-3xl font-black mb-4 text-coop-green">Our Mission</h2>
+      <p class="text-gray-500 leading-relaxed text-lg italic">"To provide inclusive financial services through cooperative principles, fostering a culture of savings and responsible credit for economic empowerment."</p>
+    </div>
+    <div class="bg-white p-12 rounded-[3rem] shadow-xl border border-gray-100">
+      <h2 class="text-3xl font-black mb-4 text-coop-green">Our Vision</h2>
+      <p class="text-gray-500 leading-relaxed text-lg italic">"To be the leading cooperative society in Nigeria, recognized for financial integrity, member satisfaction, and sustainable community impact."</p>
+    </div>
+  </section>
+
+  <section id="values" class="bg-gray-900 text-white py-24 px-6 reveal">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-4xl font-black text-center mb-16 uppercase tracking-widest">Our Core Values (IUES)</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 text-center">
+        <div class="p-6">
+          <div class="text-7xl font-black text-green-500 mb-4 opacity-50">I</div>
+          <h3 class="text-xl font-bold mb-2">Integrity</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">We maintain the highest standards of transparency and honesty in all our operations and member relations.</p>
+        </div>
+        <div class="p-6">
+          <div class="text-7xl font-black text-green-500 mb-4 opacity-50">U</div>
+          <h3 class="text-xl font-bold mb-2">Unity</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Working together as a community, we combine our strengths for the collective financial benefit of every member.</p>
+        </div>
+        <div class="p-6">
+          <div class="text-7xl font-black text-green-500 mb-4 opacity-50">E</div>
+          <h3 class="text-xl font-bold mb-2">Empowerment</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Providing members with the capital, education, and resources necessary to achieve financial independence.</p>
+        </div>
+        <div class="p-6">
+          <div class="text-7xl font-black text-green-500 mb-4 opacity-50">S</div>
+          <h3 class="text-xl font-bold mb-2">Sustainability</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Building a lasting institution with prudent management to serve our community for generations to come.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="savings" class="py-24 bg-white reveal">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-5xl font-black mb-4">Grow Your Wealth</h2>
+        <p class="text-gray-500 text-lg">Secure your future with our flexible and rewarding savings plans.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
+          <h3 class="text-2xl font-black mb-4">Regular Savings</h3>
+          <p class="text-gray-500 mb-6 italic text-sm">Qualifies members for our 2:1 Loan ratio eligibility. Build long-term capital with flexible monthly contributions.</p>
+          <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
+            <li>• Easy Withdrawal</li>
+            <li>• Loan Access</li>
+          </ul>
+        </div>
+        <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
+          <h3 class="text-2xl font-black mb-4">Target Savings</h3>
+          <p class="text-gray-500 mb-6 italic text-sm">Specifically designed for rent, school fees, or equipment. High-interest rewards for disciplined goal tracking.</p>
+          <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
+            <li>• Goal Oriented</li>
+            <li>• Higher Interest</li>
+          </ul>
+        </div>
+        <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
+          <h3 class="text-2xl font-black mb-4">Fixed Deposit</h3>
+          <p class="text-gray-500 mb-6 italic text-sm">Guaranteed high-yield dividends with quarterly interest payouts. Perfect for investing large sums over 6-12 months.</p>
+          <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
+            <li>• Maximum ROI</li>
+            <li>• Guaranteed Returns</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="calculator" class="py-24 px-6 bg-gray-100 reveal">
+    <div class="max-w-3xl mx-auto bg-white p-10 md:p-16 rounded-[4rem] shadow-2xl">
+  <div class="text-center mb-10">
+    <h2 class="text-4xl font-black text-coop-green mb-2">Loan Calculator</h2>
+    <p class="text-gray-500 font-medium">Plan your growth with transparency.</p>
+    <p class="mt-2 text-xs font-black text-amber-600 bg-amber-50 inline-block px-4 py-1 rounded-full uppercase tracking-widest">
+      Standard Interest Rate: 6% Monthly
+    </p>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <div class="md:col-span-2">
+      <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2 ml-2">Loan Amount (₦)</label>
+      <input id="amount" type="number" placeholder="e.g. 500000" class="w-full p-5 bg-gray-50 rounded-2xl text-xl font-bold outline-none focus:ring-2 focus:ring-green-500 transition-all">
+    </div>
+    <div>
+      <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2 ml-2">Duration (Months)</label>
+      <input id="months" type="number" placeholder="e.g. 12" class="w-full p-5 bg-gray-50 rounded-2xl text-xl font-bold outline-none focus:ring-2 focus:ring-green-500 transition-all">
+    </div>
+    <div>
+      <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2 ml-2">Interest Rate (6%)</label>
+      <input id="rate" type="number" value="5" class="w-full p-5 bg-gray-50 rounded-2xl text-xl font-bold outline-none focus:ring-2 focus:ring-green-500 transition-all">
+    </div>
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-4">
+    <button onclick="calculateLoan()" class="flex-1 bg-coop-green text-white py-6 rounded-2xl text-xl font-black shadow-xl hover:bg-green-700 transition-all">Calculate</button>
+    <button onclick="resetCalculator()" class="px-8 py-6 rounded-2xl text-gray-400 font-bold hover:bg-gray-100 transition-all">Reset</button>
+  </div>
+  
+  <div id="result"></div>
+</div>
+    </section>
+
+  <section class="py-24 bg-green-900 text-white reveal">
+    <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center gap-16">
+      <div class="w-64 h-64 rounded-[3rem] overflow-hidden rotate-3 shadow-2xl shrink-0 border-4 border-green-400">
+        <img src="president.jpg" alt="Mrs. Patience Salako" class="w-full h-full object-cover bg-green-800">
+      </div>
+      <div>
+        <p class="text-3xl font-medium leading-relaxed italic mb-8">"Harmony Welfare Cooperative was built on the foundation of mutual support. Our goal is to ensure that no member's dream is limited by lack of capital."</p>
+        <div class="h-1 w-20 bg-green-500 mb-4"></div>
+        <h4 class="text-xl font-black uppercase tracking-widest">Mrs. Patience Salako</h4>
+        <p class="text-green-400 font-bold uppercase tracking-widest text-xs">President, Harmony Cooperative</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="savings" class="py-24 bg-white reveal">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-5xl font-black mb-4">Our Trustee</h2>                                                                                                                                                                                                                            
+            <p class="text-gray-500 text-lg"> These are our trustees.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
+          <h3 class="text-2xl font-black mb-4">Mr. Salako Adedotun</h3>                    
+            <p class="text-gray-500 mb-6 italic text-sm">Brief introduction will be here</p>                                                                                                                                                           
+                <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
+            <li>• Contact details</li>                    
+              <li>• </li>
+          </ul>
+        </div>
+        <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
+          <h3 class="text-2xl font-black mb-4">Salako Adeoluwatomiwa</h3>                                        
+            <p class="text-gray-500 mb-6 italic text-sm"></p>                    
+            <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
+            <li>• Contact details</li>
+            <li>• </li>
+          </ul>
+        </div>
+        <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
+          <h3 class="text-2xl font-black mb-4">Mr Adeoluwatobi Salako</h3>
+          <p class="text-gray-500 mb-6 italic text-sm"></p>
+          <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
+            <li>• Contact details</li>
+            <li>• </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="py-24 px-6 max-w-7xl mx-auto reveal">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-black mb-4 text-gray-900">Our Kaduna Headquarters</h2>
+      <p class="text-gray-500">Professional environment serving our community.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="rounded-[2rem] overflow-hidden shadow-lg h-64 bg-gray-200">
+        <img src="office-exterior.jpg" alt="Office Exterior" class="w-full h-full object-cover">
+      </div>
+      <div class="rounded-[2rem] overflow-hidden shadow-lg h-64 bg-gray-200">
+        <img src="office-interior.jpg" alt="Reception Area" class="w-full h-full object-cover">
+      </div>
+      <div class="rounded-[2rem] overflow-hidden shadow-lg h-64 bg-gray-200">
+        <img src="meeting-room.jpg" alt="Conference Room" class="w-full h-full object-cover">
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="py-24 px-6 reveal bg-white border-t">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-20">
+      <div>
+        <h2 class="text-5xl font-black mb-10 leading-tight">Get in <br>Touch.</h2>
+        <div class="space-y-8">
+          <div>
+            <h4 class="text-xs font-black text-coop-green uppercase tracking-widest mb-1">Office Location</h4>
+            <p class="text-2xl font-bold text-gray-700">Shop 8 Benue Plaza, Muhammadu Buhari Way, Kaduna.</p>
+          </div>
+          <div>
+            <h4 class="text-xs font-black text-coop-green uppercase tracking-widest mb-1">Email</h4>
+            <p class="text-2xl font-bold text-gray-700">info@harmonycooperative.com</p>
+          </div>
+          <div>
+            <h5 class="text-xs font-black text-coop-green uppercase tracking-widest mb-1">Phone Number</h4>
+            <p class="text-2xl font-bold text-gray-700">+2348034067079, +234 8023358340</p>
+          </div>
+        </div>
+      </div>
+      <form action="https://formspree.io/f/mjgkjagd" method="POST" class="bg-gray-50 p-8 rounded-[3rem] shadow-2xl border border-gray-100 space-y-4">
+        <input type="text" name="name" placeholder="Full Name" required class="w-full p-5 bg-white border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-green-500">
+        <input type="email" name="email" placeholder="Email Address" required class="w-full p-5 bg-white border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-green-500">
+        <textarea name="message" rows="4" placeholder="How can we help you?" required class="w-full p-5 bg-white border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-green-500"></textarea>
+        <button type="submit" class="w-full bg-coop-green text-white py-5 rounded-2xl font-black uppercase tracking-widest shadow-xl hover:bg-green-700 transition-all">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="bg-gray-900 pt-16 pb-8 px-6 mt-10">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-8 border-b border-gray-800 pb-12">
+        <div class="text-center md:text-left">
+          <h3 class="text-white font-extrabold text-xl tracking-tight mb-2 uppercase">Harmony Welfare Cooperative</h3>
+          <p class="text-gray-500 text-sm font-medium">Building dreams through collective growth.</p>
+        </div>
+        <div class="bg-gray-800/40 border border-gray-700 p-6 rounded-2xl text-center md:text-right">
+          <p class="text-[10px] font-black text-green-500 uppercase tracking-[0.2em] mb-1">Powered & Managed By</p>
+          <p class="text-white font-bold text-lg">Zion Netcom Solutions Ltd.</p>
+          <a href="tel:+2347067580599" class="text-gray-400 hover:text-white transition-colors text-sm font-semibold mt-1 inline-block">
+            +234 706 758 0599, info@zionnetcomsolutionsltd.com
+          </a>
+        </div>
+      </div>
+      <p class="text-center mt-8 text-gray-600 text-[11px] font-bold uppercase tracking-widest">© 2026 Harmony Welfare Cooperative Society Ltd. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <button id="backToTop" onclick="window.scrollTo(0,0)" class="fixed bottom-8 right-8 bg-white text-gray-900 p-4 rounded-full shadow-2xl z-50 hover:bg-coop-green hover:text-white border border-gray-100">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+  </button>
+
+  <script>
+    function calculateLoan() {
+  const amount = document.getElementById("amount").value;
+  const months = document.getElementById("months").value;
+  const rate = document.getElementById("rate").value;
+  const resultDisplay = document.getElementById("result");
+
+  if (!amount || !months || !rate) {
+    alert("Please fill in all fields");
+    return;
+  }
+
+  const totalInterest = parseFloat(amount) * (parseFloat(rate) / 100) * parseFloat(months);
+  const totalPayable = parseFloat(amount) + totalInterest;
+  const monthly = totalPayable / months;
+
+  resultDisplay.innerHTML = `
+    <div class="mt-10 p-8 bg-green-50 rounded-[2.5rem] border border-green-100 text-center animate-pulse">
+      <p class="text-xs text-green-600 font-black uppercase mb-1">Monthly Repayment</p>
+      <p class="text-5xl font-black text-coop-green mb-4">₦${monthly.toLocaleString(undefined, {minimumFractionDigits: 2})}</p>
+      <div class="pt-4 border-t border-green-200 grid grid-cols-2 text-[10px] font-black uppercase tracking-widest text-gray-500">
+        <div class="border-r border-green-200">Total Interest<br><span class="text-gray-900">₦${totalInterest.toLocaleString()}</span></div>
+        <div>Total Payable<br><span class="text-gray-900">₦${totalPayable.toLocaleString()}</span></div>
+      </div>
+    </div>`;
+}
+
+function resetCalculator() {
+  document.getElementById("amount").value = "";
+  document.getElementById("months").value = "";
+  document.getElementById("rate").value = "5"; // Resets back to 5%
+  document.getElementById("result").innerHTML = "";
+}
+
+    function startCounter() {
+      const counterElement = document.getElementById('loanCounter');
+      const target = 10000000.00;
+      const duration = 40000;
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const currentCount = Math.floor(progress * target);
+        counterElement.innerText = "₦" + currentCount.toLocaleString();
+        if (progress < 1) window.requestAnimationFrame(step);
+        else {
+          setInterval(() => {
+            const extra = Math.floor(Math.random() * 8000);
+            const val = parseInt(counterElement.innerText.replace(/[^0-9]/g, ''));
+            counterElement.innerText = "₦" + (val + extra).toLocaleString();
+          }, 3000);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+
+    function reveal() {
+      var reveals = document.querySelectorAll(".reveal");
+      for (var i = 0; i < reveals.length; i++) {
+        var windowHeight = window.innerHeight;
+        var elementTop = reveals[i].getBoundingClientRect().top;
+        if (elementTop < windowHeight - 100) reveals[i].classList.add("active");
+      }
+      const btt = document.getElementById("backToTop");
+      if (window.scrollY > 600) btt.classList.add("show");
+      else btt.classList.remove("show");
+    }
+
+    function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
+    window.onscroll = reveal;
+    window.onload = () => { reveal(); startCounter(); };
+  </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
