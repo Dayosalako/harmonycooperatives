@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Harmony Welfare Cooperative Society Limited - Empowering Your Financial Future in Nigeria. Join our community for inclusive savings, loans, and sustainable growth. Kaduna Headquarters.">
+  <meta name="keywords" content="cooperative society, savings, loans, Nigeria, Kaduna, financial empowerment, Harmony Welfare">
+  <meta name="author" content="Zion Netcom Solutions Ltd.">
   <title>Harmony Welfare Cooperative | Empowering Growth</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -14,11 +17,19 @@
     .text-coop-green { color: #059669; }
     .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
     .reveal.active { opacity: 1; transform: translateY(0); }
-    .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-    #mobile-menu { transition: max-height 0.4s ease; max-height: 0; overflow: hidden; }
-    #mobile-menu.open { max-height: 600px; }
-    #backToTop { transition: all 0.3s ease; opacity: 0; visibility: hidden; }
+    .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    #mobile-menu { transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); max-height: 0; overflow: hidden; }
+    #mobile-menu.open { max-height: 640px; }
+    #backToTop { transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); opacity: 0; visibility: hidden; }
     #backToTop.show { opacity: 1; visibility: visible; }
+    .loan-result { animation: fadeInScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .nav-link { position: relative; }
+    .nav-link:after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: #059669; transition: width 0.3s ease; }
+    .nav-link:hover:after { width: 100%; }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -29,14 +40,16 @@
         <div class="bg-coop-green p-1.5 rounded-lg text-white">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         </div>
-        <span class="text-xl font-extrabold tracking-tight">Harmony Cooperative Society Limited</span>
+        <span class="text-xl font-extrabold tracking-tight">Harmony Cooperative Society</span>
       </div>
       <div class="hidden md:flex gap-8 text-xs font-bold text-gray-500 tracking-widest items-center">
-        <a href="#about" class="hover:text-coop-green transition-colors">ABOUT</a>
-        <a href="#values" class="hover:text-coop-green transition-colors">CORE VALUES</a>
-        <a href="#savings" class="hover:text-coop-green transition-colors">SAVINGS</a>
-        <a href="#calculator" class="hover:text-coop-green transition-colors">LOAN CALCULATOR</a>
-        <a href="#contact" class="hover:text-coop-green transition-colors">CONTACT</a>
+        <a href="#about" class="nav-link hover:text-coop-green transition-colors">ABOUT</a>
+        <a href="#values" class="nav-link hover:text-coop-green transition-colors">CORE VALUES</a>
+        <a href="#savings" class="nav-link hover:text-coop-green transition-colors">SAVINGS</a>
+        <a href="#trustees" class="nav-link hover:text-coop-green transition-colors">TRUSTEES</a>
+        <a href="#gallery" class="nav-link hover:text-coop-green transition-colors">GALLERY</a>
+        <a href="#calculator" class="nav-link hover:text-coop-green transition-colors">LOAN CALCULATOR</a>
+        <a href="#contact" class="nav-link hover:text-coop-green transition-colors">CONTACT</a>
         <a href="apply204.html" target="_blank" class="bg-coop-green text-white px-5 py-2.5 rounded-xl hover:bg-green-700 transition-all shadow-md">APPLY NOW</a>
       </div>
       <button onclick="toggleMenu()" class="md:hidden text-gray-800"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
@@ -45,6 +58,8 @@
       <a href="#about" onclick="toggleMenu()" class="block py-4 font-bold border-b">About Us</a>
       <a href="#values" onclick="toggleMenu()" class="block py-4 font-bold border-b">Core Values</a>
       <a href="#savings" onclick="toggleMenu()" class="block py-4 font-bold border-b">Savings Plans</a>
+      <a href="#trustees" onclick="toggleMenu()" class="block py-4 font-bold border-b">Trustees</a>
+      <a href="#gallery" onclick="toggleMenu()" class="block py-4 font-bold border-b">Gallery</a>
       <a href="#calculator" onclick="toggleMenu()" class="block py-4 font-bold border-b">Loan Calculator</a>
       <a href="#contact" onclick="toggleMenu()" class="block py-4 font-bold border-b">Contact</a>
       <a href="apply204.html" class="block py-4 font-bold text-coop-green">Apply for Loan</a>
@@ -71,8 +86,7 @@
     </div>
   </section>
 
-
-<h2 class="text-4xl font-black text-center mb-16 uppercase tracking-widest">ABOUT US</h2>
+  <h2 class="text-4xl font-black text-center mb-16 uppercase tracking-widest">ABOUT US</h2>
   <section id="about" class="py-24 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 reveal">
      <div class="bg-white p-12 rounded-[3rem] shadow-xl border border-gray-100">
       <h2 class="text-3xl font-black mb-4 text-coop-green">Our Mission</h2>
@@ -168,7 +182,7 @@
     </div>
     <div>
       <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2 ml-2">Interest Rate (6%)</label>
-      <input id="rate" type="number" value="5" class="w-full p-5 bg-gray-50 rounded-2xl text-xl font-bold outline-none focus:ring-2 focus:ring-green-500 transition-all">
+      <input id="rate" type="number" value="6" class="w-full p-5 bg-gray-50 rounded-2xl text-xl font-bold outline-none focus:ring-2 focus:ring-green-500 transition-all">
     </div>
   </div>
 
@@ -184,7 +198,7 @@
   <section class="py-24 bg-green-900 text-white reveal">
     <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center gap-16">
       <div class="w-64 h-64 rounded-[3rem] overflow-hidden rotate-3 shadow-2xl shrink-0 border-4 border-green-400">
-        <img src="president.jpg" alt="Mrs. Patience Salako" class="w-full h-full object-cover bg-green-800">
+        <img src="president.jpg" alt="Mrs. Patience Salako - President of Harmony Cooperative" class="w-full h-full object-cover bg-green-800" loading="lazy">
       </div>
       <div>
         <p class="text-3xl font-medium leading-relaxed italic mb-8">"Harmony Welfare Cooperative was built on the foundation of mutual support. Our goal is to ensure that no member's dream is limited by lack of capital."</p>
@@ -195,35 +209,35 @@
     </div>
   </section>
 
-  <section id="savings" class="py-24 bg-white reveal">
+  <section id="trustees" class="py-24 bg-white reveal">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-16">
-        <h2 class="text-5xl font-black mb-4">Our Trustee</h2>                                                                                                                                                                                                                            
+        <h2 class="text-5xl font-black mb-4">Our Trustees</h2>                                                                                                                                                                                                                            
             <p class="text-gray-500 text-lg"> These are our trustees.</p>
       </div>
       <div class="grid md:grid-cols-3 gap-8">
         <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
-          <h3 class="text-2xl font-black mb-4">Mr. Salako Adedotun</h3>                    
-            <p class="text-gray-500 mb-6 italic text-sm">Brief introduction will be here</p>                                                                                                                                                           
+          <h3 class="text-2xl font-black mb-4">Mr Adedotun Salako</h3>                    
+            <p class="text-gray-500 mb-6 italic text-sm">A business man</p>                                                                                                                                                           
                 <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
             <li>• Contact details</li>                    
-              <li>• </li>
+              <li>+2348023358340</li>
           </ul>
         </div>
         <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
-          <h3 class="text-2xl font-black mb-4">Salako Adeoluwatomiwa</h3>                                        
-            <p class="text-gray-500 mb-6 italic text-sm"></p>                    
+          <h3 class="text-2xl font-black mb-4">Mrs Olutunde Olayemi </h3>                                        
+            <p class="text-gray-500 mb-6 italic text-sm">Business woman</p>                    
             <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
             <li>• Contact details</li>
-            <li>• </li>
+            <li>+2348035950764</li>
           </ul>
         </div>
         <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
-          <h3 class="text-2xl font-black mb-4">Mr Adeoluwatobi Salako</h3>
-          <p class="text-gray-500 mb-6 italic text-sm"></p>
+          <h3 class="text-2xl font-black mb-4">Alh Bashir Abdullahi</h3>
+          <p class="text-gray-500 mb-6 italic text-sm">NNPC Staff</p>
           <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
             <li>• Contact details</li>
-            <li>• </li>
+            <li>+234 </li>
           </ul>
         </div>
       </div>
@@ -237,13 +251,13 @@
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="rounded-[2rem] overflow-hidden shadow-lg h-64 bg-gray-200">
-        <img src="office-exterior.jpg" alt="Office Exterior" class="w-full h-full object-cover">
+        <img src="office-exterior.jpg" alt="Office Exterior - Harmony Cooperative Kaduna" class="w-full h-full object-cover" loading="lazy">
       </div>
       <div class="rounded-[2rem] overflow-hidden shadow-lg h-64 bg-gray-200">
-        <img src="office-interior.jpg" alt="Reception Area" class="w-full h-full object-cover">
+        <img src="office-interior.jpg" alt="Reception Area - Harmony Cooperative Kaduna" class="w-full h-full object-cover" loading="lazy">
       </div>
       <div class="rounded-[2rem] overflow-hidden shadow-lg h-64 bg-gray-200">
-        <img src="meeting-room.jpg" alt="Conference Room" class="w-full h-full object-cover">
+        <img src="meeting-room.jpg" alt="Conference Room - Harmony Cooperative Kaduna" class="w-full h-full object-cover" loading="lazy">
       </div>
     </div>
   </section>
@@ -262,7 +276,7 @@
             <p class="text-2xl font-bold text-gray-700">info@harmonycooperative.com</p>
           </div>
           <div>
-            <h5 class="text-xs font-black text-coop-green uppercase tracking-widest mb-1">Phone Number</h4>
+            <h4 class="text-xs font-black text-coop-green uppercase tracking-widest mb-1">Phone Number</h4>
             <p class="text-2xl font-bold text-gray-700">+2348034067079, +234 8023358340</p>
           </div>
         </div>
@@ -295,61 +309,89 @@
     </div>
   </footer>
 
-  <button id="backToTop" onclick="window.scrollTo(0,0)" class="fixed bottom-8 right-8 bg-white text-gray-900 p-4 rounded-full shadow-2xl z-50 hover:bg-coop-green hover:text-white border border-gray-100">
+  <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-8 right-8 bg-white text-gray-900 p-4 rounded-full shadow-2xl z-50 hover:bg-coop-green hover:text-white border border-gray-100">
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
   </button>
 
   <script>
     function calculateLoan() {
-  const amount = document.getElementById("amount").value;
-  const months = document.getElementById("months").value;
-  const rate = document.getElementById("rate").value;
-  const resultDisplay = document.getElementById("result");
+      const amountInput = document.getElementById("amount").value;
+      const monthsInput = document.getElementById("months").value;
+      const rateInput = document.getElementById("rate").value;
+      const resultDisplay = document.getElementById("result");
 
-  if (!amount || !months || !rate) {
-    alert("Please fill in all fields");
-    return;
-  }
+      if (!amountInput || !monthsInput || !rateInput) {
+        resultDisplay.innerHTML = `<div class="mt-10 p-8 bg-red-50 rounded-[2.5rem] border border-red-100 text-center"><p class="text-red-600 font-bold">Please fill in all fields to calculate</p></div>`;
+        return;
+      }
 
-  const totalInterest = parseFloat(amount) * (parseFloat(rate) / 100) * parseFloat(months);
-  const totalPayable = parseFloat(amount) + totalInterest;
-  const monthly = totalPayable / months;
+      const amount = parseFloat(amountInput);
+      const months = parseFloat(monthsInput);
+      const rate = parseFloat(rateInput);
 
-  resultDisplay.innerHTML = `
-    <div class="mt-10 p-8 bg-green-50 rounded-[2.5rem] border border-green-100 text-center animate-pulse">
-      <p class="text-xs text-green-600 font-black uppercase mb-1">Monthly Repayment</p>
-      <p class="text-5xl font-black text-coop-green mb-4">₦${monthly.toLocaleString(undefined, {minimumFractionDigits: 2})}</p>
-      <div class="pt-4 border-t border-green-200 grid grid-cols-2 text-[10px] font-black uppercase tracking-widest text-gray-500">
-        <div class="border-r border-green-200">Total Interest<br><span class="text-gray-900">₦${totalInterest.toLocaleString()}</span></div>
-        <div>Total Payable<br><span class="text-gray-900">₦${totalPayable.toLocaleString()}</span></div>
-      </div>
-    </div>`;
-}
+      if (amount <= 0 || months <= 0 || rate <= 0) {
+        resultDisplay.innerHTML = `<div class="mt-10 p-8 bg-red-50 rounded-[2.5rem] border border-red-100 text-center"><p class="text-red-600 font-bold">Please enter positive values</p></div>`;
+        return;
+      }
 
-function resetCalculator() {
-  document.getElementById("amount").value = "";
-  document.getElementById("months").value = "";
-  document.getElementById("rate").value = "5"; // Resets back to 5%
-  document.getElementById("result").innerHTML = "";
-}
+      const totalInterest = amount * (rate / 100) * months;
+      const totalPayable = amount + totalInterest;
+      const monthly = totalPayable / months;
+
+      resultDisplay.innerHTML = `
+        <div class="mt-10 p-8 bg-green-50 rounded-[2.5rem] border border-green-100 text-center loan-result">
+          <p class="text-xs text-green-600 font-black uppercase mb-1">Monthly Repayment</p>
+          <p class="text-5xl font-black text-coop-green mb-4">₦${monthly.toLocaleString('en-NG', {minimumFractionDigits: 2})}</p>
+          <div class="pt-4 border-t border-green-200 grid grid-cols-2 text-[10px] font-black uppercase tracking-widest text-gray-500">
+            <div class="border-r border-green-200">Total Interest<br><span class="text-gray-900">₦${totalInterest.toLocaleString('en-NG')}</span></div>
+            <div>Total Payable<br><span class="text-gray-900">₦${totalPayable.toLocaleString('en-NG')}</span></div>
+          </div>
+        </div>`;
+    }
+
+    function resetCalculator() {
+      document.getElementById("amount").value = "";
+      document.getElementById("months").value = "";
+      document.getElementById("rate").value = "6";
+      document.getElementById("result").innerHTML = "";
+    }
+
+    // Live calculation on input change (enhanced UX while keeping original button)
+    function setupLiveCalculator() {
+      const inputs = ['amount', 'months', 'rate'];
+      inputs.forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+          input.addEventListener('input', () => {
+            if (document.getElementById("amount").value && 
+                document.getElementById("months").value && 
+                document.getElementById("rate").value) {
+              calculateLoan();
+            }
+          });
+        }
+      });
+    }
 
     function startCounter() {
       const counterElement = document.getElementById('loanCounter');
       const target = 10000000.00;
-      const duration = 40000;
+      const duration = 3200;
       let startTimestamp = null;
       const step = (timestamp) => {
         if (!startTimestamp) startTimestamp = timestamp;
         const progress = Math.min((timestamp - startTimestamp) / duration, 1);
         const currentCount = Math.floor(progress * target);
-        counterElement.innerText = "₦" + currentCount.toLocaleString();
-        if (progress < 1) window.requestAnimationFrame(step);
-        else {
+        counterElement.innerText = "₦" + currentCount.toLocaleString('en-NG');
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        } else {
+          counterElement.innerText = "₦" + target.toLocaleString('en-NG');
           setInterval(() => {
-            const extra = Math.floor(Math.random() * 8000);
+            const extra = Math.floor(Math.random() * 12000) + 5000;
             const val = parseInt(counterElement.innerText.replace(/[^0-9]/g, ''));
-            counterElement.innerText = "₦" + (val + extra).toLocaleString();
-          }, 3000);
+            counterElement.innerText = "₦" + (val + extra).toLocaleString('en-NG');
+          }, 2800);
         }
       };
       window.requestAnimationFrame(step);
@@ -360,25 +402,37 @@ function resetCalculator() {
       for (var i = 0; i < reveals.length; i++) {
         var windowHeight = window.innerHeight;
         var elementTop = reveals[i].getBoundingClientRect().top;
-        if (elementTop < windowHeight - 100) reveals[i].classList.add("active");
+        if (elementTop < windowHeight - 120) reveals[i].classList.add("active");
       }
       const btt = document.getElementById("backToTop");
       if (window.scrollY > 600) btt.classList.add("show");
       else btt.classList.remove("show");
     }
 
-    function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
+    function toggleMenu() { 
+      document.getElementById('mobile-menu').classList.toggle('open'); 
+    }
+
+    // Keyboard support for back to top
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      }
+    });
+
     window.onscroll = reveal;
-    window.onload = () => { reveal(); startCounter(); };
+    window.onload = () => { 
+      reveal(); 
+      startCounter(); 
+      setupLiveCalculator(); 
+      // Initial calculation if defaults are present
+      setTimeout(() => {
+        if (document.getElementById("amount").value && 
+            document.getElementById("months").value) {
+          calculateLoan();
+        }
+      }, 800);
+    };
   </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
