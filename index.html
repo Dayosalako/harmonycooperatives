@@ -52,7 +52,9 @@
         <a href="#contact" class="nav-link hover:text-coop-green transition-colors">CONTACT</a>
         <a href="apply204.html" target="_blank" class="bg-coop-green text-white px-5 py-2.5 rounded-xl hover:bg-green-700 transition-all shadow-md">APPLY NOW</a>
       </div>
-      <button onclick="toggleMenu()" class="md:hidden text-gray-800"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
+      <button onclick="toggleMenu()" class="md:hidden text-gray-800" aria-label="Toggle Menu">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
     </div>
     <div id="mobile-menu" class="md:hidden bg-white border-t px-6 space-y-4">
       <a href="#about" onclick="toggleMenu()" class="block py-4 font-bold border-b">About Us</a>
@@ -86,7 +88,7 @@
     </div>
   </section>
 
-  <h2 class="text-4xl font-black text-center mb-16 uppercase tracking-widest">ABOUT US</h2>
+  <h2 class="text-4xl font-black text-center mt-20 mb-16 uppercase tracking-widest">ABOUT US</h2>
   <section id="about" class="py-24 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 reveal">
      <div class="bg-white p-12 rounded-[3rem] shadow-xl border border-gray-100">
       <h2 class="text-3xl font-black mb-4 text-coop-green">Our Mission</h2>
@@ -174,11 +176,11 @@
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
     <div class="md:col-span-2">
       <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2 ml-2">Loan Amount (₦)</label>
-      <input id="amount" type="number" placeholder="e.g. 500000" class="w-full p-5 bg-gray-50 rounded-2xl text-xl font-bold outline-none focus:ring-2 focus:ring-green-500 transition-all">
+      <input id="amount" type="number" min="0" placeholder="e.g. 500000" class="w-full p-5 bg-gray-50 rounded-2xl text-xl font-bold outline-none focus:ring-2 focus:ring-green-500 transition-all">
     </div>
     <div>
       <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2 ml-2">Duration (Months)</label>
-      <input id="months" type="number" placeholder="e.g. 12" class="w-full p-5 bg-gray-50 rounded-2xl text-xl font-bold outline-none focus:ring-2 focus:ring-green-500 transition-all">
+      <input id="months" type="number" min="1" placeholder="e.g. 12" class="w-full p-5 bg-gray-50 rounded-2xl text-xl font-bold outline-none focus:ring-2 focus:ring-green-500 transition-all">
     </div>
     <div>
       <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2 ml-2">Interest Rate (6%)</label>
@@ -212,21 +214,21 @@
   <section id="trustees" class="py-24 bg-white reveal">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-16">
-        <h2 class="text-5xl font-black mb-4">Our Trustees</h2>                                                                                                                                                                                                                            
+        <h2 class="text-5xl font-black mb-4">Our Trustees</h2>
             <p class="text-gray-500 text-lg"> These are our trustees.</p>
       </div>
       <div class="grid md:grid-cols-3 gap-8">
         <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
-          <h3 class="text-2xl font-black mb-4">Mr Adedotun Salako</h3>                    
-            <p class="text-gray-500 mb-6 italic text-sm">A business man</p>                                                                                                                                                           
+          <h3 class="text-2xl font-black mb-4">Mr Adedotun Salako</h3>
+            <p class="text-gray-500 mb-6 italic text-sm">A business man</p>
                 <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
-            <li>• Contact details</li>                    
+            <li>• Contact details</li>
               <li>+2348023358340</li>
           </ul>
         </div>
         <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
-          <h3 class="text-2xl font-black mb-4">Mrs Olutunde Olayemi </h3>                                        
-            <p class="text-gray-500 mb-6 italic text-sm">Business woman</p>                    
+          <h3 class="text-2xl font-black mb-4">Mrs Olutunde Olayemi </h3>
+            <p class="text-gray-500 mb-6 italic text-sm">Business woman</p>
             <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
             <li>• Contact details</li>
             <li>+2348035950764</li>
@@ -309,30 +311,28 @@
     </div>
   </footer>
 
-  <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-8 right-8 bg-white text-gray-900 p-4 rounded-full shadow-2xl z-50 hover:bg-coop-green hover:text-white border border-gray-100">
+  <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to Top" class="fixed bottom-8 right-8 bg-white text-gray-900 p-4 rounded-full shadow-2xl z-50 hover:bg-coop-green hover:text-white border border-gray-100">
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
   </button>
 
   <script>
+    // 1. Optimized Loan Calculation
     function calculateLoan() {
-      const amountInput = document.getElementById("amount").value;
-      const monthsInput = document.getElementById("months").value;
-      const rateInput = document.getElementById("rate").value;
+      const amountVal = document.getElementById("amount").value;
+      const monthsVal = document.getElementById("months").value;
+      const rateVal = document.getElementById("rate").value;
       const resultDisplay = document.getElementById("result");
 
-      if (!amountInput || !monthsInput || !rateInput) {
-        resultDisplay.innerHTML = `<div class="mt-10 p-8 bg-red-50 rounded-[2.5rem] border border-red-100 text-center"><p class="text-red-600 font-bold">Please fill in all fields to calculate</p></div>`;
+      if (!amountVal || !monthsVal || !rateVal) {
+        if(resultDisplay.innerHTML !== "") {
+            resultDisplay.innerHTML = `<div class="mt-10 p-8 bg-red-50 rounded-[2.5rem] border border-red-100 text-center"><p class="text-red-600 font-bold">Please fill in all fields</p></div>`;
+        }
         return;
       }
 
-      const amount = parseFloat(amountInput);
-      const months = parseFloat(monthsInput);
-      const rate = parseFloat(rateInput);
-
-      if (amount <= 0 || months <= 0 || rate <= 0) {
-        resultDisplay.innerHTML = `<div class="mt-10 p-8 bg-red-50 rounded-[2.5rem] border border-red-100 text-center"><p class="text-red-600 font-bold">Please enter positive values</p></div>`;
-        return;
-      }
+      const amount = parseFloat(amountVal);
+      const months = parseFloat(monthsVal);
+      const rate = parseFloat(rateVal);
 
       const totalInterest = amount * (rate / 100) * months;
       const totalPayable = amount + totalInterest;
@@ -341,10 +341,10 @@
       resultDisplay.innerHTML = `
         <div class="mt-10 p-8 bg-green-50 rounded-[2.5rem] border border-green-100 text-center loan-result">
           <p class="text-xs text-green-600 font-black uppercase mb-1">Monthly Repayment</p>
-          <p class="text-5xl font-black text-coop-green mb-4">₦${monthly.toLocaleString('en-NG', {minimumFractionDigits: 2})}</p>
+          <p class="text-5xl font-black text-coop-green mb-4">₦${monthly.toLocaleString('en-NG', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
           <div class="pt-4 border-t border-green-200 grid grid-cols-2 text-[10px] font-black uppercase tracking-widest text-gray-500">
-            <div class="border-r border-green-200">Total Interest<br><span class="text-gray-900">₦${totalInterest.toLocaleString('en-NG')}</span></div>
-            <div>Total Payable<br><span class="text-gray-900">₦${totalPayable.toLocaleString('en-NG')}</span></div>
+            <div class="border-r border-green-200">Total Interest<br><span class="text-gray-900 font-bold">₦${totalInterest.toLocaleString('en-NG')}</span></div>
+            <div>Total Payable<br><span class="text-gray-900 font-bold">₦${totalPayable.toLocaleString('en-NG')}</span></div>
           </div>
         </div>`;
     }
@@ -356,82 +356,71 @@
       document.getElementById("result").innerHTML = "";
     }
 
-    // Live calculation on input change (enhanced UX while keeping original button)
-    function setupLiveCalculator() {
-      const inputs = ['amount', 'months', 'rate'];
-      inputs.forEach(id => {
-        const input = document.getElementById(id);
-        if (input) {
-          input.addEventListener('input', () => {
-            if (document.getElementById("amount").value && 
-                document.getElementById("months").value && 
-                document.getElementById("rate").value) {
-              calculateLoan();
-            }
-          });
+    // 2. Performance-focused Scroll Visibility
+    function handleScrollEvents() {
+      // Reveal logic
+      const reveals = document.querySelectorAll(".reveal");
+      reveals.forEach(el => {
+        const elementTop = el.getBoundingClientRect().top;
+        if (elementTop < window.innerHeight - 100) {
+          el.classList.add("active");
         }
       });
+
+      // Back to top logic
+      const btt = document.getElementById("backToTop");
+      if (window.scrollY > 600) btt.classList.add("show");
+      else btt.classList.remove("show");
     }
 
+    // 3. Counter Animation
     function startCounter() {
       const counterElement = document.getElementById('loanCounter');
-      const target = 10000000.00;
-      const duration = 3200;
+      const target = 10000000;
+      const duration = 2500;
       let startTimestamp = null;
+
       const step = (timestamp) => {
         if (!startTimestamp) startTimestamp = timestamp;
         const progress = Math.min((timestamp - startTimestamp) / duration, 1);
         const currentCount = Math.floor(progress * target);
         counterElement.innerText = "₦" + currentCount.toLocaleString('en-NG');
+        
         if (progress < 1) {
           window.requestAnimationFrame(step);
         } else {
-          counterElement.innerText = "₦" + target.toLocaleString('en-NG');
+          // Keep it lively with occasional increments
           setInterval(() => {
-            const extra = Math.floor(Math.random() * 12000) + 5000;
+            const extra = Math.floor(Math.random() * 8000) + 2000;
             const val = parseInt(counterElement.innerText.replace(/[^0-9]/g, ''));
             counterElement.innerText = "₦" + (val + extra).toLocaleString('en-NG');
-          }, 2800);
+          }, 4000);
         }
       };
       window.requestAnimationFrame(step);
-    }
-
-    function reveal() {
-      var reveals = document.querySelectorAll(".reveal");
-      for (var i = 0; i < reveals.length; i++) {
-        var windowHeight = window.innerHeight;
-        var elementTop = reveals[i].getBoundingClientRect().top;
-        if (elementTop < windowHeight - 120) reveals[i].classList.add("active");
-      }
-      const btt = document.getElementById("backToTop");
-      if (window.scrollY > 600) btt.classList.add("show");
-      else btt.classList.remove("show");
     }
 
     function toggleMenu() { 
       document.getElementById('mobile-menu').classList.toggle('open'); 
     }
 
-    // Keyboard support for back to top
+    // Global Key Listener
     document.addEventListener('keydown', (e) => {
-      if (e.key === '/' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+      if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
         window.scrollTo({top: 0, behavior: 'smooth'});
       }
     });
 
-    window.onscroll = reveal;
+    // Initialize
+    window.addEventListener('scroll', handleScrollEvents);
     window.onload = () => { 
-      reveal(); 
+      handleScrollEvents(); 
       startCounter(); 
-      setupLiveCalculator(); 
-      // Initial calculation if defaults are present
-      setTimeout(() => {
-        if (document.getElementById("amount").value && 
-            document.getElementById("months").value) {
-          calculateLoan();
-        }
-      }, 800);
+      
+      // Setup Live calculation on typing
+      ['amount', 'months', 'rate'].forEach(id => {
+          document.getElementById(id).addEventListener('input', calculateLoan);
+      });
     };
   </script>
 </body>
