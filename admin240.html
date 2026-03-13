@@ -68,7 +68,7 @@
     </div>
   </div>
 
-  <aside class="w-80 bg-white border-r border-slate-100 hidden lg:block sticky top-0 h-screen z-40">
+ <aside class="w-80 bg-white border-r border-slate-100 hidden lg:block sticky top-0 h-screen z-40">
     <div class="p-10 h-full flex flex-col">
       
       <a href="index.html" class="flex items-center space-x-4 mb-16 hover:opacity-80 transition-all duration-300 group">
@@ -80,22 +80,33 @@
             <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Corporate Elite</span>
         </div>
       </a>
-      </div>
   
       <nav class="space-y-3 flex-1">
-        <a href="#" onclick="showTab(event, 'overview')" class="sidebar-link active flex items-center px-6 py-4 rounded-2xl transition-all text-sm font-bold uppercase">Executive Summary</a>
-        <a href="#" onclick="showTab(event, 'loans')" class="sidebar-link flex items-center px-6 py-4 rounded-2xl transition-all text-sm font-bold uppercase">Authorization Queue</a>
-        <a href="#" onclick="showTab(event, 'recovery')" class="sidebar-link flex items-center px-6 py-4 rounded-2xl transition-all text-sm font-bold uppercase">Recovery Oversight</a>
-        <a href="#" onclick="showTab(event, 'history')" class="sidebar-link flex items-center px-6 py-4 rounded-2xl transition-all text-sm font-bold uppercase">Master Audit Log</a>
+        <a href="#" onclick="showTab(event, 'overview')" class="sidebar-link active flex items-center px-6 py-4 rounded-2xl transition-all text-sm font-bold uppercase tracking-tight">
+            Executive Summary
+        </a>
+        <a href="#" onclick="showTab(event, 'loans')" class="sidebar-link flex items-center px-6 py-4 rounded-2xl transition-all text-sm font-bold uppercase tracking-tight">
+            Authorization Queue
+        </a>
+        <a href="#" onclick="showTab(event, 'recovery')" class="sidebar-link flex items-center px-6 py-4 rounded-2xl transition-all text-sm font-bold uppercase tracking-tight">
+            Recovery Oversight
+        </a>
+        <a href="#" onclick="showTab(event, 'history')" class="sidebar-link flex items-center px-6 py-4 rounded-2xl transition-all text-sm font-bold uppercase tracking-tight">
+            Master Audit Log
+        </a>
       </nav>
-      <div class="p-6 bg-slate-50 rounded-[2rem] border border-slate-100">
+
+      <div class="p-6 bg-slate-50 rounded-[2rem] border border-slate-100 mt-auto">
           <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">System Integrity</p>
           <div class="flex items-center text-emerald-500 font-bold text-xs uppercase">
-              <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span> Encrypted Core
+              <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span> 
+              Encrypted Core
           </div>
       </div>
-    </div>
-  </aside>
+
+    </div> 
+ </aside>                    
+  
 
   <main class="flex-1 p-6 lg:p-16 overflow-y-auto">
     <header class="mb-12 flex flex-col md:flex-row justify-between items-center gap-6">
