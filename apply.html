@@ -240,32 +240,52 @@
         </section>
 
       
-<section class="space-y-3 text-[11px] text-slate-600">
-    <div class="terms-box border rounded-md p-3 bg-slate-50">
-        <span class="font-bold text-slate-700">Terms & Conditions</span>
-        <button type="button" id="readMoreBtn" onclick="toggleTerms()" class="ml-2 text-emerald-600 font-semibold underline text-[10px]">Read more</button>
+<section class="space-y-4">
+    <div class="flex items-center gap-3 mb-4">
+        <div class="section-indicator"></div>
+        <h2 class="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">03. Legal Authorization</h2>
+    </div>
+
+    <div class="terms-box border border-slate-200 rounded-2xl p-6 bg-slate-50/50">
+        <div class="flex items-center justify-between mb-2">
+            <span class="text-[10px] font-black text-slate-900 uppercase tracking-widest">Terms & Conditions</span>
+            <button type="button" id="readMoreBtn" onclick="toggleTerms()" class="text-emerald-600 font-bold text-[10px] uppercase hover:text-emerald-700 transition-colors">Read more</button>
+        </div>
         
-        <div id="fullTerms" class="hidden mt-3 space-y-2 leading-relaxed">
+        <p class="text-[11px] text-slate-500 leading-relaxed mb-0">
+            By proceeding, you acknowledge the financial obligations and legal recovery framework of Harmony Welfare Cooperative Society Ltd.
+        </p>
+
+        <div id="fullTerms" class="hidden mt-6 pt-6 border-t border-slate-200 space-y-4 text-[11px] text-slate-600 leading-relaxed">
             <p><strong>1. Repayment Obligation:</strong> The applicant agrees to repay the total loan amount, including applicable charges, within the approved tenure. Failure to repay attracts a default interest of <strong>6% per week</strong> until full settlement.</p>
-            <p><strong>2. Default & Recovery:</strong> Any repayment overdue beyond <strong>48 hours</strong> authorizes the organization to initiate recovery actions.</p>
-            <p><strong>3. Guarantor Consent:</strong> The applicant confirms that all listed guarantors have granted prior consent.</p>
-            <p><strong>4. Accuracy of Information:</strong> All information submitted by the applicant is declared true and accurate.</p>
-            <p><strong>5. Right of Set-Off:</strong> The organization reserves the right to recover outstanding obligations from any linked accounts.</p>
-            <p><strong>6. Early Repayment:</strong> Early repayment is permitted but does not exempt the applicant from accrued charges.</p>
-            <p><strong>7. Data Usage & Privacy:</strong> The applicant consents to the use of submitted data for credit assessment.</p>
-            <p><strong>8. Amendments:</strong> The organization reserves the right to amend these terms where necessary.</p>
-            <p><strong>9. Legal Jurisdiction:</strong> This agreement shall be governed by the laws of Nigeria.</p>
+            
+            <p><strong>2. Default & Recovery:</strong> Any repayment overdue beyond <strong>48 hours</strong> authorizes the organization to initiate recovery actions via our infrastructure partners.</p>
+            
+            <p><strong>3. Guarantor Consent:</strong> The applicant confirms that all listed guarantors have granted prior consent and are aware of their secondary liability.</p>
+            
+            <p><strong>4. Accuracy of Information:</strong> All information submitted (including GPS coordinates and device metadata) is declared true and accurate.</p>
+            
+            <p><strong>5. Right of Set-Off:</strong> The organization reserves the right to recover outstanding obligations from any linked bank accounts or BVN-associated profiles.</p>
+            
+            <p><strong>6. Early Repayment:</strong> Early repayment is permitted but does not automatically exempt the applicant from the base 6% interest accrued.</p>
+            
+            <p><strong>7. Data Usage & Privacy:</strong> The applicant consents to the use of submitted data for credit assessment and verification through Zion Netcom Solutions infrastructure.</p>
+            
+            <p><strong>8. Amendments:</strong> The organization reserves the right to amend these terms where necessary to reflect board directives.</p>
+            
+            <p><strong>9. Legal Jurisdiction:</strong> This agreement shall be governed by the laws of the Federal Republic of Nigeria.</p>
         </div>
     </div>
     
-    <div class="flex items-center gap-3 px-1">
-        <input type="checkbox" id="termsCheck" required class="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500">
-        <label for="termsCheck" class="text-[10px] font-bold text-slate-500 uppercase cursor-pointer">
-            I accept the terms & certify all information provided is accurate.
+    <div class="flex items-start gap-3 px-2 mt-4">
+        <div class="pt-0.5">
+            <input type="checkbox" id="termsCheck" required class="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 cursor-pointer">
+        </div>
+        <label for="termsCheck" class="text-[10px] font-bold text-slate-500 uppercase cursor-pointer leading-tight">
+            I accept the terms & conditions and certify that all information provided is accurate and verifiable.
         </label>
     </div>
 </section>
-
         <button type="submit" id="submitBtn" class="w-full bg-slate-900 text-white font-black py-5 rounded-2xl hover:bg-black transition-all flex items-center justify-center text-sm gap-4 shadow-xl tracking-widest">
           <span id="btnText">SUBMIT APPLICATION</span>
           <div id="spinner" class="hidden w-4 h-4 border-2 border-white/20 rounded-full loader"></div>
@@ -274,110 +294,101 @@
     </div>
 </div>
 
-<script>                                                                                
-  
-  
-  
-  
-  let currentTrackingID = "";
+<script>
+    let currentTrackingID = "";
     let globalTotalValue = 0;
     let globalInterestValue = 0;
 
     const DRIVE_API_URL = "https://script.google.com/macros/s/AKfycbxiUieTzfacU0tQOray2e98QpL6srMm6Enoj6hqUcN2mQUdBXODK3lc7yGR-kc6r-mSXQ/exec";
 
+    // --- 1. SYSTEM INITIALIZATION ---
     function updateClock() {
         const now = new Date();
-        document.getElementById('liveClock').innerText = now.toLocaleTimeString('en-GB', { hour12: false });
-        document.getElementById('headerDate').innerText = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+        const liveClock = document.getElementById('liveClock');
+        const headerDate = document.getElementById('headerDate');
+        
+        if (liveClock) liveClock.innerText = now.toLocaleTimeString('en-GB', { hour12: false });
+        if (headerDate) headerDate.innerText = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
     }
 
     function initializePortal() {
         updateClock();
         setInterval(updateClock, 1000);
         loadProgress();
+        
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((pos) => {
-                document.getElementById('geoCoords').value = `${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`;
+                const geoInput = document.getElementById('geoCoords');
+                if (geoInput) geoInput.value = `${pos.coords.latitude.toFixed(6)}, ${pos.coords.longitude.toFixed(6)}`;
             });
         }
-        document.getElementById('deviceMeta').value = `${navigator.platform} | ${navigator.vendor}`;
+        const deviceInput = document.getElementById('deviceMeta');
+        if (deviceInput) deviceInput.value = `${navigator.platform} | ${navigator.vendor}`;
     }
 
-    // --- 1. RESTORED: TERMS TOGGLE ---
+    // --- 2. UI FUNCTIONALITY (Terms Toggle) ---
     function toggleTerms() {
         const fullTerms = document.getElementById("fullTerms");
         const btnText = document.getElementById("readMoreBtn");
-        if (fullTerms.classList.contains("hidden")) {
-            fullTerms.classList.remove("hidden");
-            btnText.innerHTML = "Read less";
-        } else {
-            fullTerms.classList.add("hidden");
-            btnText.innerHTML = "Read more";
+        if (fullTerms && btnText) {
+            if (fullTerms.classList.contains("hidden")) {
+                fullTerms.classList.remove("hidden");
+                btnText.innerHTML = "Read less";
+            } else {
+                fullTerms.classList.add("hidden");
+                btnText.innerHTML = "Read more";
+            }
         }
     }
 
-    // --- 2. RESTORED: CALCULATOR & 50K LIMIT ---
-  // --- 2. UPDATED: MULTI-TIER CALCULATOR ---
+    // --- 3. CORE CALCULATOR & TIER LIMITS ---
     function calculateFinancials() {
         const loanInput = document.getElementById('amt');
         const tenureSelect = document.getElementById('term');
-        const categorySelect = document.getElementById('employmentType'); // Ensure your HTML select has this ID
+        const categorySelect = document.getElementById('employmentType'); 
         const feedback = document.getElementById('eligibilityFeedback');
         
+        if (!loanInput || !tenureSelect || !categorySelect) return;
+
         let principal = parseFloat(loanInput.value) || 0;
         const tenure = parseInt(tenureSelect.value) || 3;
         const category = categorySelect.value;
 
-        // Define Corporate Limits
+        // Corporate Limit Logic
         const LIMITS = {
-            'civil-servant': 500000,   // ₦500k limit
-            'salary-earner': 200000,   // ₦200k limit
-            'business-owner': 150000,  // ₦150k limit
-            'default': 50000           // Standard limit
+            'civil-servant': 500000,
+            'salary-earner': 200000,
+            'business-owner': 150000,
+            'default': 50000
         };
 
         const currentLimit = LIMITS[category] || LIMITS['default'];
 
-        // Enforce Tier-Based Limits
+        // Enforce Limits & Lock Input if exceeded
         if (principal > currentLimit) {
             principal = currentLimit;
             loanInput.value = currentLimit;
-            feedback.innerHTML = `⚠️ Maximum Limit for ${category.replace('-', ' ')}: ₦${currentLimit.toLocaleString()}`;
-            feedback.className = "text-[10px] font-bold text-rose-500 mt-2 bg-rose-50 p-2 rounded-lg";
+            feedback.innerHTML = `⚠️ Limit reached for ${category.replace('-', ' ')}: ₦${currentLimit.toLocaleString()}`;
+            feedback.className = "text-[10px] font-bold text-rose-500 mt-2 bg-rose-50 p-2 rounded-lg block";
         } else if (principal > 0 && category !== "") {
             feedback.innerHTML = `✅ Eligible Amount for ${category.replace('-', ' ')}`;
-            feedback.className = "text-[10px] font-bold text-emerald-500 mt-2 bg-emerald-50 p-2 rounded-lg";
-        } else if (category === "") {
-            feedback.innerHTML = `ℹ️ Select employment type to see your limit`;
-            feedback.className = "text-[10px] font-bold text-amber-500 mt-2 bg-amber-50 p-2 rounded-lg";
+            feedback.className = "text-[10px] font-bold text-emerald-500 mt-2 bg-emerald-50 p-2 rounded-lg block";
+        } else if (category === "" && principal > 0) {
+            feedback.innerHTML = `ℹ️ Select employment type to verify higher limits`;
+            feedback.className = "text-[10px] font-bold text-amber-500 mt-2 bg-amber-50 p-2 rounded-lg block";
         } else {
             feedback.innerHTML = "";
         }
 
-        // Interest Logic (Fixed 6% as per your requirement)
+        // Calculation Logic: 6% flat interest
         const interestRate = 0.06; 
         globalInterestValue = principal * interestRate;
         globalTotalValue = principal + globalInterestValue;
         const monthly = globalTotalValue / tenure;
 
-        // Update UI Labels
+        // UI Updates
         const fmt = (v) => "₦ " + v.toLocaleString(undefined, {minimumFractionDigits: 2});
-        document.getElementById('liveInterest').innerText = fmt(globalInterestValue);
-        document.getElementById('liveTotal').innerText = fmt(globalTotalValue);
-        document.getElementById('liveMonthly').innerText = fmt(monthly);
         
-        saveProgress();
-    }                    
-  
-
-        // Logic: 6% flat interest per your requirement
-        const interestRate = 0.06; 
-        globalInterestValue = principal * interestRate;
-        globalTotalValue = principal + globalInterestValue;
-        const monthly = globalTotalValue / tenure;
-
-        // Update the UI Labels
-        const fmt = (v) => "₦ " + v.toLocaleString(undefined, {minimumFractionDigits: 2});
         document.getElementById('liveInterest').innerText = fmt(globalInterestValue);
         document.getElementById('liveTotal').innerText = fmt(globalTotalValue);
         document.getElementById('liveMonthly').innerText = fmt(monthly);
@@ -385,7 +396,7 @@
         saveProgress();
     }
 
-    // --- 3. SUBMISSION LOGIC ---
+    // --- 4. DATA SUBMISSION ---
     async function toBase64(file) {
         if (!file) return null;
         return new Promise((resolve, reject) => {
@@ -396,79 +407,76 @@
         });
     }
 
-    document.getElementById('loanForm').onsubmit = async function(e) {
-        e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        const spinner = document.getElementById('spinner');
-        btn.disabled = true; spinner.classList.remove('hidden');
+    const loanForm = document.getElementById('loanForm');
+    if (loanForm) {
+        loanForm.onsubmit = async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const spinner = document.getElementById('spinner');
+            
+            btn.disabled = true; 
+            if (spinner) spinner.classList.remove('hidden');
 
-        currentTrackingID = "HARM-" + Math.floor(1000 + Math.random() * 9000) + "-TX";
+            currentTrackingID = "HARM-" + Math.floor(1000 + Math.random() * 9000) + "-TX";
 
-        const idFile = await toBase64(document.getElementById('idUpload').files[0]);
-        const passFile = await toBase64(document.getElementById('gPassport').files[0]);
+            const idFile = await toBase64(document.getElementById('idUpload')?.files[0]);
+            const passFile = await toBase64(document.getElementById('gPassport')?.files[0]);
 
-        const auditData = {
-            fullName: document.getElementById('fullName').value,
-            phone: document.getElementById('phone').value,
-            email: document.getElementById('email').value,
-            amount: document.getElementById('amt').value,
-            tenure: document.getElementById('term').selectedOptions[0].text,
-            trackingId: currentTrackingID,
-            bankName: document.getElementById('bankName').value,
-            accNum: document.getElementById('accNum').value,
-            accName: document.getElementById('accName').value,
-            date: new Date().toLocaleDateString('en-GB'),
-            status: "Pending",
-            balance: document.getElementById('amt').value
+            const auditData = {
+                fullName: document.getElementById('fullName').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                amount: document.getElementById('amt').value,
+                tenure: document.getElementById('term').selectedOptions[0].text,
+                trackingId: currentTrackingID,
+                bankName: document.getElementById('bankName').value,
+                accNum: document.getElementById('accNum').value,
+                accName: document.getElementById('accName').value,
+                date: new Date().toLocaleDateString('en-GB'),
+                status: "Pending",
+                balance: document.getElementById('amt').value
+            };
+
+            try {
+                await fetch(DRIVE_API_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify({
+                        fullName: auditData.fullName,
+                        idData: idFile?.data,
+                        idType: idFile?.type,
+                        passData: passFile?.data,
+                        passType: passFile?.type,
+                        auditData: auditData
+                    })
+                });
+
+                await fetch('https://sheetdb.io/api/v1/b9cm231d1i0he', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ data: [auditData] })
+                });
+
+                localStorage.removeItem('harmony_draft');
+                document.getElementById('displayTrackingID').innerText = currentTrackingID;
+                document.getElementById('successModal').classList.remove('hidden-modal');
+            } catch (error) {
+                alert("Transmission Error. Check connection.");
+            } finally {
+                btn.disabled = false; 
+                if (spinner) spinner.classList.add('hidden');
+            }
         };
+    }
 
-        try {
-            // Post to Apps Script
-            await fetch(DRIVE_API_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify({
-                    fullName: auditData.fullName,
-                    idData: idFile?.data,
-                    idType: idFile?.type,
-                    passData: passFile?.data,
-                    passType: passFile?.type,
-                    auditData: auditData
-                })
-            });
-
-            // Post to SheetDB
-            await fetch('https://sheetdb.io/api/v1/b9cm231d1i0he', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ data: [auditData] })
-            });
-
-            localStorage.removeItem('harmony_draft');
-            document.getElementById('displayTrackingID').innerText = currentTrackingID;
-            document.getElementById('successModal').classList.remove('hidden-modal');
-        } catch (error) {
-            alert("Transmission Error. Check connection.");
-        } finally {
-            btn.disabled = false; spinner.classList.add('hidden');
-        }
-    };
-
-    // --- 4. UTILITIES ---
+    // --- 5. UTILITIES ---
     function saveProgress() {
-        const formData = {
-            fullName: document.getElementById('fullName').value,
-            phone: document.getElementById('phone').value,
-            email: document.getElementById('email').value,
-            address: document.getElementById('address').value,
-            amt: document.getElementById('amt').value,
-            term: document.getElementById('term').value,
-            bankName: document.getElementById('bankName').value,
-            accNum: document.getElementById('accNum').value,
-            accName: document.getElementById('accName').value,
-            gName: document.getElementById('gName').value,
-            gPhone: document.getElementById('gPhone').value
-        };
+        const fields = ['fullName', 'phone', 'email', 'address', 'amt', 'term', 'employmentType', 'bankName', 'accNum', 'accName', 'gName', 'gPhone'];
+        const formData = {};
+        fields.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) formData[id] = el.value;
+        });
         localStorage.setItem('harmony_draft', JSON.stringify(formData));
     }
 
@@ -476,7 +484,10 @@
         const saved = localStorage.getItem('harmony_draft');
         if (saved) {
             const data = JSON.parse(saved);
-            Object.keys(data).forEach(key => { if (document.getElementById(key)) document.getElementById(key).value = data[key]; });
+            Object.keys(data).forEach(key => { 
+                const el = document.getElementById(key);
+                if (el) el.value = data[key]; 
+            });
             calculateFinancials();
         }
     }
@@ -509,6 +520,10 @@
         const msg = `*HARMONY ELITE | NEW LOAN REQUEST*%0A*REF ID:* ${currentTrackingID}%0A*MEMBER:* ${document.getElementById('fullName').value.toUpperCase()}%0A*TOTAL PAYABLE: ₦${globalTotalValue.toLocaleString()}*`;
         window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
     }
-</script>
+
+    // Run initialization on load
+    window.onload = initializePortal;
+</script>                    
+  
 </body>
 </html>
