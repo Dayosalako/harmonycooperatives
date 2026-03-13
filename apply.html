@@ -154,32 +154,59 @@
           </div>
         </section>
 
-        <section>
-          <div class="flex items-center gap-3 mb-8">
-            <div class="section-indicator"></div>
-            <h2 class="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">02. Financial Specification</h2>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div class="border border-slate-200 p-6 rounded-2xl bg-slate-50/30">
-                <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block">Principal (₦)</label>
-                <input type="number" id="amt" required placeholder="Min 10,000" oninput="calculateFinancials(); checkEligibility(); saveProgress();" class="w-full bg-white p-3 rounded-lg text-2xl font-black text-slate-800 border-none outline-none">
-                <div id="eligibilityFeedback" class="transition-all duration-300"></div> 
-            </div>
-            <div class="border border-slate-200 p-6 rounded-2xl bg-slate-50/30">
-              <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block">Tenure</label>
-              <select id="term" onchange="calculateFinancials(); saveProgress();" class="w-full bg-white p-3 rounded-lg text-base font-bold text-slate-800">
-                <option value="3">3 Months (18.0%)</option>
-                <option value="6">6 Months (36.0%)</option>
-                <option value="12">End of Year (72.0%)</option>
-              </select>
-            </div>
-          </div>
-          <div class="bg-slate-900 rounded-3xl p-8 text-white grid grid-cols-2 md:grid-cols-3 gap-8">
-            <div><p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Interest</p><p id="liveInterest" class="text-xl font-bold text-emerald-400">₦ 0.00</p></div>
-            <div><p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Total Due</p><p id="liveTotal" class="text-xl font-bold text-white">₦ 0.00</p></div>
-            <div class="col-span-2 md:col-span-1"><p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Monthly</p><p id="liveMonthly" class="text-xl font-bold text-sky-400">₦ 0.00</p></div>
-          </div>
-        </section>
+       <section>
+  <div class="flex items-center gap-3 mb-8">
+    <div class="section-indicator"></div>
+    <h2 class="text-xs font-black text-slate-900 uppercase tracking-[0.2em]">02. Financial Specification</h2>
+  </div>
+
+  <div class="mb-6">
+    <div class="border border-slate-200 p-6 rounded-2xl bg-slate-50/30">
+      <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block">Employment Category</label>
+      <select id="employmentType" onchange="calculateFinancials(); saveProgress();" class="w-full bg-white p-3 rounded-lg text-base font-bold text-slate-800 border border-slate-100 outline-none focus:ring-2 focus:ring-emerald-500/20">
+        <option value="">Select your category</option>
+        <option value="civil-servant">Civil Servant</option>
+        <option value="salary-earner">Salary Earner (Private)</option>
+        <option value="business-owner">Business Owner</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <div class="border border-slate-200 p-6 rounded-2xl bg-slate-50/30">
+      <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block">Principal (₦)</label>
+      <input type="number" id="amt" required placeholder="Min 10,000" 
+             oninput="calculateFinancials(); saveProgress();" 
+             class="w-full bg-white p-3 rounded-lg text-2xl font-black text-slate-800 border-none outline-none">
+      
+      <div id="eligibilityFeedback" class="transition-all duration-300"></div> 
+    </div>
+
+    <div class="border border-slate-200 p-6 rounded-2xl bg-slate-50/30">
+      <label class="text-[10px] font-bold text-slate-500 uppercase mb-2 block">Tenure</label>
+      <select id="term" onchange="calculateFinancials(); saveProgress();" class="w-full bg-white p-3 rounded-lg text-base font-bold text-slate-800">
+        <option value="3">3 Months (18.0%)</option>
+        <option value="6">6 Months (36.0%)</option>
+        <option value="12">End of Year (72.0%)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="bg-slate-900 rounded-3xl p-8 text-white grid grid-cols-2 md:grid-cols-3 gap-8">
+    <div>
+      <p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Interest</p>
+      <p id="liveInterest" class="text-xl font-bold text-emerald-400">₦ 0.00</p>
+    </div>
+    <div>
+      <p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Total Due</p>
+      <p id="liveTotal" class="text-xl font-bold text-white">₦ 0.00</p>
+    </div>
+    <div class="col-span-2 md:col-span-1">
+      <p class="text-[9px] text-slate-400 font-bold uppercase mb-1">Monthly</p>
+      <p id="liveMonthly" class="text-xl font-bold text-sky-400">₦ 0.00</p>
+    </div>
+  </div>
+</section>
 
         <section>
             <div class="flex items-center gap-3 mb-8">
@@ -219,7 +246,7 @@
         <button type="button" id="readMoreBtn" onclick="toggleTerms()" class="ml-2 text-emerald-600 font-semibold underline text-[10px]">Read more</button>
         
         <div id="fullTerms" class="hidden mt-3 space-y-2 leading-relaxed">
-            <p><strong>1. Repayment Obligation:</strong> The applicant agrees to repay the total loan amount, including applicable charges, within the approved tenure. Failure to repay attracts a default interest of <strong>5% per week</strong> until full settlement.</p>
+            <p><strong>1. Repayment Obligation:</strong> The applicant agrees to repay the total loan amount, including applicable charges, within the approved tenure. Failure to repay attracts a default interest of <strong>6% per week</strong> until full settlement.</p>
             <p><strong>2. Default & Recovery:</strong> Any repayment overdue beyond <strong>48 hours</strong> authorizes the organization to initiate recovery actions.</p>
             <p><strong>3. Guarantor Consent:</strong> The applicant confirms that all listed guarantors have granted prior consent.</p>
             <p><strong>4. Accuracy of Information:</strong> All information submitted by the applicant is declared true and accurate.</p>
@@ -247,7 +274,11 @@
     </div>
 </div>
 
-<script>
+<script>                                                                                
+  
+  
+  
+  
   let currentTrackingID = "";
     let globalTotalValue = 0;
     let globalInterestValue = 0;
@@ -286,29 +317,61 @@
     }
 
     // --- 2. RESTORED: CALCULATOR & 50K LIMIT ---
+  // --- 2. UPDATED: MULTI-TIER CALCULATOR ---
     function calculateFinancials() {
         const loanInput = document.getElementById('amt');
         const tenureSelect = document.getElementById('term');
+        const categorySelect = document.getElementById('employmentType'); // Ensure your HTML select has this ID
         const feedback = document.getElementById('eligibilityFeedback');
         
         let principal = parseFloat(loanInput.value) || 0;
         const tenure = parseInt(tenureSelect.value) || 3;
+        const category = categorySelect.value;
 
-        // Enforce the ₦50,000 Limit immediately
-        if (principal > 50000) {
-            principal = 50000;
-            loanInput.value = 50000;
-            feedback.innerHTML = `⚠️ Maximum Limit: ₦50,000`;
+        // Define Corporate Limits
+        const LIMITS = {
+            'civil-servant': 500000,   // ₦500k limit
+            'salary-earner': 200000,   // ₦200k limit
+            'business-owner': 150000,  // ₦150k limit
+            'default': 50000           // Standard limit
+        };
+
+        const currentLimit = LIMITS[category] || LIMITS['default'];
+
+        // Enforce Tier-Based Limits
+        if (principal > currentLimit) {
+            principal = currentLimit;
+            loanInput.value = currentLimit;
+            feedback.innerHTML = `⚠️ Maximum Limit for ${category.replace('-', ' ')}: ₦${currentLimit.toLocaleString()}`;
             feedback.className = "text-[10px] font-bold text-rose-500 mt-2 bg-rose-50 p-2 rounded-lg";
-        } else if (principal > 0) {
-            feedback.innerHTML = `✅ Eligible Amount`;
+        } else if (principal > 0 && category !== "") {
+            feedback.innerHTML = `✅ Eligible Amount for ${category.replace('-', ' ')}`;
             feedback.className = "text-[10px] font-bold text-emerald-500 mt-2 bg-emerald-50 p-2 rounded-lg";
+        } else if (category === "") {
+            feedback.innerHTML = `ℹ️ Select employment type to see your limit`;
+            feedback.className = "text-[10px] font-bold text-amber-500 mt-2 bg-amber-50 p-2 rounded-lg";
         } else {
             feedback.innerHTML = "";
         }
 
-        // Logic: 5% flat interest per your requirement
-        const interestRate = 0.05; 
+        // Interest Logic (Fixed 6% as per your requirement)
+        const interestRate = 0.06; 
+        globalInterestValue = principal * interestRate;
+        globalTotalValue = principal + globalInterestValue;
+        const monthly = globalTotalValue / tenure;
+
+        // Update UI Labels
+        const fmt = (v) => "₦ " + v.toLocaleString(undefined, {minimumFractionDigits: 2});
+        document.getElementById('liveInterest').innerText = fmt(globalInterestValue);
+        document.getElementById('liveTotal').innerText = fmt(globalTotalValue);
+        document.getElementById('liveMonthly').innerText = fmt(monthly);
+        
+        saveProgress();
+    }                    
+  
+
+        // Logic: 6% flat interest per your requirement
+        const interestRate = 0.06; 
         globalInterestValue = principal * interestRate;
         globalTotalValue = principal + globalInterestValue;
         const monthly = globalTotalValue / tenure;
