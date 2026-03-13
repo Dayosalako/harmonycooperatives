@@ -207,27 +207,32 @@
           </div>
         </section>
 
-        <section class="space-y-3 text-[11px] text-slate-600">
-            <div class="terms-box border rounded-md p-3 bg-slate-50">
-                <span class="font-bold text-slate-700">Terms & Conditions</span>
-                <button type="button" onclick="toggleTerms()" class="ml-2 text-emerald-600 font-semibold underline text-[10px]">Read more</button>
-                <div id="fullTerms" class="hidden mt-3 space-y-2 leading-relaxed">
-                    <p><strong>1. Repayment Obligation:</strong> The applicant agrees to repay the total loan amount, including applicable charges, within the approved tenure. Failure to repay attracts a default interest of <strong>5% per week</strong> until full settlement.</p>
-                    <p><strong>2. Default & Recovery:</strong> Any repayment overdue beyond <strong>48 hours</strong> authorizes the organization to initiate recovery actions.</p>
-                    <p><strong>3. Guarantor Consent:</strong> The applicant confirms that all listed guarantors have granted prior consent.</p>
-                    <p><strong>4. Accuracy of Information:</strong> All information submitted by the applicant is declared true and accurate.</p>
-                    <p><strong>5. Right of Set-Off:</strong> The organization reserves the right to recover outstanding obligations from any linked accounts.</p>
-                    <p><strong>6. Early Repayment:</strong> Early repayment is permitted but does not exempt the applicant from accrued charges.</p>
-                    <p><strong>7. Data Usage & Privacy:</strong> The applicant consents to the use of submitted data for credit assessment.</p>
-                    <p><strong>8. Amendments:</strong> The organization reserves the right to amend these terms where necessary.</p>
-                    <p><strong>9. Legal Jurisdiction:</strong> This agreement shall be governed by the laws of Nigeria.</p>
-                </div>
-            </div>
-            <div class="flex items-center gap-3 px-1">
-                <input type="checkbox" id="termsCheck" required class="w-4 h-4 text-emerald-600 rounded">
-                <label for="termsCheck" class="text-[10px] font-bold text-slate-500 uppercase">I accept the terms & certify all information provided is accurate.</label>
-            </div>
-        </section>
+      
+<section class="space-y-3 text-[11px] text-slate-600">
+    <div class="terms-box border rounded-md p-3 bg-slate-50">
+        <span class="font-bold text-slate-700">Terms & Conditions</span>
+        <button type="button" id="readMoreBtn" onclick="toggleTerms()" class="ml-2 text-emerald-600 font-semibold underline text-[10px]">Read more</button>
+        
+        <div id="fullTerms" class="hidden mt-3 space-y-2 leading-relaxed">
+            <p><strong>1. Repayment Obligation:</strong> The applicant agrees to repay the total loan amount, including applicable charges, within the approved tenure. Failure to repay attracts a default interest of <strong>5% per week</strong> until full settlement.</p>
+            <p><strong>2. Default & Recovery:</strong> Any repayment overdue beyond <strong>48 hours</strong> authorizes the organization to initiate recovery actions.</p>
+            <p><strong>3. Guarantor Consent:</strong> The applicant confirms that all listed guarantors have granted prior consent.</p>
+            <p><strong>4. Accuracy of Information:</strong> All information submitted by the applicant is declared true and accurate.</p>
+            <p><strong>5. Right of Set-Off:</strong> The organization reserves the right to recover outstanding obligations from any linked accounts.</p>
+            <p><strong>6. Early Repayment:</strong> Early repayment is permitted but does not exempt the applicant from accrued charges.</p>
+            <p><strong>7. Data Usage & Privacy:</strong> The applicant consents to the use of submitted data for credit assessment.</p>
+            <p><strong>8. Amendments:</strong> The organization reserves the right to amend these terms where necessary.</p>
+            <p><strong>9. Legal Jurisdiction:</strong> This agreement shall be governed by the laws of Nigeria.</p>
+        </div>
+    </div>
+    
+    <div class="flex items-center gap-3 px-1">
+        <input type="checkbox" id="termsCheck" required class="w-4 h-4 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500">
+        <label for="termsCheck" class="text-[10px] font-bold text-slate-500 uppercase cursor-pointer">
+            I accept the terms & certify all information provided is accurate.
+        </label>
+    </div>
+</section>
 
         <button type="submit" id="submitBtn" class="w-full bg-slate-900 text-white font-black py-5 rounded-2xl hover:bg-black transition-all flex items-center justify-center text-sm gap-4 shadow-xl tracking-widest">
           <span id="btnText">SUBMIT APPLICATION</span>
@@ -263,10 +268,27 @@
         document.getElementById('deviceMeta').value = `${navigator.platform} | ${navigator.vendor}`;
     }
 
-    function toggleTerms() {
-        const terms = document.getElementById("fullTerms");
-        terms.classList.toggle("hidden");
+   // --- TERMS & CONDITIONS TOGGLE ---
+function                    
+   toggleTerms() {
+    const fullTerms = document.getElementById("fullTerms");
+    const btnText = document.getElementById("readMoreBtn");
+
+    // Check if the content is currently hidden
+    if (fullTerms.classList.contains("hidden")) {
+        // Show the content
+        fullTerms.classList.remove("hidden");
+        // Change button text
+        btnText.innerHTML = "Read less";
+    } else {
+        // Hide the content
+        fullTerms.classList.add("hidden");
+        // Revert button text
+        btnText.innerHTML = "Read more";
     }
+}                                       
+  
+  
 
     function calculateFinancials() {
         const principal = parseFloat(document.getElementById('amt').value) || 0;
@@ -424,6 +446,41 @@
         localStorage.setItem('harmony_draft', JSON.stringify(formData));
     }
 
+  // --- LOAN CALCULATOR & LIMIT ENGINE ---
+const loanInput = document.getElementById('amt');
+const termInput = document.getElementById('term');
+const limitWarning = document.getElementById('limitWarning'); // Ensure this ID exists in your HTML
+
+function calculateRepayment() {
+    let principal = parseFloat(loanInput.value) || 0;
+    
+    // Enforce 50k Limit
+    if (principal > 50000) {
+        principal = 50000;
+        loanInput.value = 50000;
+        limitWarning?.classList.remove('hidden');
+    } else {
+        limitWarning?.classList.add('hidden');
+    }
+
+    const interestRate = 0.05; // 5% Interest
+    const months = parseInt(termInput.value) || 1;
+    
+    const interest = principal * interestRate;
+    const totalRepayment = principal + interest;
+    const monthlyAmount = totalRepayment / months;
+
+    // Update UI Labels
+    document.getElementById('displayPrincipal').innerText = `₦${principal.toLocaleString()}`;
+    document.getElementById('displayInterest').innerText = `₦${interest.toLocaleString()}`;
+    document.getElementById('displayTotal').innerText = `₦${totalRepayment.toLocaleString()}`;
+    document.getElementById('displayMonthly').innerText = `₦${monthlyAmount.toLocaleString()}`;
+}
+
+// Attach listeners so it updates as the user types
+loanInput.addEventListener('input', calculateRepayment);
+termInput.addEventListener('change', calculateRepayment);
+  
     function loadProgress() {
         const saved = localStorage.getItem('harmony_draft');
         if (saved) {
