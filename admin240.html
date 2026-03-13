@@ -190,9 +190,11 @@
 
   <script>
    const API_URL = 'https://sheetdb.io/api/v1/b9cm231d1i0he';
-    let allRecords = [];
-    const ADMIN_CREDS = { user: "Admin", pass: "Salako2024" };
-
+   const ADMIN_CREDS = [
+    { user: "Admin", pass: "Salako2024" },
+    { user: "Dayo", pass: "Salako2020" },
+    { user: "Harmony", pass: "Secure2026" } // You can add as many as you like
+];
     function setGreeting() {
         const hour = new Date().getHours();
         const greet = hour < 12 ? "Good Morning" : hour < 17 ? "Good Afternoon" : "Good Evening";
