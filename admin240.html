@@ -206,16 +206,22 @@
         document.getElementById('greeting').innerText = `${greet}, Admin`;
     }
 
-    function handleAdminLogin() {
-        const u = document.getElementById('adminUser').value;
-        const p = document.getElementById('adminPass').value;
-        if(u === ADMIN_CREDS.user && p === ADMIN_CREDS.pass) {
-            document.getElementById('authOverlay').classList.add('hidden');
-            setGreeting();
-            fetchLoans();
-        } else { alert("ACCESS DENIED"); }
-    }
+  function handleLogin() {
+    const userInput = document.getElementById('adminUser').value;
+    const passInput = document.getElementById('adminPass').value;
 
+    // This checks if any object in the array matches both the username and password
+    const isAuthenticated = ADMIN_CREDS.some(cred => 
+        cred.user === userInput && cred.pass === passInput
+    );
+
+    if (isAuthenticated) {
+        showAdminPanel(); // Or your login success logic
+    } else {
+        alert("Invalid Administrative Credentials");
+    }
+}
+    
     async function fetchLoans() {
       try {
         const res = await fetch(API_URL);
