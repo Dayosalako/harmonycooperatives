@@ -243,11 +243,10 @@
 </div>
 
 <script>
-    let currentTrackingID = "";
+  let currentTrackingID = "";
     let globalTotalValue = 0;
     let globalInterestValue = 0;
 
-    // IMPORTANT: REPLACE THIS WITH YOUR APPS SCRIPT WEB APP URL
     const DRIVE_API_URL = "https://script.google.com/macros/s/AKfycbxiUieTzfacU0tQOray2e98QpL6srMm6Enoj6hqUcN2mQUdBXODK3lc7yGR-kc6r-mSXQ/exec";
 
     function updateClock() {
@@ -268,106 +267,109 @@
         document.getElementById('deviceMeta').value = `${navigator.platform} | ${navigator.vendor}`;
     }
 
-   // --- TERMS & CONDITIONS TOGGLE ---
-function                    
-   toggleTerms() {
-    const fullTerms = document.getElementById("fullTerms");
-    const btnText = document.getElementById("readMoreBtn");
-
-    // Check if the content is currently hidden
-    if (fullTerms.classList.contains("hidden")) {
-        // Show the content
-        fullTerms.classList.remove("hidden");
-        // Change button text
-        btnText.innerHTML = "Read less";
-    } else {
-        // Hide the content
-        fullTerms.classList.add("hidden");
-        // Revert button text
-        btnText.innerHTML = "Read more";
+    // --- 1. RESTORED: TERMS TOGGLE ---
+    function toggleTerms() {
+        const fullTerms = document.getElementById("fullTerms");
+        const btnText = document.getElementById("readMoreBtn");
+        if (fullTerms.classList.contains("hidden")) {
+            fullTerms.classList.remove("hidden");
+            btnText.innerHTML = "Read less";
+        } else {
+            fullTerms.classList.add("hidden");
+            btnText.innerHTML = "Read more";
+        }
     }
-}                                       
-  
-  
 
+    // --- 2. RESTORED: CALCULATOR & 50K LIMIT ---
     function calculateFinancials() {
-        const principal = parseFloat(document.getElementById('amt').value) || 0;
-        const tenure = parseInt(document.getElementById('term').value);
-        let rate = (tenure === 3) ? 0.18 : (tenure === 6) ? 0.36 : 0.72;
-        globalInterestValue = principal * rate;
+        const loanInput = document.getElementById('amt');
+        const tenureSelect = document.getElementById('term');
+        const feedback = document.getElementById('eligibilityFeedback');
+        
+        let principal = parseFloat(loanInput.value) || 0;
+        const tenure = parseInt(tenureSelect.value) || 3;
+
+        // Enforce the ₦50,000 Limit immediately
+        if (principal > 50000) {
+            principal = 50000;
+            loanInput.value = 50000;
+            feedback.innerHTML = `⚠️ Maximum Limit: ₦50,000`;
+            feedback.className = "text-[10px] font-bold text-rose-500 mt-2 bg-rose-50 p-2 rounded-lg";
+        } else if (principal > 0) {
+            feedback.innerHTML = `✅ Eligible Amount`;
+            feedback.className = "text-[10px] font-bold text-emerald-500 mt-2 bg-emerald-50 p-2 rounded-lg";
+        } else {
+            feedback.innerHTML = "";
+        }
+
+        // Logic: 5% flat interest per your requirement
+        const interestRate = 0.05; 
+        globalInterestValue = principal * interestRate;
         globalTotalValue = principal + globalInterestValue;
         const monthly = globalTotalValue / tenure;
+
+        // Update the UI Labels
         const fmt = (v) => "₦ " + v.toLocaleString(undefined, {minimumFractionDigits: 2});
         document.getElementById('liveInterest').innerText = fmt(globalInterestValue);
         document.getElementById('liveTotal').innerText = fmt(globalTotalValue);
         document.getElementById('liveMonthly').innerText = fmt(monthly);
+        
+        saveProgress();
     }
 
-    // Helper to convert files to Base64 for Google Drive
+    // --- 3. SUBMISSION LOGIC ---
     async function toBase64(file) {
         if (!file) return null;
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = () => resolve({
-                data: reader.result.split(',')[1],
-                type: file.type
-            });
+            reader.onload = () => resolve({ data: reader.result.split(',')[1], type: file.type });
             reader.onerror = error => reject(error);
         });
     }
 
     document.getElementById('loanForm').onsubmit = async function(e) {
-    e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    const spinner = document.getElementById('spinner');
-    btn.disabled = true; spinner.classList.remove('hidden');
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        const spinner = document.getElementById('spinner');
+        btn.disabled = true; spinner.classList.remove('hidden');
 
-    currentTrackingID = "HARM-" + Math.floor(1000 + Math.random() * 9000) + "-TX";
+        currentTrackingID = "HARM-" + Math.floor(1000 + Math.random() * 9000) + "-TX";
 
-    // Prepare File Data
-    const idFile = await toBase64(document.getElementById('idUpload').files[0]);
-    const passFile = await toBase64(document.getElementById('gPassport').files[0]);
+        const idFile = await toBase64(document.getElementById('idUpload').files[0]);
+        const passFile = await toBase64(document.getElementById('gPassport').files[0]);
 
-    const auditData = {
-        fullName: document.getElementById('fullName').value,
-        phone: document.getElementById('phone').value,
-        email: document.getElementById('email').value,
-        amount: document.getElementById('amt').value,
-        tenure: document.getElementById('term').selectedOptions[0].text,
-        trackingId: currentTrackingID,
-        bankName: document.getElementById('bankName').value,
-        accNum: document.getElementById('accNum').value,
-        accName: document.getElementById('accName').value,
-        date: new Date().toLocaleDateString('en-GB'),
-        status: "Pending"
-    };
+        const auditData = {
+            fullName: document.getElementById('fullName').value,
+            phone: document.getElementById('phone').value,
+            email: document.getElementById('email').value,
+            amount: document.getElementById('amt').value,
+            tenure: document.getElementById('term').selectedOptions[0].text,
+            trackingId: currentTrackingID,
+            bankName: document.getElementById('bankName').value,
+            accNum: document.getElementById('accNum').value,
+            accName: document.getElementById('accName').value,
+            date: new Date().toLocaleDateString('en-GB'),
+            status: "Pending",
+            balance: document.getElementById('amt').value
+        };
 
-    try {
-        // Single call to your Apps Script handles EVERYTHING (Files + Sheets)
-        await fetch('https://script.google.com/macros/s/AKfycbxiUieTzfacU0tQOray2e98QpL6srMm6Enoj6hqUcN2mQUdBXODK3lc7yGR-kc6r-mSXQ/exec', {
-            method: 'POST',
-            body: JSON.stringify({
-                fullName: auditData.fullName,
-                idData: idFile?.data,
-                idType: idFile?.type,
-                passData: passFile?.data,
-                passType: passFile?.type,
-                auditData: auditData // Pass the text data here too
-            })
-        });
+        try {
+            // Post to Apps Script
+            await fetch(DRIVE_API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify({
+                    fullName: auditData.fullName,
+                    idData: idFile?.data,
+                    idType: idFile?.type,
+                    passData: passFile?.data,
+                    passType: passFile?.type,
+                    auditData: auditData
+                })
+            });
 
-        localStorage.removeItem('harmony_draft');
-        document.getElementById('displayTrackingID').innerText = currentTrackingID;
-        document.getElementById('successModal').classList.remove('hidden-modal');
-    } catch (error) {
-        alert("Digital Transmission Failed. Check script permissions.");
-    } finally {
-        btn.disabled = false; spinner.classList.add('hidden');
-    }
-};
-
-            // 2. Submit Data to SheetDB
+            // Post to SheetDB
             await fetch('https://sheetdb.io/api/v1/b9cm231d1i0he', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -378,21 +380,42 @@ function
             document.getElementById('displayTrackingID').innerText = currentTrackingID;
             document.getElementById('successModal').classList.remove('hidden-modal');
         } catch (error) {
-            alert("Digital Transmission Failed. Please check connectivity.");
+            alert("Transmission Error. Check connection.");
         } finally {
             btn.disabled = false; spinner.classList.add('hidden');
         }
     };
 
+    // --- 4. UTILITIES ---
+    function saveProgress() {
+        const formData = {
+            fullName: document.getElementById('fullName').value,
+            phone: document.getElementById('phone').value,
+            email: document.getElementById('email').value,
+            address: document.getElementById('address').value,
+            amt: document.getElementById('amt').value,
+            term: document.getElementById('term').value,
+            bankName: document.getElementById('bankName').value,
+            accNum: document.getElementById('accNum').value,
+            accName: document.getElementById('accName').value,
+            gName: document.getElementById('gName').value,
+            gPhone: document.getElementById('gPhone').value
+        };
+        localStorage.setItem('harmony_draft', JSON.stringify(formData));
+    }
+
+    function loadProgress() {
+        const saved = localStorage.getItem('harmony_draft');
+        if (saved) {
+            const data = JSON.parse(saved);
+            Object.keys(data).forEach(key => { if (document.getElementById(key)) document.getElementById(key).value = data[key]; });
+            calculateFinancials();
+        }
+    }
+
     function generatePDF() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.saveGraphicsState();
-        doc.setGState(new doc.GState({opacity: 0.1}));
-        doc.setFontSize(55); doc.setFont("helvetica", "bold"); doc.setTextColor(150, 150, 150);
-        doc.text("HARMONY COOPERATIVE", 35, 150, {angle: 45});
-        doc.restoreGraphicsState();
-
         doc.setFillColor(15, 23, 42); doc.rect(0, 0, 210, 45, 'F');
         doc.setTextColor(255, 255, 255); doc.setFontSize(22);
         doc.text("HARMONY COOPERATIVE SOCIETY", 20, 25);
@@ -406,21 +429,10 @@ function
                 ['Principal Sum', `NGN ${parseFloat(document.getElementById('amt').value).toLocaleString()}`],
                 ['Total Repayment', `NGN ${globalTotalValue.toLocaleString()}`],
                 ['Bank Name', document.getElementById('bankName').value],
-                ['Account No.', document.getElementById('accNum').value],
-                ['Audit Status', 'DIGITALLY VERIFIED']
+                ['Account No.', document.getElementById('accNum').value]
             ],
             theme: 'striped', headStyles: { fillColor: [5, 150, 105] }
         });
-
-        const finalY = doc.lastAutoTable.finalY + 40;
-        doc.setFontSize(9); doc.setTextColor(0);
-        doc.line(20, finalY, 75, finalY); doc.text("Applicant Signature", 20, finalY + 5);
-        doc.line(130, finalY, 185, finalY); doc.text("Internal Auditor", 130, finalY + 5);
-        
-        const presY = finalY + 30;
-        doc.line(75, presY, 135, presY); doc.text("Cooperative President", 85, presY + 5);
-        doc.circle(105, presY - 12, 10); doc.setFontSize(6); doc.text("OFFICIAL STAMP", 98, presY - 12);
-
         doc.save(`Harmony_Voucher_${currentTrackingID}.pdf`);
     }
 
@@ -428,85 +440,6 @@ function
         const phone = "2347067580599"; 
         const msg = `*HARMONY ELITE | NEW LOAN REQUEST*%0A*REF ID:* ${currentTrackingID}%0A*MEMBER:* ${document.getElementById('fullName').value.toUpperCase()}%0A*TOTAL PAYABLE: ₦${globalTotalValue.toLocaleString()}*`;
         window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
-    }
-
-    function saveProgress() {
-        const formData = {
-            fullName: document.getElementById('fullName').value,
-            phone: document.getElementById('phone').value,
-            email: document.getElementById('email').value,
-            address: document.getElementById('address').value,
-            amt: document.getElementById('amt').value,
-            bankName: document.getElementById('bankName').value,
-            accNum: document.getElementById('accNum').value,
-            accName: document.getElementById('accName').value,
-            gName: document.getElementById('gName').value,
-            gPhone: document.getElementById('gPhone').value
-        };
-        localStorage.setItem('harmony_draft', JSON.stringify(formData));
-    }
-
-  // --- LOAN CALCULATOR & LIMIT ENGINE ---
-const loanInput = document.getElementById('amt');
-const termInput = document.getElementById('term');
-const limitWarning = document.getElementById('limitWarning'); // Ensure this ID exists in your HTML
-
-function calculateRepayment() {
-    let principal = parseFloat(loanInput.value) || 0;
-    
-    // Enforce 50k Limit
-    if (principal > 50000) {
-        principal = 50000;
-        loanInput.value = 50000;
-        limitWarning?.classList.remove('hidden');
-    } else {
-        limitWarning?.classList.add('hidden');
-    }
-
-    const interestRate = 0.05; // 5% Interest
-    const months = parseInt(termInput.value) || 1;
-    
-    const interest = principal * interestRate;
-    const totalRepayment = principal + interest;
-    const monthlyAmount = totalRepayment / months;
-
-    // Update UI Labels
-    document.getElementById('displayPrincipal').innerText = `₦${principal.toLocaleString()}`;
-    document.getElementById('displayInterest').innerText = `₦${interest.toLocaleString()}`;
-    document.getElementById('displayTotal').innerText = `₦${totalRepayment.toLocaleString()}`;
-    document.getElementById('displayMonthly').innerText = `₦${monthlyAmount.toLocaleString()}`;
-}
-
-// Attach listeners so it updates as the user types
-loanInput.addEventListener('input', calculateRepayment);
-termInput.addEventListener('change', calculateRepayment);
-  
-    function loadProgress() {
-        const saved = localStorage.getItem('harmony_draft');
-        if (saved) {
-            const data = JSON.parse(saved);
-            Object.keys(data).forEach(key => { if (document.getElementById(key)) document.getElementById(key).value = data[key]; });
-            if(data.amt) calculateFinancials();
-            checkEligibility();
-        }
-    }
-
-    function checkEligibility() {
-        const amount = parseFloat(document.getElementById('amt').value) || 0;
-        const emp = document.getElementById('employment').value;
-        const feedback = document.getElementById('eligibilityFeedback');
-        const submitBtn = document.getElementById('submitBtn');
-        const limits = { "Civil Servant": 2000000, "Salaried": 1000000, "Self-Employed": 500000 };
-        const max = limits[emp];
-        if (amount > max) {
-            feedback.innerHTML = `⚠️ Limit: ₦${max.toLocaleString()}`;
-            feedback.className = "text-[10px] font-bold text-rose-500 mt-2 bg-rose-50 p-2 rounded-lg";
-            submitBtn.disabled = true; submitBtn.classList.add('opacity-50');
-        } else {
-            feedback.innerHTML = amount > 0 ? `✅ Eligible` : "";
-            feedback.className = "text-[10px] font-bold text-emerald-500 mt-2 bg-emerald-50 p-2 rounded-lg";
-            submitBtn.disabled = false; submitBtn.classList.remove('opacity-50');
-        }
     }
 </script>
 </body>
