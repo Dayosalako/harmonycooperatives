@@ -68,13 +68,18 @@
 
   <aside class="w-80 bg-white border-r border-slate-100 hidden lg:block sticky top-0 h-screen z-40">
     <div class="p-10 h-full flex flex-col">
-      <div class="flex items-center space-x-4 mb-16">
-        <div class="w-12 h-12 bg-emerald-600 rounded-2xl flex items-center justify-center text-white font-black shadow-lg">H</div>
+      
+      <a href="index.html" class="flex items-center space-x-4 mb-16 hover:opacity-80 transition-all duration-300 group">
+        <div class="w-12 h-12 flex items-center justify-center transition-transform group-hover:scale-105">
+            <img src="logo.png" alt="Harmony Logo" class="w-full h-full object-contain">
+        </div>
         <div>
             <h2 class="text-xl font-black text-slate-800 tracking-tighter leading-none">Harmony</h2>
             <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest">Corporate Elite</span>
         </div>
+      </a>
       </div>
+  
       <nav class="space-y-3 flex-1">
         <a href="#" onclick="showTab(event, 'overview')" class="sidebar-link active flex items-center px-6 py-4 rounded-2xl transition-all text-sm font-bold uppercase">Executive Summary</a>
         <a href="#" onclick="showTab(event, 'loans')" class="sidebar-link flex items-center px-6 py-4 rounded-2xl transition-all text-sm font-bold uppercase">Authorization Queue</a>
