@@ -340,8 +340,8 @@
             }
         }
     }
-
-    // --- 3. CORE CALCULATOR & TIER LIMITS ---
+  
+   // --- 3. CORE CALCULATOR & TIER LIMITS ---
     function calculateFinancials() {
         const loanInput = document.getElementById('amt');
         const tenureSelect = document.getElementById('term');
@@ -354,7 +354,7 @@
         const tenure = parseInt(tenureSelect.value) || 3;
         const category = categorySelect.value;
 
-        // Corporate Limit Logic
+        // 1. Corporate Limit Logic (Tiered)
         const LIMITS = {
             'civil-servant': 500000,
             'salary-earner': 200000,
@@ -364,7 +364,7 @@
 
         const currentLimit = LIMITS[category] || LIMITS['default'];
 
-        // Enforce Limits & Lock Input if exceeded
+        // 2. Enforce Limits & Update UI Feedback
         if (principal > currentLimit) {
             principal = currentLimit;
             loanInput.value = currentLimit;
@@ -380,21 +380,35 @@
             feedback.innerHTML = "";
         }
 
-        // Calculation Logic: 6% flat interest
-        const interestRate = 0.06; 
-        globalInterestValue = principal * interestRate;
+        // 3. Dynamic Interest Rate Selection
+        // Logic: 3 months = 18% | 6 months = 36% | 12 months = 72%
+        let interestMultiplier = 0.18; // Default for 3 months
+        if (tenure === 6) {
+            interestMultiplier = 0.36;
+        } else if (tenure === 12) {
+            interestMultiplier = 0.72;
+        }
+
+        globalInterestValue = principal * interestMultiplier;
         globalTotalValue = principal + globalInterestValue;
         const monthly = globalTotalValue / tenure;
 
-        // UI Updates
+        // 4. Update UI Display Labels
         const fmt = (v) => "₦ " + v.toLocaleString(undefined, {minimumFractionDigits: 2});
         
-        document.getElementById('liveInterest').innerText = fmt(globalInterestValue);
-        document.getElementById('liveTotal').innerText = fmt(globalTotalValue);
-        document.getElementById('liveMonthly').innerText = fmt(monthly);
+        const liveInterest = document.getElementById('liveInterest');
+        const liveTotal = document.getElementById('liveTotal');
+        const liveMonthly = document.getElementById('liveMonthly');
+
+        if (liveInterest) liveInterest.innerText = fmt(globalInterestValue);
+        if (liveTotal) liveTotal.innerText = fmt(globalTotalValue);
+        if (liveMonthly) liveMonthly.innerText = fmt(monthly);
         
         saveProgress();
-    }
+    }                    
+  
+  
+  
 
     // --- 4. DATA SUBMISSION ---
     async function toBase64(file) {
