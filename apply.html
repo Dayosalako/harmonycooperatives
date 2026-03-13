@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html>                                                                                                    
+  
+  
+  
+  
+  
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -46,14 +51,17 @@
 </head>
 <body class="pb-20" onload="initializePortal()">
 
-  <nav class="bg-white/80 backdrop-blur-md border-b sticky top-0 z-[100]">
+ <nav class="bg-white/80 backdrop-blur-md border-b sticky top-0 z-[100]">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
     
-    <div class="flex items-center gap-3">
+    <div class="flex items-center">
       <a href="index.html" class="flex items-center space-x-4 hover:opacity-80 transition-all duration-300 group">
         <div class="w-12 h-12 flex items-center justify-center transition-transform group-hover:scale-105">
-          <img src="logo.png" alt="Harmony Logo" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                 <div class="flex flex-col">
+          <img src="logo.png" alt="Harmony Logo" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+          <div class="hidden w-10 h-10 bg-emerald-600 rounded-lg items-center justify-center text-white font-black">H</div>
+        </div>
+        
+        <div class="flex flex-col">
           <span class="text-lg font-extrabold tracking-tight text-slate-900 leading-none">Harmony</span>
           <span class="text-[8px] font-bold text-emerald-600 uppercase tracking-[0.2em] mt-1">Cooperative Society</span>
         </div>
@@ -65,13 +73,10 @@
       <div class="hidden md:block h-4 w-px bg-slate-200"></div>
       <p class="hidden md:block text-[10px] font-black text-slate-400 uppercase tracking-widest">Application Portal v2.0</p>
     </div>
-  </div> 
-</nav>                    
-                      
-                      
-                      
-  
 
+  </div> 
+</nav>                                                  
+  
 <div id="successModal" class="hidden-modal fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-[2rem] p-8 max-w-sm w-full text-center shadow-2xl border border-slate-100">
       <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
