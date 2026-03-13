@@ -3,320 +3,392 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Harmony Welfare Cooperative Society Limited - Empowering Your Financial Future in Nigeria. Join our community for inclusive savings, loans, and sustainable growth. Kaduna Headquarters.">
+  <meta name="description" content="Harmony Welfare Cooperative Society Limited - Premium Financial Empowerment. Kaduna Headquarters.">
   <meta name="keywords" content="cooperative society, savings, loans, Nigeria, Kaduna, financial empowerment, Harmony Welfare">
   <meta name="author" content="Zion Netcom Solutions Ltd.">
-  <title>Harmony Welfare Cooperative | Empowering Growth</title>
+  <title>Harmony Welfare | Premium Cooperative Banking</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    :root { --emerald-900: #064e3b; --emerald-600: #059669; --slate-900: #0f172a; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-font-smoothing: antialiased; background-color: #f8fafc; }
     section { scroll-margin-top: 100px; }
-    .bg-coop-green { background-color: #059669; }
-    .text-coop-green { color: #059669; }
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .premium-gradient { background: linear-gradient(135deg, #064e3b 0%, #065f46 100%); }
+    .reveal { opacity: 0; transform: translateY(20px); transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
     .reveal.active { opacity: 1; transform: translateY(0); }
-    .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
-    #mobile-menu { transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); max-height: 0; overflow: hidden; }
-    #mobile-menu.open { max-height: 640px; }
-    #backToTop { transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); opacity: 0; visibility: hidden; }
-    #backToTop.show { opacity: 1; visibility: visible; }
-    .loan-result { animation: fadeInScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-    @keyframes fadeInScale {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    .nav-link { position: relative; }
-    .nav-link:after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: #059669; transition: width 0.3s ease; }
-    .nav-link:hover:after { width: 100%; }
+    .card-hover { transition: all 0.4s ease; border: 1px solid rgba(0,0,0,0.03); }
+    .card-hover:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: #059669; }
+    #mobile-menu { transition: all 0.4s ease; opacity: 0; visibility: hidden; pointer-events: none; }
+    #mobile-menu.open { opacity: 1; visibility: visible; pointer-events: auto; }
+    #backToTop { transition: all 0.3s ease; opacity: 0; }
+    #backToTop.show { opacity: 1; }
+    input:focus, textarea:focus { border-color: #059669 !important; ring: 2px solid #059669; }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body>
 
-  <nav class="glass-nav border-b sticky top-0 z-50">
+  <nav class="glass-nav fixed w-full top-0 z-[100]">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-2">
-        <div class="bg-coop-green p-1.5 rounded-lg text-white">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 premium-gradient rounded-xl flex items-center justify-center text-white shadow-lg">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         </div>
-        <span class="text-xl font-extrabold tracking-tight">Harmony Cooperative Society</span>
+        <span class="text-xl font-extrabold text-slate-900 tracking-tight uppercase">Harmony</span>
       </div>
-      <div class="hidden md:flex gap-8 text-xs font-bold text-gray-500 tracking-widest items-center">
-        <a href="#about" class="nav-link hover:text-coop-green transition-colors">ABOUT</a>
-        <a href="#values" class="nav-link hover:text-coop-green transition-colors">CORE VALUES</a>
-        <a href="#savings" class="nav-link hover:text-coop-green transition-colors">SAVINGS</a>
-        <a href="#trustees" class="nav-link hover:text-coop-green transition-colors">TRUSTEES</a>
-        <a href="#gallery" class="nav-link hover:text-coop-green transition-colors">GALLERY</a>
-        <a href="#calculator" class="nav-link hover:text-coop-green transition-colors">LOAN CALCULATOR</a>
-        <a href="#contact" class="nav-link hover:text-coop-green transition-colors">CONTACT</a>
-        <a href="apply204.html" target="_blank" class="bg-coop-green text-white px-5 py-2.5 rounded-xl hover:bg-green-700 transition-all shadow-md">APPLY NOW</a>
+      <div class="hidden lg:flex gap-10 text-[11px] font-extrabold text-slate-500 tracking-[0.2em] items-center">
+        <a href="#about" class="hover:text-emerald-600 transition-colors">ABOUT</a>
+        <a href="#savings" class="hover:text-emerald-600 transition-colors">SOLUTIONS</a>
+        <a href="#calculator" class="hover:text-emerald-600 transition-colors">CALCULATOR</a>
+        <a href="#trustees" class="hover:text-emerald-600 transition-colors">LEADERSHIP</a>
+        <a href="#apply" class="bg-emerald-600 text-white px-8 py-3 rounded-full hover:bg-emerald-700 transition-all shadow-md">APPLY NOW</a>
       </div>
-      <button onclick="toggleMenu()" class="md:hidden text-gray-800" aria-label="Toggle Menu">
+      <button onclick="toggleMenu()" class="lg:hidden p-2 text-slate-900">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
       </button>
     </div>
-    <div id="mobile-menu" class="md:hidden bg-white border-t px-6 space-y-4">
-      <a href="#about" onclick="toggleMenu()" class="block py-4 font-bold border-b">About Us</a>
-      <a href="#values" onclick="toggleMenu()" class="block py-4 font-bold border-b">Core Values</a>
-      <a href="#savings" onclick="toggleMenu()" class="block py-4 font-bold border-b">Savings Plans</a>
-      <a href="#trustees" onclick="toggleMenu()" class="block py-4 font-bold border-b">Trustees</a>
-      <a href="#gallery" onclick="toggleMenu()" class="block py-4 font-bold border-b">Gallery</a>
-      <a href="#calculator" onclick="toggleMenu()" class="block py-4 font-bold border-b">Loan Calculator</a>
-      <a href="#contact" onclick="toggleMenu()" class="block py-4 font-bold border-b">Contact</a>
-      <a href="apply204.html" class="block py-4 font-bold text-coop-green">Apply for Loan</a>
-    </div>
   </nav>
 
-  <header class="bg-coop-green text-white py-24 px-6 text-center">
-    <div class="max-w-4xl mx-auto">
-      <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">Empowering Your Financial Future.</h1>
-      <p class="text-xl text-green-50 mb-10 max-w-2xl mx-auto">Join a community of savers and builders. We provide the tools, support, and capital to help our members achieve their dreams.</p>
-      <div class="flex flex-col sm:flex-row justify-center gap-4">
-        <a href="apply204.html" target="_blank" class="inline-block bg-white text-coop-green px-10 py-5 rounded-2xl font-black text-lg shadow-2xl hover:bg-gray-100 transition-all">Apply for a Loan</a>
-        <a href="#calculator" class="inline-block bg-green-700 text-white px-10 py-5 rounded-2xl font-black text-lg shadow-2xl hover:bg-green-800 transition-all">Loan Calculator</a>
+  <div id="mobile-menu" class="fixed inset-0 bg-white z-[90] flex flex-col justify-center items-center gap-8 text-2xl font-bold">
+    <a href="#about" onclick="toggleMenu()">About</a>
+    <a href="#savings" onclick="toggleMenu()">Solutions</a>
+    <a href="#calculator" onclick="toggleMenu()">Calculator</a>
+    <a href="#apply" onclick="toggleMenu()" class="text-emerald-600">Apply Now</a>
+    <button onclick="toggleMenu()" class="absolute top-6 right-6 text-slate-400 font-normal">Close [x]</button>
+  </div>
+
+  <header class="pt-40 pb-32 px-6 premium-gradient relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10 pointer-events-none">
+        <div class="absolute top-20 right-20 w-96 h-96 rounded-full bg-white blur-3xl"></div>
+    </div>
+    <div class="max-w-7xl mx-auto text-center relative z-10">
+      <span class="inline-block px-4 py-1.5 rounded-full bg-emerald-500/20 text-emerald-100 text-xs font-bold tracking-widest uppercase mb-6 border border-white/10">The Future of Cooperative Banking</span>
+      <h1 class="text-6xl lg:text-8xl font-black text-white mb-8 tracking-tighter leading-none">Wealth creation <br><span class="text-emerald-300">Simplified.</span></h1>
+      <p class="text-xl text-emerald-50/70 mb-12 max-w-2xl mx-auto leading-relaxed">Exclusive financial tools and capital support designed for the builders of tomorrow. Join Nigeria's elite cooperative community.</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-6">
+        <a href="#apply" class="px-12 py-5 bg-white text-emerald-900 rounded-full font-extrabold text-lg shadow-2xl hover:bg-emerald-50 transition-all">Start Application</a>
+        <a href="#calculator" class="px-12 py-5 bg-emerald-700/50 text-white rounded-full font-extrabold text-lg backdrop-blur-md hover:bg-emerald-700 transition-all border border-white/10">Loan Calculator</a>
       </div>
     </div>
   </header>
 
-  <section class="py-12 bg-white border-b reveal">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-      <p class="text-sm font-black uppercase tracking-[0.3em] text-gray-400 mb-2">Total Member Loans Disbursed</p>
-      <div id="loanCounter" class="text-5xl md:text-7xl font-black text-coop-green tabular-nums tracking-tighter">
-        ₦0
+  <section class="py-16 bg-white border-b reveal">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+      <div class="text-left">
+        <p class="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-600 mb-2">Portfolio Impact</p>
+        <h2 class="text-3xl font-bold text-slate-900">Empowering Members Nationwide</h2>
       </div>
+      <div id="loanCounter" class="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter tabular-nums text-right">₦0</div>
     </div>
   </section>
 
-  <h2 class="text-4xl font-black text-center mt-20 mb-16 uppercase tracking-widest">ABOUT US</h2>
-  <section id="about" class="py-24 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 reveal">
-     <div class="bg-white p-12 rounded-[3rem] shadow-xl border border-gray-100">
-      <h2 class="text-3xl font-black mb-4 text-coop-green">Our Mission</h2>
-      <p class="text-gray-500 leading-relaxed text-lg italic">"To provide inclusive financial services through cooperative principles, fostering a culture of savings and responsible credit for economic empowerment."</p>
+  <section id="about" class="py-32 px-6 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 reveal">
+    <div class="relative group">
+        <div class="absolute -inset-4 bg-emerald-100 rounded-[3rem] -rotate-2 group-hover:rotate-0 transition-transform duration-500"></div>
+        <div class="relative bg-emerald-900 p-16 rounded-[3rem] text-white overflow-hidden shadow-2xl">
+            <div class="absolute top-0 right-0 p-8 opacity-20"><svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+            <h2 class="text-xs font-black tracking-[0.4em] uppercase text-emerald-400 mb-6">Our Mission</h2>
+            <p class="text-2xl font-medium leading-snug italic opacity-90">"To provide inclusive financial services through cooperative principles, fostering a culture of savings and responsible credit for economic empowerment."</p>
+        </div>
     </div>
-    <div class="bg-white p-12 rounded-[3rem] shadow-xl border border-gray-100">
-      <h2 class="text-3xl font-black mb-4 text-coop-green">Our Vision</h2>
-      <p class="text-gray-500 leading-relaxed text-lg italic">"To be the leading cooperative society in Nigeria, recognized for financial integrity, member satisfaction, and sustainable community impact."</p>
+    <div class="flex flex-col justify-center space-y-10">
+        <div>
+            <h2 class="text-xs font-black tracking-[0.4em] uppercase text-emerald-600 mb-4">Our Vision</h2>
+            <p class="text-4xl font-bold text-slate-900 leading-tight">Leading the standard for financial integrity and member satisfaction in Nigeria.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-6">
+            <div class="p-6 bg-white rounded-3xl border border-slate-100 shadow-sm"><p class="text-3xl font-black text-emerald-600">100%</p><p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Transparency</p></div>
+            <div class="p-6 bg-white rounded-3xl border border-slate-100 shadow-sm"><p class="text-3xl font-black text-emerald-600">Secure</p><p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Investment</p></div>
+        </div>
     </div>
   </section>
 
-  <section id="values" class="bg-gray-900 text-white py-24 px-6 reveal">
+  <section id="values" class="bg-slate-900 py-32 px-6 reveal">
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-4xl font-black text-center mb-16 uppercase tracking-widest">Our Core Values (IUES)</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 text-center">
-        <div class="p-6">
-          <div class="text-7xl font-black text-green-500 mb-4 opacity-50">I</div>
-          <h3 class="text-xl font-bold mb-2">Integrity</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">We maintain the highest standards of transparency and honesty in all our operations and member relations.</p>
+      <div class="text-center mb-24">
+        <h2 class="text-xs font-black text-emerald-500 uppercase tracking-[0.5em] mb-4">The Foundation</h2>
+        <h3 class="text-5xl font-bold text-white">Our Core Values (IUES)</h3>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="p-10 bg-slate-800/50 rounded-[2.5rem] border border-white/5 hover:border-emerald-500/50 transition-all">
+          <span class="text-6xl font-black text-emerald-500/20 block mb-6">I</span>
+          <h4 class="text-xl font-bold text-white mb-4">Integrity</h4>
+          <p class="text-slate-400 text-sm leading-relaxed">Highest standards of transparency and honesty in all member relations.</p>
         </div>
-        <div class="p-6">
-          <div class="text-7xl font-black text-green-500 mb-4 opacity-50">U</div>
-          <h3 class="text-xl font-bold mb-2">Unity</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">Working together as a community, we combine our strengths for the collective financial benefit of every member.</p>
+        <div class="p-10 bg-slate-800/50 rounded-[2.5rem] border border-white/5 hover:border-emerald-500/50 transition-all">
+          <span class="text-6xl font-black text-emerald-500/20 block mb-6">U</span>
+          <h4 class="text-xl font-bold text-white mb-4">Unity</h4>
+          <p class="text-slate-400 text-sm leading-relaxed">Combining strengths as a community for collective financial benefit.</p>
         </div>
-        <div class="p-6">
-          <div class="text-7xl font-black text-green-500 mb-4 opacity-50">E</div>
-          <h3 class="text-xl font-bold mb-2">Empowerment</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">Providing members with the capital, education, and resources necessary to achieve financial independence.</p>
+        <div class="p-10 bg-slate-800/50 rounded-[2.5rem] border border-white/5 hover:border-emerald-500/50 transition-all">
+          <span class="text-6xl font-black text-emerald-500/20 block mb-6">E</span>
+          <h4 class="text-xl font-bold text-white mb-4">Empowerment</h4>
+          <p class="text-slate-400 text-sm leading-relaxed">Providing resources necessary to achieve total financial independence.</p>
         </div>
-        <div class="p-6">
-          <div class="text-7xl font-black text-green-500 mb-4 opacity-50">S</div>
-          <h3 class="text-xl font-bold mb-2">Sustainability</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">Building a lasting institution with prudent management to serve our community for generations to come.</p>
+        <div class="p-10 bg-slate-800/50 rounded-[2.5rem] border border-white/5 hover:border-emerald-500/50 transition-all">
+          <span class="text-6xl font-black text-emerald-500/20 block mb-6">S</span>
+          <h4 class="text-xl font-bold text-white mb-4">Sustainability</h4>
+          <p class="text-slate-400 text-sm leading-relaxed">Prudent management building a lasting institution for generations.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="savings" class="py-24 bg-white reveal">
+  <section id="savings" class="py-32 bg-slate-50 reveal">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <h2 class="text-5xl font-black mb-4">Grow Your Wealth</h2>
-        <p class="text-gray-500 text-lg">Secure your future with our flexible and rewarding savings plans.</p>
+      <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+        <div class="max-w-xl">
+          <h2 class="text-xs font-black text-emerald-600 uppercase tracking-[0.4em] mb-4">Wealth Solutions</h2>
+          <h3 class="text-5xl font-black text-slate-900 leading-tight">Engineered for consistent growth.</h3>
+        </div>
+        <p class="text-slate-500 text-lg md:text-right">Diverse products tailored to your financial timeline.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-10">
+        <div class="p-12 bg-white rounded-[3rem] shadow-sm border border-slate-100 card-hover">
+          <div class="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-8 font-black">01</div>
+          <h3 class="text-2xl font-bold text-slate-900 mb-4">Regular Savings</h3>
+          <p class="text-slate-500 mb-8 italic text-sm">Qualifies members for our 2:1 Loan ratio eligibility. Build long-term capital with flexible monthly contributions.</p>
+          <div class="pt-6 border-t border-slate-50 flex gap-4 text-[10px] font-black tracking-widest text-emerald-600 uppercase">
+            <span>• LOAN ACCESS</span><span>• FLEXIBLE</span>
+          </div>
+        </div>
+        <div class="p-12 bg-white rounded-[3rem] shadow-sm border border-slate-100 card-hover">
+          <div class="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-8 font-black">02</div>
+          <h3 class="text-2xl font-bold text-slate-900 mb-4">Target Savings</h3>
+          <p class="text-slate-500 mb-8 italic text-sm">Specifically designed for rent, school fees, or equipment. High-interest rewards for disciplined goal tracking.</p>
+          <div class="pt-6 border-t border-slate-50 flex gap-4 text-[10px] font-black tracking-widest text-emerald-600 uppercase">
+            <span>• GOAL ORIENTED</span><span>• HIGH YIELD</span>
+          </div>
+        </div>
+        <div class="p-12 bg-white rounded-[3rem] shadow-sm border border-slate-100 card-hover">
+          <div class="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-8 font-black">03</div>
+          <h3 class="text-2xl font-bold text-slate-900 mb-4">Fixed Deposit</h3>
+          <p class="text-slate-500 mb-8 italic text-sm">Guaranteed high-yield dividends with quarterly interest payouts. Perfect for investing large sums over 6-12 months.</p>
+          <div class="pt-6 border-t border-slate-50 flex gap-4 text-[10px] font-black tracking-widest text-emerald-600 uppercase">
+            <span>• MAX ROI</span><span>• GUARANTEED</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="calculator" class="py-32 px-6 bg-white reveal">
+    <div class="max-w-5xl mx-auto">
+        <div class="grid lg:grid-cols-5 bg-slate-50 rounded-[4rem] overflow-hidden shadow-2xl border border-slate-100">
+            <div class="lg:col-span-2 premium-gradient p-16 text-white flex flex-col justify-center">
+                <h2 class="text-4xl font-bold mb-6">Strategic Planning.</h2>
+                <p class="text-emerald-50/70 leading-relaxed mb-8">Calculate your interest rates instantly. We maintain a fixed 6% monthly rate to ensure your business remains sustainable.</p>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3"><div class="w-2 h-2 bg-emerald-300 rounded-full"></div><span class="text-xs font-bold uppercase tracking-widest">No Hidden Fees</span></div>
+                    <div class="flex items-center gap-3"><div class="w-2 h-2 bg-emerald-300 rounded-full"></div><span class="text-xs font-bold uppercase tracking-widest">Instant Breakdown</span></div>
+                </div>
+            </div>
+            <div class="lg:col-span-3 p-12 lg:p-20 bg-white">
+                <div class="space-y-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="md:col-span-2">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block ml-2">Principal Amount (₦)</label>
+                            <input id="amount" type="number" placeholder="0.00" class="w-full p-5 bg-slate-50 rounded-2xl text-2xl font-bold outline-none border border-transparent transition-all">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block ml-2">Tenure (Months)</label>
+                            <input id="months" type="number" placeholder="12" class="w-full p-5 bg-slate-50 rounded-2xl text-2xl font-bold outline-none border border-transparent transition-all">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block ml-2">Rate (% Monthly)</label>
+                            <input id="rate" type="number" value="6" class="w-full p-5 bg-slate-50 rounded-2xl text-2xl font-bold outline-none border border-transparent transition-all">
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <button onclick="calculateLoan()" class="flex-1 bg-emerald-600 text-white py-5 rounded-2xl font-black text-lg shadow-xl hover:bg-emerald-700 transition-all">Generate Quote</button>
+                        <button onclick="resetCalculator()" class="px-8 py-5 text-slate-400 font-bold hover:bg-slate-100 rounded-2xl transition-all">Reset</button>
+                    </div>
+                    <div id="result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <section class="py-32 bg-slate-900 overflow-hidden relative reveal">
+    <div class="absolute right-0 top-0 w-1/3 h-full bg-emerald-500/5 blur-3xl rounded-full"></div>
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
+        <div class="relative">
+            <div class="aspect-square rounded-[4rem] overflow-hidden border-8 border-slate-800 shadow-2xl">
+                <img src="president.jpg" alt="President" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+            </div>
+            <div class="absolute -bottom-10 -right-10 bg-emerald-600 text-white p-12 rounded-[3rem] shadow-2xl">
+                <p class="text-6xl font-black leading-none">20+</p>
+                <p class="text-xs font-bold uppercase tracking-widest mt-2">Years of Impact</p>
+            </div>
+        </div>
+        <div>
+            <svg class="w-20 h-20 text-emerald-500 opacity-20 mb-8" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H16.017C14.9124 8 14.017 7.10457 14.017 6V5C14.017 3.89543 14.9124 3 16.017 3H21.017C22.1216 3 23.017 3.89543 23.017 5V15C23.017 18.3137 20.3307 21 17.017 21H14.017ZM1 21L1 18C1 16.8954 1.89543 16 3 16H6C6.55228 16 7 15.5523 7 15V9C7 8.44772 6.55228 8 6 8H3C1.89543 8 1 7.10457 1 6V5C1 3.89543 1.89543 3 3 3H8C9.10457 3 10 3.89543 10 5V15C10 18.3137 7.31371 21 4 21H1ZM3 5V6H6V5H3ZM16.017 5V6H19.017V5H16.017Z"/></svg>
+            <h4 class="text-4xl font-medium text-white italic leading-relaxed mb-12">"Harmony Welfare Cooperative was built on the foundation of mutual support. Our goal is to ensure that no member's dream is limited by lack of capital."</h4>
+            <div class="h-px w-24 bg-emerald-500 mb-6"></div>
+            <h5 class="text-2xl font-bold text-white">Mrs. Patience Salako</h5>
+            <p class="text-emerald-500 font-bold uppercase tracking-[0.3em] text-[10px] mt-1">President, Harmony Cooperative</p>
+        </div>
+    </div>
+  </section>
+
+  <section id="trustees" class="py-32 bg-white reveal">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-20">
+        <h2 class="text-xs font-black text-emerald-600 uppercase tracking-[0.5em] mb-4">Board of Trustees</h2>
+        <h3 class="text-5xl font-black text-slate-900">Guardian of Integrity</h3>
       </div>
       <div class="grid md:grid-cols-3 gap-8">
-        <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
-          <h3 class="text-2xl font-black mb-4">Regular Savings</h3>
-          <p class="text-gray-500 mb-6 italic text-sm">Qualifies members for our 2:1 Loan ratio eligibility. Build long-term capital with flexible monthly contributions.</p>
-          <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
-            <li>• Easy Withdrawal</li>
-            <li>• Loan Access</li>
-          </ul>
+        <div class="group p-1 bg-slate-50 rounded-[3rem] transition-all hover:bg-emerald-600 shadow-sm">
+            <div class="bg-white p-10 rounded-[2.8rem] h-full">
+                <h3 class="text-2xl font-extrabold text-slate-900 mb-2">Mr Adedotun Salako</h3>
+                <p class="text-emerald-600 font-bold text-xs uppercase tracking-widest mb-6">Entrepreneurial Strategist</p>
+                <p class="text-slate-500 text-sm mb-8">Specializing in high-value business development and cooperative scaling.</p>
+                <div class="pt-6 border-t border-slate-100">
+                    <p class="text-[10px] font-black text-slate-400 uppercase mb-1">Direct Contact</p>
+                    <p class="text-slate-900 font-bold">+234 802 335 8340</p>
+                </div>
+            </div>
         </div>
-        <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
-          <h3 class="text-2xl font-black mb-4">Target Savings</h3>
-          <p class="text-gray-500 mb-6 italic text-sm">Specifically designed for rent, school fees, or equipment. High-interest rewards for disciplined goal tracking.</p>
-          <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
-            <li>• Goal Oriented</li>
-            <li>• Higher Interest</li>
-          </ul>
+        <div class="group p-1 bg-slate-50 rounded-[3rem] transition-all hover:bg-emerald-600 shadow-sm">
+            <div class="bg-white p-10 rounded-[2.8rem] h-full">
+                <h3 class="text-2xl font-extrabold text-slate-900 mb-2">Mrs Olutunde Olayemi</h3>
+                <p class="text-emerald-600 font-bold text-xs uppercase tracking-widest mb-6">Commercial Operations</p>
+                <p class="text-slate-500 text-sm mb-8">Overseeing commercial integrity and member resource allocation.</p>
+                <div class="pt-6 border-t border-slate-100">
+                    <p class="text-[10px] font-black text-slate-400 uppercase mb-1">Direct Contact</p>
+                    <p class="text-slate-900 font-bold">+234 803 595 0764</p>
+                </div>
+            </div>
         </div>
-        <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
-          <h3 class="text-2xl font-black mb-4">Fixed Deposit</h3>
-          <p class="text-gray-500 mb-6 italic text-sm">Guaranteed high-yield dividends with quarterly interest payouts. Perfect for investing large sums over 6-12 months.</p>
-          <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
-            <li>• Maximum ROI</li>
-            <li>• Guaranteed Returns</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="calculator" class="py-24 px-6 bg-gray-100 reveal">
-    <div class="max-w-3xl mx-auto bg-white p-10 md:p-16 rounded-[4rem] shadow-2xl">
-  <div class="text-center mb-10">
-    <h2 class="text-4xl font-black text-coop-green mb-2">Loan Calculator</h2>
-    <p class="text-gray-500 font-medium">Plan your growth with transparency.</p>
-    <p class="mt-2 text-xs font-black text-amber-600 bg-amber-50 inline-block px-4 py-1 rounded-full uppercase tracking-widest">
-      Standard Interest Rate: 6% Monthly
-    </p>
-  </div>
-  
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-    <div class="md:col-span-2">
-      <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2 ml-2">Loan Amount (₦)</label>
-      <input id="amount" type="number" min="0" placeholder="e.g. 500000" class="w-full p-5 bg-gray-50 rounded-2xl text-xl font-bold outline-none focus:ring-2 focus:ring-green-500 transition-all">
-    </div>
-    <div>
-      <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2 ml-2">Duration (Months)</label>
-      <input id="months" type="number" min="1" placeholder="e.g. 12" class="w-full p-5 bg-gray-50 rounded-2xl text-xl font-bold outline-none focus:ring-2 focus:ring-green-500 transition-all">
-    </div>
-    <div>
-      <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2 ml-2">Interest Rate (6%)</label>
-      <input id="rate" type="number" value="6" class="w-full p-5 bg-gray-50 rounded-2xl text-xl font-bold outline-none focus:ring-2 focus:ring-green-500 transition-all">
-    </div>
-  </div>
-
-  <div class="flex flex-col sm:flex-row gap-4">
-    <button onclick="calculateLoan()" class="flex-1 bg-coop-green text-white py-6 rounded-2xl text-xl font-black shadow-xl hover:bg-green-700 transition-all">Calculate</button>
-    <button onclick="resetCalculator()" class="px-8 py-6 rounded-2xl text-gray-400 font-bold hover:bg-gray-100 transition-all">Reset</button>
-  </div>
-  
-  <div id="result"></div>
-</div>
-    </section>
-
-  <section class="py-24 bg-green-900 text-white reveal">
-    <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center gap-16">
-      <div class="w-64 h-64 rounded-[3rem] overflow-hidden rotate-3 shadow-2xl shrink-0 border-4 border-green-400">
-        <img src="president.jpg" alt="Mrs. Patience Salako - President of Harmony Cooperative" class="w-full h-full object-cover bg-green-800" loading="lazy">
-      </div>
-      <div>
-        <p class="text-3xl font-medium leading-relaxed italic mb-8">"Harmony Welfare Cooperative was built on the foundation of mutual support. Our goal is to ensure that no member's dream is limited by lack of capital."</p>
-        <div class="h-1 w-20 bg-green-500 mb-4"></div>
-        <h4 class="text-xl font-black uppercase tracking-widest">Mrs. Patience Salako</h4>
-        <p class="text-green-400 font-bold uppercase tracking-widest text-xs">President, Harmony Cooperative</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="trustees" class="py-24 bg-white reveal">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16">
-        <h2 class="text-5xl font-black mb-4">Our Trustees</h2>
-            <p class="text-gray-500 text-lg"> These are our trustees.</p>
-      </div>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
-          <h3 class="text-2xl font-black mb-4">Mr Adedotun Salako</h3>
-            <p class="text-gray-500 mb-6 italic text-sm">A business man</p>
-                <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
-            <li>• Contact details</li>
-              <li>+2348023358340</li>
-          </ul>
-        </div>
-        <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
-          <h3 class="text-2xl font-black mb-4">Mrs Olutunde Olayemi </h3>
-            <p class="text-gray-500 mb-6 italic text-sm">Business woman</p>
-            <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
-            <li>• Contact details</li>
-            <li>+2348035950764</li>
-          </ul>
-        </div>
-        <div class="p-10 rounded-[3rem] bg-gray-50 border border-gray-100 hover:border-green-500 transition-all shadow-sm">
-          <h3 class="text-2xl font-black mb-4">Alh Bashir Abdullahi</h3>
-          <p class="text-gray-500 mb-6 italic text-sm">NNPC Staff</p>
-          <ul class="text-xs font-black text-coop-green tracking-widest uppercase space-y-2">
-            <li>• Contact details</li>
-            <li>+234 </li>
-          </ul>
+        <div class="group p-1 bg-slate-50 rounded-[3rem] transition-all hover:bg-emerald-600 shadow-sm">
+            <div class="bg-white p-10 rounded-[2.8rem] h-full">
+                <h3 class="text-2xl font-extrabold text-slate-900 mb-2">Alh Bashir Abdullahi</h3>
+                <p class="text-emerald-600 font-bold text-xs uppercase tracking-widest mb-6">Strategic Advisor (NNPC)</p>
+                <p class="text-slate-500 text-sm mb-8">Bringing corporate governance and strategic oversight from the energy sector.</p>
+                <div class="pt-6 border-t border-slate-100">
+                    <p class="text-[10px] font-black text-slate-400 uppercase mb-1">Direct Contact</p>
+                    <p class="text-slate-900 font-bold">Confidential</p>
+                </div>
+            </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="gallery" class="py-24 px-6 max-w-7xl mx-auto reveal">
-    <div class="text-center mb-16">
-      <h2 class="text-4xl font-black mb-4 text-gray-900">Our Kaduna Headquarters</h2>
-      <p class="text-gray-500">Professional environment serving our community.</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="rounded-[2rem] overflow-hidden shadow-lg h-64 bg-gray-200">
-        <img src="office-exterior.jpg" alt="Office Exterior - Harmony Cooperative Kaduna" class="w-full h-full object-cover" loading="lazy">
-      </div>
-      <div class="rounded-[2rem] overflow-hidden shadow-lg h-64 bg-gray-200">
-        <img src="office-interior.jpg" alt="Reception Area - Harmony Cooperative Kaduna" class="w-full h-full object-cover" loading="lazy">
-      </div>
-      <div class="rounded-[2rem] overflow-hidden shadow-lg h-64 bg-gray-200">
-        <img src="meeting-room.jpg" alt="Conference Room - Harmony Cooperative Kaduna" class="w-full h-full object-cover" loading="lazy">
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" class="py-24 px-6 reveal bg-white border-t">
-    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-20">
-      <div>
-        <h2 class="text-5xl font-black mb-10 leading-tight">Get in <br>Touch.</h2>
-        <div class="space-y-8">
-          <div>
-            <h4 class="text-xs font-black text-coop-green uppercase tracking-widest mb-1">Office Location</h4>
-            <p class="text-2xl font-bold text-gray-700">Shop 8 Benue Plaza, Muhammadu Buhari Way, Kaduna.</p>
-          </div>
-          <div>
-            <h4 class="text-xs font-black text-coop-green uppercase tracking-widest mb-1">Email</h4>
-            <p class="text-2xl font-bold text-gray-700">info@harmonycooperative.com</p>
-          </div>
-          <div>
-            <h4 class="text-xs font-black text-coop-green uppercase tracking-widest mb-1">Phone Number</h4>
-            <p class="text-2xl font-bold text-gray-700">+2348034067079, +234 8023358340</p>
-          </div>
-        </div>
-      </div>
-      <form action="https://formspree.io/f/mjgkjagd" method="POST" class="bg-gray-50 p-8 rounded-[3rem] shadow-2xl border border-gray-100 space-y-4">
-        <input type="text" name="name" placeholder="Full Name" required class="w-full p-5 bg-white border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-green-500">
-        <input type="email" name="email" placeholder="Email Address" required class="w-full p-5 bg-white border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-green-500">
-        <textarea name="message" rows="4" placeholder="How can we help you?" required class="w-full p-5 bg-white border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-green-500"></textarea>
-        <button type="submit" class="w-full bg-coop-green text-white py-5 rounded-2xl font-black uppercase tracking-widest shadow-xl hover:bg-green-700 transition-all">Send Message</button>
-      </form>
-    </div>
-  </section>
-
-  <footer class="bg-gray-900 pt-16 pb-8 px-6 mt-10">
+  <section id="gallery" class="py-32 px-6 bg-slate-50 reveal">
     <div class="max-w-7xl mx-auto">
-      <div class="flex flex-col md:flex-row justify-between items-center gap-8 border-b border-gray-800 pb-12">
-        <div class="text-center md:text-left">
-          <h3 class="text-white font-extrabold text-xl tracking-tight mb-2 uppercase">Harmony Welfare Cooperative</h3>
-          <p class="text-gray-500 text-sm font-medium">Building dreams through collective growth.</p>
+      <div class="flex flex-col md:flex-row justify-between items-center mb-16">
+        <h2 class="text-4xl font-black text-slate-900">Headquarters</h2>
+        <p class="text-slate-500 font-bold uppercase tracking-widest text-xs">Kaduna, Nigeria</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 h-[600px]">
+        <div class="md:col-span-8 rounded-[3rem] overflow-hidden shadow-2xl bg-slate-200">
+          <img src="office-exterior.jpg" alt="Office Exterior" class="w-full h-full object-cover">
         </div>
-        <div class="bg-gray-800/40 border border-gray-700 p-6 rounded-2xl text-center md:text-right">
-          <p class="text-[10px] font-black text-green-500 uppercase tracking-[0.2em] mb-1">Powered & Managed By</p>
-          <p class="text-white font-bold text-lg">Zion Netcom Solutions Ltd.</p>
-          <a href="tel:+2347067580599" class="text-gray-400 hover:text-white transition-colors text-sm font-semibold mt-1 inline-block">
-            +234 706 758 0599, info@zionnetcomsolutionsltd.com
-          </a>
+        <div class="md:col-span-4 grid grid-rows-2 gap-6">
+            <div class="rounded-[3rem] overflow-hidden shadow-2xl bg-slate-200">
+                <img src="office-interior.jpg" alt="Interior" class="w-full h-full object-cover">
+            </div>
+            <div class="rounded-[3rem] overflow-hidden shadow-2xl bg-slate-200">
+                <img src="meeting-room.jpg" alt="Meeting" class="w-full h-full object-cover">
+            </div>
         </div>
       </div>
-      <p class="text-center mt-8 text-gray-600 text-[11px] font-bold uppercase tracking-widest">© 2026 Harmony Welfare Cooperative Society Ltd. All Rights Reserved.</p>
+    </div>
+  </section>
+
+  <section id="apply" class="py-32 px-6 bg-white reveal">
+    <div class="max-w-7xl mx-auto">
+        <div class="bg-slate-900 rounded-[4rem] p-12 lg:p-24 relative overflow-hidden shadow-3xl">
+            <div class="absolute top-0 right-0 w-96 h-96 premium-gradient blur-[120px] opacity-30"></div>
+            <div class="grid lg:grid-cols-2 gap-20 relative z-10">
+                <div>
+                    <h2 class="text-xs font-black text-emerald-500 uppercase tracking-[0.5em] mb-6">Application Portal</h2>
+                    <h3 class="text-6xl font-black text-white leading-none mb-10">Ready to <br><span class="text-emerald-500">Accelerate?</span></h3>
+                    <p class="text-xl text-slate-400 mb-12 leading-relaxed">Submit your details via our secure channel. Our board reviews applications every 48 hours.</p>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-6">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0">1</div>
+                            <div><p class="text-white font-bold mb-1">Verify Identity</p><p class="text-slate-500 text-sm">Ensure your member ID is active and valid.</p></div>
+                        </div>
+                        <div class="flex items-start gap-6">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 shrink-0">2</div>
+                            <div><p class="text-white font-bold mb-1">Collateral Review</p><p class="text-slate-500 text-sm">Upload documentation for asset verification.</p></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <form action="https://formspree.io/f/mjgkjagd" method="POST" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-black uppercase text-slate-500 ml-2 tracking-widest">Full Legal Name</label>
+                            <input type="text" name="name" required class="w-full p-5 bg-white/5 border border-white/10 rounded-2xl text-white focus:outline-none focus:bg-white/10 transition-all">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-black uppercase text-slate-500 ml-2 tracking-widest">Email Address</label>
+                            <input type="email" name="email" required class="w-full p-5 bg-white/5 border border-white/10 rounded-2xl text-white focus:outline-none focus:bg-white/10 transition-all">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase text-slate-500 ml-2 tracking-widest">Purpose of Credit</label>
+                        <select name="purpose" class="w-full p-5 bg-white/5 border border-white/10 rounded-2xl text-slate-400 focus:outline-none focus:bg-white/10 transition-all appearance-none">
+                            <option value="business">Business Expansion</option>
+                            <option value="personal">Personal Growth</option>
+                            <option value="emergency">Emergency Funding</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black uppercase text-slate-500 ml-2 tracking-widest">Detailed Proposal</label>
+                        <textarea name="message" rows="5" required class="w-full p-5 bg-white/5 border border-white/10 rounded-2xl text-white focus:outline-none focus:bg-white/10 transition-all"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-6 bg-emerald-600 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-emerald-700 shadow-2xl transition-all">Submit Formal Application</button>
+                    <p class="text-[10px] text-center text-slate-500 uppercase tracking-widest">Secure 256-bit Encrypted Transmission</p>
+                </form>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <footer class="bg-white pt-32 pb-12 px-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-4 gap-16 mb-20 border-b border-slate-100 pb-20">
+            <div class="lg:col-span-2">
+                <h3 class="text-2xl font-black text-slate-900 uppercase tracking-tighter mb-6">Harmony Cooperative</h3>
+                <p class="text-slate-500 max-w-sm leading-relaxed">Building a sustainable future through disciplined savings and strategic credit allocation. Kaduna's premier cooperative partner.</p>
+            </div>
+            <div>
+                <h4 class="text-xs font-black uppercase tracking-[0.3em] text-emerald-600 mb-8">Contact Central</h4>
+                <ul class="space-y-4 text-slate-900 font-bold">
+                    <li>Shop 8 Benue Plaza, Kaduna</li>
+                    <li>info@harmonycooperative.com</li>
+                    <li>+234 803 406 7079</li>
+                </ul>
+            </div>
+            <div class="bg-slate-50 p-10 rounded-[2.5rem] border border-slate-100">
+                <p class="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-2">Technical Partner</p>
+                <p class="text-slate-900 font-black text-xl leading-tight mb-4">Zion Netcom <br>Solutions Ltd.</p>
+                <a href="tel:+2347067580599" class="text-slate-400 hover:text-emerald-600 font-bold text-xs transition-colors">Connect via Tel: +234 706 758 0599</a>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">© 2026 Harmony Welfare Cooperative Society Ltd.</p>
+            <div class="flex gap-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">
+                <a href="#" class="hover:text-emerald-600">Privacy Policy</a>
+                <a href="#" class="hover:text-emerald-600">Terms of Service</a>
+            </div>
+        </div>
     </div>
   </footer>
 
-  <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to Top" class="fixed bottom-8 right-8 bg-white text-gray-900 p-4 rounded-full shadow-2xl z-50 hover:bg-coop-green hover:text-white border border-gray-100">
+  <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-10 right-10 w-14 h-14 bg-slate-900 text-white rounded-full shadow-2xl z-50 flex items-center justify-center hover:bg-emerald-600 transition-all">
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
   </button>
 
   <script>
-    // 1. Optimized Loan Calculation
+    // 1. Precise Financial Calculator
     function calculateLoan() {
       const amountVal = document.getElementById("amount").value;
       const monthsVal = document.getElementById("months").value;
@@ -325,7 +397,7 @@
 
       if (!amountVal || !monthsVal || !rateVal) {
         if(resultDisplay.innerHTML !== "") {
-            resultDisplay.innerHTML = `<div class="mt-10 p-8 bg-red-50 rounded-[2.5rem] border border-red-100 text-center"><p class="text-red-600 font-bold">Please fill in all fields</p></div>`;
+            resultDisplay.innerHTML = `<div class="mt-8 p-6 bg-red-50 text-red-600 rounded-2xl border border-red-100 font-bold text-center">Incomplete Data Provided</div>`;
         }
         return;
       }
@@ -339,12 +411,18 @@
       const monthly = totalPayable / months;
 
       resultDisplay.innerHTML = `
-        <div class="mt-10 p-8 bg-green-50 rounded-[2.5rem] border border-green-100 text-center loan-result">
-          <p class="text-xs text-green-600 font-black uppercase mb-1">Monthly Repayment</p>
-          <p class="text-5xl font-black text-coop-green mb-4">₦${monthly.toLocaleString('en-NG', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</p>
-          <div class="pt-4 border-t border-green-200 grid grid-cols-2 text-[10px] font-black uppercase tracking-widest text-gray-500">
-            <div class="border-r border-green-200">Total Interest<br><span class="text-gray-900 font-bold">₦${totalInterest.toLocaleString('en-NG')}</span></div>
-            <div>Total Payable<br><span class="text-gray-900 font-bold">₦${totalPayable.toLocaleString('en-NG')}</span></div>
+        <div class="mt-10 p-10 bg-slate-900 rounded-[2.5rem] text-white shadow-2xl reveal active loan-result">
+          <p class="text-[10px] text-emerald-400 font-black uppercase tracking-[0.4em] mb-4 text-center">Monthly Commitment</p>
+          <p class="text-5xl font-black mb-8 text-center tabular-nums">₦${monthly.toLocaleString('en-NG', {minimumFractionDigits: 2})}</p>
+          <div class="grid grid-cols-2 gap-4 pt-8 border-t border-white/10">
+            <div class="text-center">
+              <p class="text-[9px] text-slate-500 font-black uppercase mb-1">Total Interest</p>
+              <p class="font-bold">₦${totalInterest.toLocaleString('en-NG')}</p>
+            </div>
+            <div class="text-center border-l border-white/10">
+              <p class="text-[9px] text-slate-500 font-black uppercase mb-1">Final Payable</p>
+              <p class="font-bold">₦${totalPayable.toLocaleString('en-NG')}</p>
+            </div>
           </div>
         </div>`;
     }
@@ -356,71 +434,53 @@
       document.getElementById("result").innerHTML = "";
     }
 
-    // 2. Performance-focused Scroll Visibility
-    function handleScrollEvents() {
-      // Reveal logic
+    // 2. High-Performance Scroll Handling
+    function handleScroll() {
       const reveals = document.querySelectorAll(".reveal");
       reveals.forEach(el => {
-        const elementTop = el.getBoundingClientRect().top;
-        if (elementTop < window.innerHeight - 100) {
-          el.classList.add("active");
-        }
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) el.classList.add("active");
       });
 
-      // Back to top logic
       const btt = document.getElementById("backToTop");
-      if (window.scrollY > 600) btt.classList.add("show");
+      if (window.scrollY > 800) btt.classList.add("show");
       else btt.classList.remove("show");
     }
 
-    // 3. Counter Animation
+    // 3. Fintech Style Counter
     function startCounter() {
-      const counterElement = document.getElementById('loanCounter');
+      const el = document.getElementById('loanCounter');
       const target = 10000000;
-      const duration = 2500;
-      let startTimestamp = null;
+      let start = null;
+      const duration = 2000;
 
-      const step = (timestamp) => {
-        if (!startTimestamp) startTimestamp = timestamp;
-        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        const currentCount = Math.floor(progress * target);
-        counterElement.innerText = "₦" + currentCount.toLocaleString('en-NG');
-        
-        if (progress < 1) {
-          window.requestAnimationFrame(step);
-        } else {
-          // Keep it lively with occasional increments
-          setInterval(() => {
-            const extra = Math.floor(Math.random() * 8000) + 2000;
-            const val = parseInt(counterElement.innerText.replace(/[^0-9]/g, ''));
-            counterElement.innerText = "₦" + (val + extra).toLocaleString('en-NG');
-          }, 4000);
+      const step = (ts) => {
+        if (!start) start = ts;
+        const progress = Math.min((ts - start) / duration, 1);
+        const current = Math.floor(progress * target);
+        el.innerText = "₦" + current.toLocaleString('en-NG');
+        if (progress < 1) window.requestAnimationFrame(step);
+        else {
+            setInterval(() => {
+                const add = Math.floor(Math.random() * 10000) + 2000;
+                const now = parseInt(el.innerText.replace(/[^0-9]/g, ''));
+                el.innerText = "₦" + (now + add).toLocaleString('en-NG');
+            }, 5000);
         }
       };
       window.requestAnimationFrame(step);
     }
 
-    function toggleMenu() { 
-      document.getElementById('mobile-menu').classList.toggle('open'); 
-    }
+    function toggleMenu() { document.getElementById('mobile-menu').classList.toggle('open'); }
 
-    // Global Key Listener
-    document.addEventListener('keydown', (e) => {
-      if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
-        window.scrollTo({top: 0, behavior: 'smooth'});
-      }
-    });
-
-    // Initialize
-    window.addEventListener('scroll', handleScrollEvents);
+    // Init listeners
+    window.addEventListener('scroll', handleScroll);
     window.onload = () => { 
-      handleScrollEvents(); 
-      startCounter(); 
-      
-      // Setup Live calculation on typing
-      ['amount', 'months', 'rate'].forEach(id => {
-          document.getElementById(id).addEventListener('input', calculateLoan);
-      });
+        handleScroll(); 
+        startCounter(); 
+        ['amount', 'months', 'rate'].forEach(id => {
+            document.getElementById(id).addEventListener('input', calculateLoan);
+        });
     };
   </script>
 </body>
