@@ -356,19 +356,28 @@
     }
 
 async function approveLoan(id) {
-    const finalAmt = document.getElementById(`amt-${id}`).value;
+    const finalAmtInput = document.getElementById(`amt-${id}`);
+    if (!finalAmtInput) return;
+
+    const principal = Number(finalAmtInput.value);
     
-    // Validation
-    if (!finalAmt || Number(finalAmt) <= 0) {
+    // 1. Validation
+    if (!principal || principal <= 0) {
         return alert("Invalid amount. Please enter a valid sum.");
     }
 
-    // Logic: Calculate 6% monthly interest
-    const principal = Number(finalAmt);
-    const interest = principal * 0.06;
-    const totalBalanceWithInterest = principal + interest;
+    // 2. Find the specific record to get the chosen tenure
+    const loanRecord = allRecords.find(r => r.trackingId === id);
+    if (!loanRecord) return alert("Record not found.");
+
+    // 3. Logic: Extract months from tenure string (e.g., "3 Months (18.0%)" -> 3)
+    // If parsing fails, we default to 3 months as a safety measure
+    const tenureMonths = parseInt(loanRecord.tenure) || 3;
+    const totalInterestRate = 0.06 * tenureMonths; 
+    const totalBalanceWithInterest = principal * (1 + totalInterestRate);
 
     const btn = window.event.target;
+    const originalText = btn.innerText;
     btn.innerText = "Syncing..."; 
     btn.disabled = true;
 
@@ -384,19 +393,19 @@ async function approveLoan(id) {
         });
 
         if (res.ok) {
-            // Refresh local data to update dashboard and tables
-            fetchLoans();
+            // Refresh local data and UI
+            if (typeof fetchLoans === "function") fetchLoans();
         } else {
-            alert("Update failed. Please check your connection.");
+            alert("Update failed. Please check your API connection.");
         }
     } catch (e) { 
         console.error("Approval Error:", e);
         alert("Network Error: Could not reach the server."); 
     } finally { 
-        btn.innerText = "Grant"; 
+        btn.innerText = originalText; 
         btn.disabled = false; 
     }
-}                    
+}
   
 
     function renderRecoveryOversight() {
