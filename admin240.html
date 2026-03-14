@@ -352,41 +352,40 @@
     renderRecoveryOversight();
     renderHistory();
 }  
+                                                       
+  
 function calculateIntelligence() {
-    // 1. Total Outstanding Debt: Sum of every 'balance' field in the database
-    // This represents all the money (Principal + Interest) currently with members
+    // 1. Debt Recovery: Sum up every 'balance' currently in the database
+    // We use 'allRecords' because that is your Admin global variable
     const debtSum = allRecords.reduce((acc, curr) => acc + (Number(curr.balance) || 0), 0);
 
-    // 2. Total Principal Disbursed: (Optional, for the progress bar calculation)
-    // Sum of the original 'amount' granted to non-pending members
-    const totalDisbursed = allRecords
+    // 2. Total Principal: Sum of original 'amount' to calculate recovery percentage
+    const totalPrincipal = allRecords
         .filter(r => r.status !== 'Pending')
         .reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
 
-    // 3. Update the UI Card
-    const recoveryDisplay = document.getElementById('recoveryTotal');
-    if (recoveryDisplay) {
-        recoveryDisplay.innerText = `₦${debtSum.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+    // 3. Update the UI
+    const recoveryTotalEl = document.getElementById('recoveryTotal');
+    const recoveryProgressEl = document.getElementById('recoveryProgress');
+    const recoveryPercentEl = document.getElementById('recoveryPercentText');
+
+    if (recoveryTotalEl) {
+        recoveryTotalEl.innerText = `₦${debtSum.toLocaleString()}`;
     }
 
-    // 4. Progress Bar Logic
-    // We calculate progress based on how much of the Total Portfolio (Principal) 
-    // is still outstanding. If debtSum is high, progress is low.
-    const progressBar = document.getElementById('recoveryProgress');
-    const percentText = document.getElementById('recoveryPercentText');
-
-    if (progressBar && totalDisbursed > 0) {
-        // Example logic: (1 - (Current Debt / Total Disbursed)) 
-        // Note: This percentage may stay low if interest makes the balance > principal
-        let progressPercent = Math.max(0, (1 - (debtSum / (totalDisbursed * 1.18))) * 100);
+    // 4. Progress Logic: 
+    // If debt is 0, we are 100% recovered. 
+    // Otherwise, we calculate based on the Principal + 18% (Average Interest)
+    if (recoveryProgressEl && totalPrincipal > 0) {
+        const totalExpected = totalPrincipal * 1.18; 
+        const progressPercent = Math.max(0, (1 - (debtSum / totalExpected)) * 100);
         
-        progressBar.style.width = `${Math.min(progressPercent, 100)}%`;
-        if (percentText) percentText.innerText = `${Math.floor(progressPercent)}%`;
+        recoveryProgressEl.style.width = `${Math.min(progressPercent, 100)}%`;
+        if (recoveryPercentEl) {
+            recoveryPercentEl.innerText = `${Math.floor(progressPercent)}%`;
+        }
     }
-}                                      
-  
-                      
-                      
+}  
   
     function renderApplications(pending) {
         const body = document.getElementById('loanTableBody');
