@@ -1,4 +1,7 @@
-<!DOCTYPE html>                    
+<!DOCTYPE html>                                                                                
+  
+  
+  
   
 <html lang="en">
 <head>
@@ -338,39 +341,88 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: 'Approved', amount: finalAmt, balance: finalAmt })
             });
-            if(res.ok) fetchLoans();
+          if(res.ok) {
+                const loan = allRecords.find(l => l.trackingId === id);
+                triggerModal('Authorized', `Funds released for ${loan.fullName}`);
+                generateEliteAuthPDF(loan, finalAmt);
+                fetchLoans(); 
+            }
         } catch (e) { alert("Network Error"); }
         finally { btn.innerText = "Grant"; btn.disabled = false; }
-    }
+    }  
 
     function renderRecoveryOversight() {
-        const container = document.getElementById('recoveryStats');
-        const debtors = allRecords.filter(r => Number(r.balance) > 0);
-
-        container.innerHTML = debtors.map(loan => `
-            <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-xl stat-card relative overflow-hidden">
-                <div class="flex justify-between items-start mb-6">
-                    <div class="w-12 h-12 bg-slate-900 text-white rounded-xl flex items-center justify-center font-black">${loan.fullName.charAt(0)}</div>
-                    <button onclick="sendWhatsAppReminder('${loan.phone}', '${loan.fullName}', '${loan.balance}')" class="text-emerald-600 hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.412-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.309 1.656zm6.224-3.82c1.516.903 3.11 1.383 4.743 1.385 5.176 0 9.391-4.213 9.391-9.39 0-2.51-.979-4.87-2.757-6.648-1.779-1.779-4.138-2.758-6.646-2.759-5.176 0-9.392 4.213-9.394 9.39-.001 1.769.497 3.488 1.441 5.011l-.941 3.437 3.506-.928z"/></svg>
+    const container = document.getElementById('recoveryStats');
+    // Filter for members who still owe money
+    const debtors = allRecords.filter(r => {
+        const bal = parseFloat(r.balance);
+        return !isNaN(bal) && bal > 0;
+    });
+     
+      container.innerHTML = debtors.map(loan => `
+        <div class="bg-white p-10 rounded-[3rem] border border-slate-100 shadow-xl shadow-slate-200/40 group hover:border-emerald-200 transition-all relative overflow-hidden">
+            <div class="flex justify-between items-start mb-8">
+                <div class="w-14 h-14 bg-slate-900 text-white rounded-2xl flex items-center justify-center text-xl font-black shadow-lg group-hover:bg-emerald-600 transition-colors">
+                    ${loan.fullName.charAt(0)}
+                </div>
+                <div class="flex flex-col items-end">
+                    <span class="bg-emerald-50 text-emerald-700 text-[9px] font-black px-3 py-1 rounded-lg uppercase border border-emerald-100 mb-2">
+                        Active Liability
+                    </span>
+                    <span class="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest">${loan.trackingId}</span>
+                </div>
+            </div>
+            
+            <div class="mb-8">
+                <h4 class="font-black text-slate-900 text-xl tracking-tight uppercase group-hover:text-emerald-600 transition-colors">${loan.fullName}</h4>
+                <div class="flex gap-2 mt-2">
+                    <button onclick="sendWhatsAppReminder('${loan.phone}', '${loan.fullName}', '${loan.balance}')" class="text-[10px] font-black text-emerald-600 uppercase flex items-center gap-1 hover:underline">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.412-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.309 1.656zm6.224-3.82c1.516.903 3.11 1.383 4.743 1.385 5.176 0 9.389-4.213 9.391-9.39 0-2.51-.979-4.87-2.757-6.648-1.779-1.779-4.138-2.758-6.646-2.759-5.176 0-9.392 4.213-9.394 9.39-.001 1.769.497 3.488 1.441 5.011l-.941 3.437 3.506-.928z"/></svg>
+                        Send Reminder
                     </button>
                 </div>
-                <h4 class="font-black text-slate-900 text-xl tracking-tight uppercase mb-6">${loan.fullName}</h4>
-                <div class="p-6 bg-slate-50 rounded-2xl mb-6">
-                    <p class="text-[9px] font-black text-slate-400 uppercase mb-1">Due Balance</p>
-                    <p class="text-2xl font-black text-slate-900 tracking-tighter">₦${Number(loan.balance).toLocaleString()}</p>
-                </div>
-                <button onclick="openRepayModal('${loan.trackingId}')" class="w-full py-4 bg-emerald-600 text-white rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-100">Process Collection</button>
             </div>
-        `).join('') || '<p class="col-span-full text-center text-slate-400 font-bold py-10">No Active Debtors</p>';
-    }
 
-    function sendWhatsAppReminder(phone, name, balance) {
-        if (!phone) return alert("No phone linked.");
-        const msg = encodeURIComponent(`Hello ${name}, this is Harmony Admin. Reminder of your ₦${Number(balance).toLocaleString()} balance. Please visit Station A for settlement.`);
-        window.open(`https://wa.me/${phone.replace(/\D/g,'')}?text=${msg}`, '_blank');
-    }
+            <div class="p-8 bg-slate-50 rounded-[2rem] mb-8 border border-slate-100 flex justify-between items-center">
+                <div>
+                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Due Balance</p>
+                    <p class="text-3xl font-black text-slate-900 tracking-tighter">₦${Number(loan.balance).toLocaleString()}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Principal</p>
+                    <p class="text-sm font-bold text-slate-600 italic">₦${Number(loan.amount).toLocaleString()}</p>
+                </div>
+            </div>
 
+            <button onclick="openRepayModal('${loan.trackingId}')" 
+                class="w-full py-5 bg-emerald-600 text-white rounded-[1.5rem] font-black text-[11px] uppercase tracking-[0.1em] shadow-lg shadow-emerald-100 hover:bg-emerald-700 hover:-translate-y-1 transition-all active:scale-95">
+                Process Collection
+            </button>
+        </div>
+    `).join('') || `
+        <div class="col-span-full p-20 text-center bg-white rounded-[3rem] border border-dashed border-slate-200">
+            <p class="text-slate-400 font-bold uppercase tracking-widest text-xs italic">Clear Skies: No active debt records found</p>
+        </div>
+    `;
+}
+                    
+  // Search Filter Logic
+function filterDebtPortfolio() {
+    const val = document.getElementById('debtSearchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('#recoveryStats > div');
+    cards.forEach(card => {
+        card.style.display = card.innerText.toLowerCase().includes(val) ? 'block' : 'none';
+    });
+}
+
+    // WhatsApp Integration
+function sendWhatsAppReminder(phone, name, balance) {
+    if (!phone || phone === "N/A" || phone === "") return alert("No phone number linked to this member.");
+    const cleanPhone = phone.replace(/\D/g, '');
+    const message = encodeURIComponent(`Hello ${name}, this is Harmony Elite Admin. Reminder of your ₦${Number(balance).toLocaleString()} balance. Please visit Station A for settlement.`);
+    window.open(`https://wa.me/${cleanPhone}?text=${message}`, '_blank');
+}
+    
     function renderHistory() {
         const body = document.getElementById('historyTableBody');
         body.innerHTML = allRecords.map(item => {
@@ -458,6 +510,44 @@ function toggleSidebar() {
     sidebar.classList.toggle('fixed');
     sidebar.classList.toggle('inset-0');
     sidebar.classList.toggle('z-50');
+}
+
+     function generateEliteAuthPDF(loan, finalAmt) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFillColor(15, 23, 42); doc.rect(0, 0, 210, 50, 'F');
+        doc.setTextColor(255, 255, 255); doc.setFontSize(22); doc.text("HARMONY ELITE AUTHORIZATION", 20, 30);
+        doc.setTextColor(15, 23, 42); doc.setFontSize(12);
+        doc.text(`Beneficiary: ${loan.fullName.toUpperCase()}`, 20, 70);
+        doc.text(`Reference: ${loan.trackingId}`, 20, 80);
+        doc.setFontSize(16); doc.text(`Authorized Sum: NGN ${Number(finalAmt).toLocaleString()}`, 20, 100);
+        doc.save(`Auth_${loan.trackingId}.pdf`);
+    }
+
+    function triggerModal(title, message) {
+        document.getElementById('modalBody').innerHTML = `<h3 class="text-2xl font-black mb-2">${title}</h3><p class="text-slate-500">${message}</p>`;
+        document.getElementById('globalModal').classList.remove('hidden');
+    }
+    function closeModal() { document.getElementById('globalModal').classList.add('hidden'); }
+    
+    function filterHistory() {
+        const val = document.getElementById('adminTrackInput').value.toLowerCase();
+        document.querySelectorAll('.history-row').forEach(row => {
+            row.style.display = row.innerText.toLowerCase().includes(val) ? '' : 'none';
+        });
+    }
+
+    function exportToCSV() {
+        const headers = ["ID", "Name", "Sum", "Bal", "Status"];
+        const rows = allRecords.map(r => [r.trackingId, `"${r.fullName}"`, r.amount, r.balance, r.status]);
+        const csv = [headers, ...rows].map(e => e.join(",")).join("\n");
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "Ledger_Export.csv"; link.click();
+    }
+    if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
 }
   </script>
 </body>
