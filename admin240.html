@@ -303,6 +303,8 @@
         const res = await fetch(API_URL);
         allRecords = await res.json();
         updateDashboard();
+       calculateIntelligence(); // Updates Debt Recovery card
+        renderApplications();   // Updates the tables
       } catch (e) { 
           console.error("System Data Error", e); 
       }
