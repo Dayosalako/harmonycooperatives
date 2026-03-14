@@ -450,6 +450,15 @@ document.getElementById('adminPass').addEventListener('keypress', function (e) {
         handleAdminLogin();
     }
 });
+
+    // Add a simple toggle function
+function toggleSidebar() {
+    const sidebar = document.querySelector('aside');
+    sidebar.classList.toggle('hidden');
+    sidebar.classList.toggle('fixed');
+    sidebar.classList.toggle('inset-0');
+    sidebar.classList.toggle('z-50');
+}
   </script>
 </body>
 </html>
