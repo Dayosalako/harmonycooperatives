@@ -353,48 +353,41 @@
     renderHistory();
 }  
 function calculateIntelligence() {
-    // 1. Calculate Payouts (Money already collected/paid out)
-    // Adjust 'Paid' to match the status you use for completed collections
-    const payouts = allRecords.filter(r => r.status === 'Paid');
-    const payoutSum = payouts.reduce((a, b) => a + (Number(b.amount) || 0), 0);
+    // 1. Total Outstanding Debt: Sum of every 'balance' field in the database
+    // This represents all the money (Principal + Interest) currently with members
+    const debtSum = allRecords.reduce((acc, curr) => acc + (Number(curr.balance) || 0), 0);
 
-    // 2. Calculate Active Debt (Current outstanding balances in the field)
-    const debtSum = allRecords.reduce((a, b) => a + (Number(b.balance) || 0), 0);
-
-    // 3. Calculate Total Portfolio Value (Principal + Interest)
-    // We need this to show a realistic progress bar percentage
-    const totalExpected = allRecords
+    // 2. Total Principal Disbursed: (Optional, for the progress bar calculation)
+    // Sum of the original 'amount' granted to non-pending members
+    const totalDisbursed = allRecords
         .filter(r => r.status !== 'Pending')
-        .reduce((a, b) => {
-            const principal = Number(b.amount) || 0;
-            // Assuming the 6% per month logic; adjust if you store totalRepayment separately
-            const tenure = parseInt(b.tenure) || 3;
-            return a + (principal + (principal * 0.06 * tenure));
-        }, 0);
+        .reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
 
-    // 4. Update UI Elements
-    if (document.getElementById('shiftTotal')) {
-        document.getElementById('shiftTotal').innerText = `₦${payoutSum.toLocaleString()}`;
+    // 3. Update the UI Card
+    const recoveryDisplay = document.getElementById('recoveryTotal');
+    if (recoveryDisplay) {
+        recoveryDisplay.innerText = `₦${debtSum.toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
     }
 
-    if (document.getElementById('recoveryTotal')) {
-        document.getElementById('recoveryTotal').innerText = `₦${debtSum.toLocaleString()}`;
-    }
-
-    // 5. Progress Bar Logic: (Collected / Total Expected)
-    // This shows how close you are to 100% recovery of all issued loans
-    const recoveryProgress = totalExpected > 0 ? (1 - (debtSum / totalExpected)) * 100 : 0;
-    
+    // 4. Progress Bar Logic
+    // We calculate progress based on how much of the Total Portfolio (Principal) 
+    // is still outstanding. If debtSum is high, progress is low.
     const progressBar = document.getElementById('recoveryProgress');
-    const progressText = document.getElementById('recoveryPercentText');
-    
-    if (progressBar) progressBar.style.width = `${Math.min(recoveryProgress, 100)}%`;
-    if (progressText) progressText.innerText = `${Math.floor(recoveryProgress)}%`;
+    const percentText = document.getElementById('recoveryPercentText');
 
-    // Optional: High Exposure Logic
-    const highExposureCount = allRecords.filter(r => Number(r.balance) > 500000).length;
-    console.log(`Members with > ₦500k debt: ${highExposureCount}`);
-}
+    if (progressBar && totalDisbursed > 0) {
+        // Example logic: (1 - (Current Debt / Total Disbursed)) 
+        // Note: This percentage may stay low if interest makes the balance > principal
+        let progressPercent = Math.max(0, (1 - (debtSum / (totalDisbursed * 1.18))) * 100);
+        
+        progressBar.style.width = `${Math.min(progressPercent, 100)}%`;
+        if (percentText) percentText.innerText = `${Math.floor(progressPercent)}%`;
+    }
+}                                      
+  
+                      
+                      
+  
     function renderApplications(pending) {
         const body = document.getElementById('loanTableBody');
         body.innerHTML = pending.map(loan => `
