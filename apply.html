@@ -279,80 +279,97 @@
         document.getElementById("fullTerms").classList.toggle("hidden");
     }                     
   
-    function calculateFinancials() {
-        const principal = parseFloat(document.getElementById('amt').value) || 0;
-        const tenure = parseInt(document.getElementById('term').value);
-        let rate = (tenure === 3) ? 0.18 : (tenure === 6) ? 0.36 : 0.72;
-        globalInterestValue = principal * rate;
-        globalTotalValue = principal + globalInterestValue;
-        const monthly = globalTotalValue / tenure;
-        const fmt = (v) => "₦ " + v.toLocaleString(undefined, {minimumFractionDigits: 2});
-        document.getElementById('liveInterest').innerText = fmt(globalInterestValue);
-        document.getElementById('liveTotal').innerText = fmt(globalTotalValue);
-        document.getElementById('liveMonthly').innerText = fmt(monthly);
-    }
+   function calculateFinancials() {
+    const principal = parseFloat(document.getElementById('amt').value) || 0;
+    const tenure = parseInt(document.getElementById('term').value);
+    
+    // Monthly interest is 6% (0.06). Total rate = 0.06 * number of months.
+    // This correctly gives 0.18 for 3 months, 0.36 for 6 months, and 0.72 for 12 months.
+    let rate = 0.06 * tenure;
+    
+    globalInterestValue = principal * rate;
+    globalTotalValue = principal + globalInterestValue;
+    
+    const monthly = globalTotalValue / tenure;
+    const fmt = (v) => "₦ " + v.toLocaleString(undefined, {minimumFractionDigits: 2});
+    
+    document.getElementById('liveInterest').innerText = fmt(globalInterestValue);
+    document.getElementById('liveTotal').innerText = fmt(globalTotalValue);
+    document.getElementById('liveMonthly').innerText = fmt(monthly);
+}
 
-    document.getElementById('loanForm').onsubmit = async function(e) {
-        e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        const spinner = document.getElementById('spinner');
-        btn.disabled = true; spinner.classList.remove('hidden');
+document.getElementById('loanForm').onsubmit = async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const spinner = document.getElementById('spinner');
+    btn.disabled = true; 
+    spinner.classList.remove('hidden');
 
-        currentTrackingID = "HARM-" + Math.floor(1000 + Math.random() * 9000) + "-TX";
+    currentTrackingID = "HARM-" + Math.floor(1000 + Math.random() * 9000) + "-TX";
 
-        const auditData = {
-            fullName: document.getElementById('fullName').value,
-            phone: document.getElementById('phone').value,
-            dob: document.getElementById('dob').value,
-            email: document.getElementById('email').value,
-            employment: document.getElementById('employment').value,
-            address: document.getElementById('address').value,
-            amount: document.getElementById('amt').value,
-            tenure: document.getElementById('term').selectedOptions[0].text,
-            interest: globalInterestValue, 
-            totalRepayment: globalTotalValue,
-            trackingId: currentTrackingID,
-            guarantorName: document.getElementById('gName').value,
-            guarantorPhone: document.getElementById('gPhone').value,
-            bankName: document.getElementById('bankName').value,
-            accNum: document.getElementById('accNum').value,
-            accName: document.getElementById('accName').value,
-            geoCoords: document.getElementById('geoCoords').value,
-            balance: globalTotalValue,
-            date: new Date().toLocaleDateString('en-GB'),
-            timestamp: new Date().toLocaleTimeString('en-GB'),
-            status: "Pending"
-        };
+    // Build the audit object using the globally calculated total for the balance
+    const auditData = {
+        fullName: document.getElementById('fullName').value,
+        phone: document.getElementById('phone').value,
+        dob: document.getElementById('dob').value,
+        email: document.getElementById('email').value,
+        employment: document.getElementById('employment').value,
+        address: document.getElementById('address').value,
+        amount: document.getElementById('amt').value,
+        tenure: document.getElementById('term').selectedOptions[0].text,
+        interest: globalInterestValue, 
+        totalRepayment: globalTotalValue,
+        trackingId: currentTrackingID,
+        guarantorName: document.getElementById('gName').value,
+        guarantorPhone: document.getElementById('gPhone').value,
+        bankName: document.getElementById('bankName').value,
+        accNum: document.getElementById('accNum').value,
+        accName: document.getElementById('accName').value,
+        geoCoords: document.getElementById('geoCoords').value,
+        // The balance must be the total amount expected back (Principal + Interest)
+        balance: globalTotalValue,
+        date: new Date().toLocaleDateString('en-GB'),
+        timestamp: new Date().toLocaleTimeString('en-GB'),
+        status: "Pending"
+    };
 
-        try {
-            await fetch(DRIVE_API_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify({
-                    fullName: auditData.fullName,
-                    idData: idFile?.data,
-                    idType: idFile?.type,
-                    passData: passFile?.data,
-                    passType: passFile?.type,
-                    auditData: auditData
-                })
-            });
+    try {
+        // 1. Digital Vault Upload (Google Apps Script)
+        await fetch(DRIVE_API_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify({
+                fullName: auditData.fullName,
+                idData: idFile?.data,
+                idType: idFile?.type,
+                passData: passFile?.data,
+                passType: passFile?.type,
+                auditData: auditData
+            })
+        });
 
-            await fetch('https://sheetdb.io/api/v1/b9cm231d1i0he', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ data: [auditData] })
-            });
-            
+        // 2. Database Record Creation (SheetDB)
+        const res = await fetch('https://sheetdb.io/api/v1/b9cm231d1i0he', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ data: [auditData] })
+        });
+
+        if (res.ok) {
             localStorage.removeItem('harmony_draft');
             document.getElementById('displayTrackingID').innerText = currentTrackingID;
             document.getElementById('successModal').classList.remove('hidden-modal');
-        } catch (error) {
-            alert("Digital Transmission Failed.");
-        } finally {
-            btn.disabled = false; spinner.classList.add('hidden');
+        } else {
+            throw new Error("SheetDB rejection");
         }
-    };
+    } catch (error) {
+        console.error("Submission error:", error);
+        alert("Digital Transmission Failed. Please check your internet connection.");
+    } finally {
+        btn.disabled = false; 
+        spinner.classList.add('hidden');
+    }
+};
 
     function generatePDF() {
         const { jsPDF } = window.jspdf;
