@@ -188,15 +188,15 @@
                     <div class="grid md:grid-cols-2 gap-8">
                         <div class="md:col-span-2">
                             <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block ml-2">Principal Amount (₦)</label>
-                            <input id="amount" type="number" placeholder="0.00" class="w-full p-5 bg-slate-50 rounded-2xl text-2xl font-bold outline-none border border-transparent transition-all">
+                            <input id="amount" type="number" placeholder="0.00" oninput="calculateLoan()" class="w-full p-5 bg-slate-50 rounded-2xl text-2xl font-bold outline-none border border-transparent transition-all">
                         </div>
                         <div>
                             <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block ml-2">Tenure (Months)</label>
-                            <input id="months" type="number" placeholder="12" class="w-full p-5 bg-slate-50 rounded-2xl text-2xl font-bold outline-none border border-transparent transition-all">
+                            <input id="months" type="number" placeholder="12" oninput="updateRate(); calculateLoan();" class="w-full p-5 bg-slate-50 rounded-2xl text-2xl font-bold outline-none border border-transparent transition-all">
                         </div>
                         <div>
-                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block ml-2">Rate (% Monthly)</label>
-                            <input id="rate" type="number" value="6" class="w-full p-5 bg-slate-50 rounded-2xl text-2xl font-bold outline-none border border-transparent transition-all">
+                            <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-3 block ml-2">Total Interest Rate (%)</label>
+                            <input id="rate" type="number" value="0" readonly class="w-full p-5 bg-slate-100 text-slate-400 rounded-2xl text-2xl font-bold outline-none cursor-not-allowed">
                         </div>
                     </div>
                     <div class="flex gap-4">
@@ -208,8 +208,8 @@
             </div>
         </div>
     </div>
-  </section>
-
+</section>
+  
   <section class="py-32 bg-slate-900 overflow-hidden relative reveal">
     <div class="absolute right-0 top-0 w-1/3 h-full bg-emerald-500/5 blur-3xl rounded-full"></div>
     <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-center">
@@ -417,44 +417,60 @@
   </button>
 
   <script>
-    function calculateLoan() {
-      const amountVal = document.getElementById("amount").value;
-      const monthsVal = document.getElementById("months").value;
-      const rateVal = document.getElementById("rate").value;
-      const resultDisplay = document.getElementById("result");
+  function updateRate() {
+    const months = parseFloat(document.getElementById("months").value) || 0;
+    const rateInput = document.getElementById("rate");
+    
+    // Logic: 6% per month. If 3 months, shows 18. If 12 months, shows 72.
+    const calculatedRate = months * 6;
+    rateInput.value = calculatedRate;
+}
 
-      if (!amountVal || !monthsVal || !rateVal) {
-        if(resultDisplay.innerHTML !== "") {
-            resultDisplay.innerHTML = `<div class="mt-8 p-6 bg-red-50 text-red-600 rounded-2xl border border-red-100 font-bold text-center">Incomplete Data</div>`;
-        }
+function calculateLoan() {
+    const amountVal = document.getElementById("amount").value;
+    const monthsVal = document.getElementById("months").value;
+    const resultDisplay = document.getElementById("result");
+
+    // Ensure the rate is updated before calculation
+    updateRate();
+    const rateVal = document.getElementById("rate").value;
+
+    if (!amountVal || !monthsVal || amountVal <= 0 || monthsVal <= 0) {
+        // Only show error if they've actually tried to click calculate
         return;
-      }
+    }
 
-      const amount = parseFloat(amountVal);
-      const months = parseFloat(monthsVal);
-      const rate = parseFloat(rateVal);
+    const amount = parseFloat(amountVal);
+    const months = parseFloat(monthsVal);
+    
+    // Monthly rate is 0.06 (6%). Total interest is Principal * 0.06 * Months
+    const totalInterest = amount * 0.06 * months;
+    const totalPayable = amount + totalInterest;
+    const monthly = totalPayable / months;
 
-      const totalInterest = amount * (rate / 100) * months;
-      const totalPayable = amount + totalInterest;
-      const monthly = totalPayable / months;
-
-      resultDisplay.innerHTML = `
+    resultDisplay.innerHTML = `
         <div class="mt-10 p-10 bg-slate-900 rounded-[2.5rem] text-white shadow-2xl reveal active">
-          <p class="text-[10px] text-emerald-400 font-black uppercase tracking-[0.4em] mb-4 text-center">Monthly Commitment</p>
-          <p class="text-5xl font-black mb-8 text-center tabular-nums">₦${monthly.toLocaleString('en-NG', {minimumFractionDigits: 2})}</p>
-          <div class="grid grid-cols-2 gap-4 pt-8 border-t border-white/10 text-center">
-            <div><p class="text-[9px] text-slate-500 font-black uppercase mb-1">Interest</p><p class="font-bold">₦${totalInterest.toLocaleString('en-NG')}</p></div>
-            <div class="border-l border-white/10"><p class="text-[9px] text-slate-500 font-black uppercase mb-1">Total</p><p class="font-bold">₦${totalPayable.toLocaleString('en-NG')}</p></div>
-          </div>
+            <p class="text-[10px] text-emerald-400 font-black uppercase tracking-[0.4em] mb-4 text-center">Monthly Commitment</p>
+            <p class="text-5xl font-black mb-8 text-center tabular-nums">₦${monthly.toLocaleString('en-NG', {minimumFractionDigits: 2})}</p>
+            <div class="grid grid-cols-2 gap-4 pt-8 border-t border-white/10 text-center">
+                <div>
+                    <p class="text-[9px] text-slate-500 font-black uppercase mb-1">Total Interest (${months * 6}%)</p>
+                    <p class="font-bold text-emerald-400">₦${totalInterest.toLocaleString('en-NG', {minimumFractionDigits: 2})}</p>
+                </div>
+                <div class="border-l border-white/10">
+                    <p class="text-[9px] text-slate-500 font-black uppercase mb-1">Total Payable</p>
+                    <p class="font-bold text-white">₦${totalPayable.toLocaleString('en-NG', {minimumFractionDigits: 2})}</p>
+                </div>
+            </div>
         </div>`;
-    }
+}
 
-    function resetCalculator() {
-      document.getElementById("amount").value = "";
-      document.getElementById("months").value = "";
-      document.getElementById("rate").value = "6";
-      document.getElementById("result").innerHTML = "";
-    }
+function resetCalculator() {
+    document.getElementById("amount").value = "";
+    document.getElementById("months").value = "";
+    document.getElementById("rate").value = "0";
+    document.getElementById("result").innerHTML = "";
+}  
 
     function handleScroll() {
       const reveals = document.querySelectorAll(".reveal");
