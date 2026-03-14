@@ -294,18 +294,48 @@
   
 
     function updateDashboard() {
-        const totalOut = allRecords.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
-        const totalDebt = allRecords.reduce((acc, curr) => acc + (Number(curr.balance) || 0), 0);
-        const pending = allRecords.filter(r => r.status === 'Pending');
+    // 1. CONFIGURATION: Interest is 6% per month (0.06)
+    const monthlyInterestRate = 0.06;
 
+    // 2. Gross Disbursements: Total principal given out to all non-pending members
+    const totalOut = allRecords
+        .filter(r => r.status !== 'Pending')
+        .reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
+
+    // 3. Total Receivables: Sum of (Principal + 6% Interest) for all active/liquidated loans
+    const totalReceivables = allRecords
+        .filter(r => r.status !== 'Pending')
+        .reduce((acc, curr) => {
+            const principal = Number(curr.amount) || 0;
+            const interest = principal * monthlyInterestRate;
+            return acc + (principal + interest);
+        }, 0);
+
+    // 4. Pending Queue: Applications awaiting approval
+    const pending = allRecords.filter(r => r.status === 'Pending');
+
+    // --- UPDATE UI ELEMENTS ---
+    
+    // Displays total cash disbursed
+    if(document.getElementById('statOut')) {
         document.getElementById('statOut').innerText = `₦${totalOut.toLocaleString()}`;
-        document.getElementById('statDebt').innerText = `₦${totalDebt.toLocaleString()}`;
-        document.getElementById('pendingCount').innerText = pending.length.toString().padStart(2, '0');
-
-        renderApplications(pending);
-        renderRecoveryOversight();
-        renderHistory();
     }
+    
+    // Displays total expected return (Principal + 6% Interest)
+    if(document.getElementById('statDebt')) {
+        document.getElementById('statDebt').innerText = `₦${totalReceivables.toLocaleString()}`;
+    }
+    
+    // Displays pending count
+    if(document.getElementById('pendingCount')) {
+        document.getElementById('pendingCount').innerText = pending.length.toString().padStart(2, '0');
+    }
+
+    // Refresh display components
+    renderApplications(pending);
+    renderRecoveryOversight();
+    renderHistory();
+}  
 
     function renderApplications(pending) {
         const body = document.getElementById('loanTableBody');
@@ -325,22 +355,49 @@
         `).join('') || '<tr><td colspan="3" class="p-10 text-center text-slate-400">Queue Empty</td></tr>';
     }
 
-    async function approveLoan(id) {
-        const finalAmt = document.getElementById(`amt-${id}`).value;
-        if (!finalAmt || Number(finalAmt) <= 0) return alert("Invalid amount");
-        const btn = window.event.target;
-        btn.innerText = "Syncing..."; btn.disabled = true;
-
-        try {
-            const res = await fetch(`${API_URL}/trackingId/${id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status: 'Approved', amount: finalAmt, balance: finalAmt })
-            });
-            if(res.ok) fetchLoans();
-        } catch (e) { alert("Network Error"); }
-        finally { btn.innerText = "Grant"; btn.disabled = false; }
+async function approveLoan(id) {
+    const finalAmt = document.getElementById(`amt-${id}`).value;
+    
+    // Validation
+    if (!finalAmt || Number(finalAmt) <= 0) {
+        return alert("Invalid amount. Please enter a valid sum.");
     }
+
+    // Logic: Calculate 6% monthly interest
+    const principal = Number(finalAmt);
+    const interest = principal * 0.06;
+    const totalBalanceWithInterest = principal + interest;
+
+    const btn = window.event.target;
+    btn.innerText = "Syncing..."; 
+    btn.disabled = true;
+
+    try {
+        const res = await fetch(`${API_URL}/trackingId/${id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                status: 'Approved', 
+                amount: principal, 
+                balance: totalBalanceWithInterest 
+            })
+        });
+
+        if (res.ok) {
+            // Refresh local data to update dashboard and tables
+            fetchLoans();
+        } else {
+            alert("Update failed. Please check your connection.");
+        }
+    } catch (e) { 
+        console.error("Approval Error:", e);
+        alert("Network Error: Could not reach the server."); 
+    } finally { 
+        btn.innerText = "Grant"; 
+        btn.disabled = false; 
+    }
+}                    
+  
 
     function renderRecoveryOversight() {
         const container = document.getElementById('recoveryStats');
