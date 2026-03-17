@@ -285,9 +285,9 @@
     const principal = parseFloat(document.getElementById('amt').value) || 0;
     const tenure = parseInt(document.getElementById('term').value);
     
-    // Monthly interest is 6% (0.06). Total rate = 0.06 * number of months.
-    // This correctly gives 0.18 for 3 months, 0.36 for 6 months, and 0.72 for 12 months.
-    let rate = 0.06 * tenure;
+    // Monthly interest is 6.5% (0.065). Total rate = 0.065 * number of months.
+    // This correctly gives 0.19.5 for 3 months, 0.39 for 6 months, and 0.78 for 12 months.
+    let rate = 0.065 * tenure;
     
     globalInterestValue = principal * rate;
     globalTotalValue = principal + globalInterestValue;
