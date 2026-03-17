@@ -322,14 +322,24 @@
         .filter(r => r.status !== 'Pending')
         .reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
 
-    // 3. Total Receivables: Sum of (Principal + 6% Interest) for all active/liquidated loans
-    const totalReceivables = allRecords
-        .filter(r => r.status !== 'Pending')
-        .reduce((acc, curr) => {
-            const principal = Number(curr.amount) || 0;
-            const interest = principal * monthlyInterestRate;
-            return acc + (principal + interest);
-        }, 0);
+      // 3. Total Receivables: Principal + (6% Interest * Months) for all non-pending loans
+const totalReceivables = allRecords
+    .filter(r => r.status !== 'Pending')
+    .reduce((acc, curr) => {
+        const principal = Number(curr.amount) || 0;
+        
+        // Extract the number of months from the tenure string (e.g., "3 Months" becomes 3)
+        const months = parseInt(curr.tenure) || 3; 
+        
+        // Formula: Principal + (Principal * 0.06 * Months)
+        const totalLoanValue = principal + (principal * 0.06 * months);
+        
+        return acc + totalLoanValue;
+    }, 0);
+
+// Update UI
+document.getElementById('totalReceivablesDisplay').innerText = `₦${totalReceivables.toLocaleString()}`;                    
+  
 
     // 4. Pending Queue: Applications awaiting approval
     const pending = allRecords.filter(r => r.status === 'Pending');
