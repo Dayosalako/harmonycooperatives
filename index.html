@@ -180,7 +180,7 @@
         <div class="grid lg:grid-cols-5 bg-slate-50 rounded-[4rem] overflow-hidden shadow-2xl border border-slate-100">
             <div class="lg:col-span-2 premium-gradient p-16 text-white flex flex-col justify-center">
                 <h2 class="text-4xl font-bold mb-6">Strategic Planning.</h2>
-                <p class="text-emerald-50/70 leading-relaxed mb-8">Maintain a fixed 6.5% monthly rate to ensure your business remains sustainable.</p>
+                <p class="text-emerald-50/70 leading-relaxed mb-8">Maintain a fixed 6% monthly rate to ensure your business remains sustainable.</p>
                 <div class="space-y-4">
                     <div class="flex items-center gap-3"><div class="w-2 h-2 bg-emerald-300 rounded-full"></div><span class="text-xs font-bold uppercase tracking-widest">No Hidden Fees</span></div>
                     <div class="flex items-center gap-3"><div class="w-2 h-2 bg-emerald-300 rounded-full"></div><span class="text-xs font-bold uppercase tracking-widest">Instant Quotes</span></div>
@@ -424,8 +424,8 @@
     const months = parseFloat(document.getElementById("months").value) || 0;
     const rateInput = document.getElementById("rate");
     
-    // Logic: 6.5% per month. If 3 months, shows 18. If 12 months, shows 72.
-    const calculatedRate = months * 6.5;
+    // Logic: 6% per month. If 3 months, shows 18. If 12 months, shows 72.
+    const calculatedRate = months * 6;
     rateInput.value = calculatedRate;
 }
 
@@ -446,8 +446,8 @@ function calculateLoan() {
     const amount = parseFloat(amountVal);
     const months = parseFloat(monthsVal);
     
-    // Monthly rate is 0.065 (6.5%). Total interest is Principal * 0.065 * Months
-    const totalInterest = amount * 0.065 * months;
+    // Monthly rate is 0.06 (6%). Total interest is Principal * 0.06 * Months
+    const totalInterest = amount * 0.06 * months;
     const totalPayable = amount + totalInterest;
     const monthly = totalPayable / months;
 
