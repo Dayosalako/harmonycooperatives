@@ -300,66 +300,60 @@
     }
 
     // Initialize fetching only after login (called inside handleAdminLogin)
-    async function fetchLoans() {
+   async function fetchLoans() {
       try {
         const res = await fetch(API_URL);
         allRecords = await res.json();
+        
+        // Critical: Update all dashboard metrics
         updateDashboard();
-       calculateIntelligence(); // Updates Debt Recovery card
-        renderApplications();   // Updates the tables
+        calculateIntelligence(); 
+        
+        // Refresh tables/UI
+        renderApplications(allRecords.filter(r => r.status === 'Pending'));   
+        renderRecoveryOversight();
+        renderHistory();
       } catch (e) { 
           console.error("System Data Error", e); 
       }
-    }                    
+    }                                         
   
+   function updateDashboard() {
+        // 1. Gross Disbursements: Total principal given out
+        const totalOut = allRecords
+            .filter(r => r.status !== 'Pending')
+            .reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
 
-    function updateDashboard() {
-    // 1. CONFIGURATION: Interest is 6% per month (0.06)
-    const monthlyInterestRate = 0.06;
+        // 2. Total Receivables: Sum of (Principal + (6% Interest * Tenure))
+        const totalReceivables = allRecords
+            .filter(r => r.status !== 'Pending')
+            .reduce((acc, curr) => {
+                const principal = Number(curr.amount) || 0;
+                // Extracts the number from "3 Months" or "12 Months"
+                const months = parseInt(curr.tenure) || 3; 
+                const interestTotal = principal * 0.06 * months;
+                return acc + (principal + interestTotal);
+            }, 0);
 
-    // 2. Gross Disbursements: Total principal given out to all non-pending members
-    const totalOut = allRecords
-        .filter(r => r.status !== 'Pending')
-        .reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
+        // 3. Pending Queue count
+        const pendingCount = allRecords.filter(r => r.status === 'Pending').length;
 
-      // 3. Total Receivables: Principal + (6% Interest * Months) for all non-pending loans
-const totalReceivables = allRecords
-    .filter(r => r.status !== 'Pending')
-    .reduce((acc, curr) => {
-        const principal = Number(curr.amount) || 0;
+        // --- UPDATE UI ELEMENTS ---
+        // Capital Deployed
+        if(document.getElementById('statOut')) {
+            document.getElementById('statOut').innerText = `₦${totalOut.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+        }
         
-        // Extract the number of months from the tenure string (e.g., "3 Months" becomes 3)
-        const months = parseInt(curr.tenure) || 3; 
+        // Total Receivables (Liability)
+        if(document.getElementById('statDebt')) {
+            document.getElementById('statDebt').innerText = `₦${totalReceivables.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+        }
         
-        // Formula: Principal + (Principal * 0.06 * Months)
-        const totalLoanValue = principal + (principal * 0.06 * months);
-        
-        return acc + totalLoanValue;
-    }, 0);
-
-// Update UI
-document.getElementById('totalReceivablesDisplay').innerText = `₦${totalReceivables.toLocaleString()}`;                    
-  
-
-    // 4. Pending Queue: Applications awaiting approval
-    const pending = allRecords.filter(r => r.status === 'Pending');
-
-    // --- UPDATE UI ELEMENTS ---
-    
-    // Displays total cash disbursed
-    if(document.getElementById('statOut')) {
-        document.getElementById('statOut').innerText = `₦${totalOut.toLocaleString()}`;
-    }
-    
-    // Displays total expected return (Principal + 6% Interest)
-    if(document.getElementById('statDebt')) {
-        document.getElementById('statDebt').innerText = `₦${totalReceivables.toLocaleString()}`;
-    }
-    
-    // Displays pending count
-    if(document.getElementById('pendingCount')) {
-        document.getElementById('pendingCount').innerText = pending.length.toString().padStart(2, '0');
-    }
+        // Pending Count
+        if(document.getElementById('pendingCount')) {
+            document.getElementById('pendingCount').innerText = pendingCount.toString().padStart(2, '0');
+        }
+    }  
 
     // Refresh display components
     renderApplications(pending);
@@ -369,23 +363,36 @@ document.getElementById('totalReceivablesDisplay').innerText = `₦${totalReceiv
                                                        
   
 function calculateIntelligence() {
-    // 1. Debt Recovery: Sum up every 'balance' currently in the database
-    // We use 'allRecords' because that is your Admin global variable
-    const debtSum = allRecords.reduce((acc, curr) => acc + (Number(curr.balance) || 0), 0);
+        // 1. Debt Recovery: Sum of 'balance' field currently in database
+        const debtSum = allRecords.reduce((acc, curr) => acc + (Number(curr.balance) || 0), 0);
 
-    // 2. Total Principal: Sum of original 'amount' to calculate recovery percentage
-    const totalPrincipal = allRecords
-        .filter(r => r.status !== 'Pending')
-        .reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
+        // 2. Total Principal for recovery percentage
+        const totalPrincipal = allRecords
+            .filter(r => r.status !== 'Pending')
+            .reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
 
-    // 3. Update the UI
-    const recoveryTotalEl = document.getElementById('recoveryTotal');
-    const recoveryProgressEl = document.getElementById('recoveryProgress');
-    const recoveryPercentEl = document.getElementById('recoveryPercentText');
+        // 3. Update the UI Card
+        const recoveryTotalEl = document.getElementById('recoveryTotal');
+        const recoveryProgressEl = document.getElementById('recoveryProgress');
+        const recoveryPercentEl = document.getElementById('recoveryPercentText');
 
-    if (recoveryTotalEl) {
-        recoveryTotalEl.innerText = `₦${debtSum.toLocaleString()}`;
-    }
+        if (recoveryTotalEl) {
+            recoveryTotalEl.innerText = `₦${debtSum.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+        }
+
+        // 4. Progress Logic (Calculates how much of the debt has been cleared)
+        if (recoveryProgressEl && totalPrincipal > 0) {
+            // We use a baseline expected (Principal + average 18% interest)
+            const totalExpected = totalPrincipal * 1.18; 
+            const progressPercent = Math.max(0, (1 - (debtSum / totalExpected)) * 100);
+            
+            recoveryProgressEl.style.width = `${Math.min(progressPercent, 100)}%`;
+            if (recoveryPercentEl) {
+                recoveryPercentEl.innerText = `${Math.floor(progressPercent)}%`;
+            }
+        }
+    }                      
+  
 
     // 4. Progress Logic: 
     // If debt is 0, we are 100% recovered. 
