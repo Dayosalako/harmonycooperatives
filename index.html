@@ -64,20 +64,48 @@
     <button onclick="toggleMenu()" class="absolute top-6 right-6 text-slate-400 font-normal">Close [x]</button>
   </div>
 
-  <header class="pt-48 pb-32 px-6 premium-gradient relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10 pointer-events-none">
-        <div class="absolute top-20 right-20 w-96 h-96 rounded-full bg-white blur-3xl"></div>
+ <header class="pt-48 pb-32 px-6 premium-gradient relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20 pointer-events-none">
+        <div class="absolute top-20 right-[-10%] w-[500px] h-[500px] rounded-full bg-emerald-400 blur-[120px] animate-pulse"></div>
+        <div class="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] rounded-full bg-white blur-[100px] opacity-30"></div>
     </div>
+
+    <div class="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay" style="background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');"></div>
+
     <div class="max-w-7xl mx-auto text-center relative z-10">
-      <span class="inline-block px-4 py-1.5 rounded-full bg-emerald-500/20 text-emerald-100 text-xs font-bold tracking-widest uppercase mb-6 border border-white/10">Empowering Growth. Securing Futures.</span>
-      <h1 class="text-6xl lg:text-8xl font-black text-white mb-8 tracking-tighter leading-none">Wealth creation <br><span class="text-emerald-300">Simplified.</span></h1>
-      <p class="text-xl text-emerald-50/70 mb-12 max-w-2xl mx-auto leading-relaxed">Exclusive financial tools and capital support designed for the builders of tomorrow. Join Nigeria's elite cooperative community.</p>
-      <div class="flex flex-col sm:flex-row justify-center gap-6">
-        <a href="apply.html" class="px-12 py-5 bg-white text-emerald-900 rounded-full font-extrabold text-lg shadow-2xl hover:bg-emerald-50 transition-all">Start Application</a>
-        <a href="#calculator" class="px-12 py-5 bg-emerald-700/50 text-white rounded-full font-extrabold text-lg backdrop-blur-md hover:bg-emerald-700 transition-all border border-white/10">Loan Calculator</a>
-      </div>
+        <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/10 backdrop-blur-xl text-emerald-100 text-[10px] font-black tracking-[0.2em] uppercase mb-10 border border-white/20 shadow-2xl">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            Empowering Growth. Securing Futures.
+        </div>
+
+        <h1 class="text-6xl lg:text-[100px] font-black text-white mb-10 tracking-[-0.04em] leading-[0.9] group">
+            Wealth creation <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-white to-emerald-200 drop-shadow-sm">Simplified.</span>
+        </h1>
+
+        <p class="text-xl lg:text-2xl text-emerald-50/80 mb-14 max-w-3xl mx-auto leading-relaxed font-medium">
+            Exclusive financial tools and capital support designed for the builders of tomorrow. <br class="hidden lg:block"> 
+            <span class="text-white font-bold">Join Nigeria's elite cooperative community.</span>
+        </p>
+
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+            <a href="apply.html" class="group relative px-14 py-6 bg-white text-emerald-900 rounded-full font-black text-xl shadow-[0_20px_50px_rgba(5,150,105,0.3)] hover:-translate-y-1 hover:shadow-[0_25px_60px_rgba(5,150,105,0.4)] transition-all duration-300 overflow-hidden">
+                <span class="relative z-10">Start Application</span>
+                <div class="absolute inset-0 bg-emerald-50 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+            </a>
+
+            <a href="#calculator" class="px-14 py-6 bg-white/5 text-white rounded-full font-black text-xl backdrop-blur-2xl hover:bg-white/10 transition-all border-2 border-white/10 hover:border-white/30 tracking-tight">
+                Loan Calculator
+            </a>
+        </div>
+
+        <div class="mt-24 pt-10 border-t border-white/10 opacity-60">
+            <p class="text-[9px] font-bold text-emerald-200 uppercase tracking-[0.5em] mb-4">Infrastructure Partner</p>
+            <p class="text-sm font-black text-white tracking-widest uppercase">Zion Netcom Solutions Ltd</p>
+        </div>
     </div>
-  </header>
+</header>                    
+  
 
   <section class="py-16 bg-white border-b reveal">
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
