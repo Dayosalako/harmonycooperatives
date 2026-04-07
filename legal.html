@@ -7,138 +7,165 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }
     .premium-gradient { background: linear-gradient(135deg, #064e3b 0%, #065f46 100%); }
+    .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); }
+    
+    .tab-button {
+      transition: all 0.3s ease;
+    }
     .tab-active {
-      border-bottom: 3px solid #059669;
+      border-bottom: 4px solid #059669;
       color: #064e3b;
       font-weight: 700;
     }
     .tab-content {
       display: none;
+      animation: fadeIn 0.4s ease;
     }
     .tab-content.active {
       display: block;
     }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .prose h3 {
+      color: #064e3b;
+      font-weight: 700;
+    }
   </style>
 </head>
-<body class="bg-slate-50">
+<body>
 
   <!-- Navigation -->
-  <nav class="bg-white shadow-sm border-b sticky top-0 z-50">
+  <nav class="glass-nav fixed w-full top-0 z-[100] border-b">
     <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
       <div class="flex items-center gap-3">
-        <img src="logo.jpg" alt="Harmony Logo" class="h-10 w-auto">
-        <div>
-          <span class="text-xl font-extrabold text-slate-900">Harmony</span>
-          <span class="text-[9px] font-bold text-emerald-600 tracking-widest block -mt-1">WELFARE COOPERATIVE</span>
+        <img src="logo.jpg" alt="Harmony Logo" class="h-12 w-auto object-contain">
+        <div class="flex flex-col">
+          <span class="text-xl font-extrabold text-slate-900 tracking-tight">HARMONY</span>
+          <span class="text-[8px] font-bold text-emerald-600 tracking-[0.2em] uppercase">Welfare Cooperative</span>
         </div>
       </div>
-      <a href="index.html" class="text-emerald-600 hover:text-emerald-700 font-semibold">← Back to Homepage</a>
+      <a href="index.html" class="flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-semibold transition-colors">
+        ← Back to Homepage
+      </a>
     </div>
   </nav>
 
-  <div class="max-w-5xl mx-auto px-6 py-12">
-    <h1 class="text-4xl font-black text-slate-900 text-center mb-2">Legal Documents</h1>
-    <p class="text-center text-slate-500 mb-10">Harmony Welfare Cooperative Society Limited</p>
+  <div class="pt-28 pb-16 max-w-5xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h1 class="text-5xl font-black text-slate-900 tracking-tight">Legal &amp; Compliance</h1>
+      <p class="mt-4 text-slate-500 text-lg">Transparency • Integrity • Security</p>
+    </div>
 
     <!-- Tabs -->
-    <div class="flex border-b border-slate-200 mb-10">
-      <button onclick="openTab(0)" class="tab-button tab-active px-8 py-4 text-lg" id="tab0">Privacy Policy</button>
-      <button onclick="openTab(1)" class="tab-button px-8 py-4 text-lg" id="tab1">Terms of Service</button>
-      <button onclick="openTab(2)" class="tab-button px-8 py-4 text-lg" id="tab2">Anti-Fraud Policy</button>
+    <div class="flex border-b border-slate-200 mb-12 overflow-x-auto">
+      <button onclick="openTab(0)" class="tab-button tab-active px-10 py-5 text-lg whitespace-nowrap" id="tab0">Privacy Policy</button>
+      <button onclick="openTab(1)" class="tab-button px-10 py-5 text-lg whitespace-nowrap" id="tab1">Terms of Service</button>
+      <button onclick="openTab(2)" class="tab-button px-10 py-5 text-lg whitespace-nowrap" id="tab2">Anti-Fraud Policy</button>
     </div>
 
     <!-- Privacy Policy -->
     <div id="content0" class="tab-content active">
-      <h2 class="text-3xl font-bold text-slate-900 mb-8">Privacy Policy</h2>
-      <p class="text-slate-500 mb-6">Last updated: April 07, 2026</p>
+      <h2 class="text-3xl font-bold text-slate-900 mb-6">Privacy Policy</h2>
+      <p class="text-slate-500 mb-10">Last Updated: April 07, 2026</p>
       
-      <div class="prose prose-slate max-w-none">
-        <h3 class="text-xl font-semibold mt-10 mb-4">1. Information We Collect</h3>
-        <p>We collect personal information such as your full name, phone number, email address, BVN, NIN, bank details, and employment information when you apply for membership or loans.</p>
+      <div class="prose prose-slate max-w-none leading-relaxed text-[15.2px]">
+        <p>At Harmony Welfare Cooperative Society Limited, we are committed to protecting your personal information and maintaining the highest standards of data privacy in accordance with the Nigeria Data Protection Act 2023.</p>
 
-        <h3 class="text-xl font-semibold mt-10 mb-4">2. How We Use Your Information</h3>
-        <p>Your information is used to process loan applications, manage savings, communicate important updates, and comply with regulatory requirements in Nigeria.</p>
+        <h3 class="mt-12 mb-4">1. Information We Collect</h3>
+        <p>We collect personal and financial information including but not limited to: full name, phone number, email address, Bank Verification Number (BVN), National Identification Number (NIN), passport photographs, proof of address, employment details, and bank account information.</p>
 
-        <h3 class="text-xl font-semibold mt-10 mb-4">3. Data Protection</h3>
-        <p>We implement strong security measures to protect your data. We do not sell your personal information to third parties.</p>
+        <h3 class="mt-12 mb-4">2. Purpose of Data Collection</h3>
+        <p>Your data is used solely for processing membership applications, savings and loan transactions, identity verification, risk assessment, regulatory compliance, and to communicate important cooperative updates.</p>
 
-        <h3 class="text-xl font-semibold mt-10 mb-4">4. Your Rights</h3>
-        <p>You have the right to access, correct, or request deletion of your personal data. Contact us to exercise these rights.</p>
+        <h3 class="mt-12 mb-4">3. Data Security</h3>
+        <p>We employ industry-standard security measures including encryption, secure servers, access controls, and regular security audits to safeguard your information against unauthorized access, alteration, or disclosure.</p>
+
+        <h3 class="mt-12 mb-4">4. Data Sharing</h3>
+        <p>We do not sell your personal data. Information may only be shared with regulatory authorities when legally required or with trusted service providers under strict confidentiality agreements.</p>
+
+        <h3 class="mt-12 mb-4">5. Your Rights</h3>
+        <p>You have the right to access, correct, update, or request deletion of your personal data. To exercise these rights, contact us at info@harmonycooperative.com.</p>
       </div>
     </div>
 
     <!-- Terms of Service -->
     <div id="content1" class="tab-content">
-      <h2 class="text-3xl font-bold text-slate-900 mb-8">Terms of Service</h2>
-      <p class="text-slate-500 mb-6">Last updated: April 07, 2026</p>
+      <h2 class="text-3xl font-bold text-slate-900 mb-6">Terms of Service</h2>
+      <p class="text-slate-500 mb-10">Last Updated: April 07, 2026</p>
       
-      <div class="prose prose-slate max-w-none">
-        <h3 class="text-xl font-semibold mt-10 mb-4">1. Acceptance of Terms</h3>
-        <p>By using our services, you agree to be bound by these Terms of Service and our policies.</p>
+      <div class="prose prose-slate max-w-none leading-relaxed text-[15.2px]">
+        <p>By accessing or using the services of Harmony Welfare Cooperative, you agree to comply with these Terms of Service.</p>
 
-        <h3 class="text-xl font-semibold mt-10 mb-4">2. Membership</h3>
-        <p>Membership is open to Nigerian citizens and residents who meet our eligibility criteria. All members must maintain regular savings contributions.</p>
+        <h3 class="mt-12 mb-4">1. Membership Eligibility</h3>
+        <p>Membership is open to Nigerian citizens and legal residents above 18 years of age who agree to abide by the cooperative’s rules and make regular savings contributions.</p>
 
-        <h3 class="text-xl font-semibold mt-10 mb-4">3. Loan Terms</h3>
-        <p>Loans are subject to 10% monthly interest rate. Late repayment may attract additional charges. All loans must be repaid according to the agreed schedule.</p>
+        <h3 class="mt-12 mb-4">2. Savings and Loans</h3>
+        <p>Loans are issued at a fixed 10% monthly interest rate. Members must maintain consistent savings to qualify for loans. Late repayments attract penalty fees as stipulated in the loan agreement.</p>
 
-        <h3 class="text-xl font-semibold mt-10 mb-4">4. Termination</h3>
-        <p>We reserve the right to suspend or terminate membership for violation of cooperative rules or fraudulent activities.</p>
+        <h3 class="mt-12 mb-4">3. Member Obligations</h3>
+        <p>Members agree to provide accurate information, repay loans as scheduled, and maintain confidentiality of cooperative information.</p>
+
+        <h3 class="mt-12 mb-4">4. Termination and Suspension</h3>
+        <p>We reserve the right to suspend or terminate membership for breach of terms, fraudulent activity, or failure to meet financial obligations.</p>
+
+        <h3 class="mt-12 mb-4">5. Limitation of Liability</h3>
+        <p>Harmony Welfare Cooperative shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services.</p>
       </div>
     </div>
 
     <!-- Anti-Fraud Policy -->
     <div id="content2" class="tab-content">
-      <h2 class="text-3xl font-bold text-slate-900 mb-8">Anti-Fraud Policy</h2>
-      <p class="text-slate-500 mb-6">Last updated: April 07, 2026</p>
+      <h2 class="text-3xl font-bold text-slate-900 mb-6">Anti-Fraud Policy</h2>
+      <p class="text-slate-500 mb-10">Last Updated: April 07, 2026</p>
       
-      <div class="prose prose-slate max-w-none">
-        <h3 class="text-xl font-semibold mt-10 mb-4">1. Zero Tolerance for Fraud</h3>
-        <p>Harmony Welfare Cooperative has zero tolerance for any form of fraud, misrepresentation, or financial misconduct.</p>
+      <div class="prose prose-slate max-w-none leading-relaxed text-[15.2px]">
+        <p>Harmony Welfare Cooperative maintains a strict zero-tolerance policy against all forms of fraud and financial misconduct.</p>
 
-        <h3 class="text-xl font-semibold mt-10 mb-4">2. Prohibited Activities</h3>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>Submitting false or forged documents</li>
-          <li>Multiple account registrations with false identities</li>
-          <li>Collusion to obtain unauthorized loans</li>
-          <li>Money laundering or terrorist financing</li>
+        <h3 class="mt-12 mb-4">1. Commitment to Integrity</h3>
+        <p>We are dedicated to ensuring transparency, accountability, and trust in all our operations.</p>
+
+        <h3 class="mt-12 mb-4">2. Prohibited Conduct</h3>
+        <ul class="list-disc pl-6 space-y-3">
+          <li>Submission of forged or falsified documents</li>
+          <li>Identity theft or impersonation</li>
+          <li>Collusive activities to obtain unauthorized loans</li>
+          <li>Money laundering or financing of illegal activities</li>
+          <li>Any form of misrepresentation or deceit</li>
         </ul>
 
-        <h3 class="text-xl font-semibold mt-10 mb-4">3. Reporting Fraud</h3>
-        <p>If you suspect any fraudulent activity, please report immediately to: <strong>info@harmonycooperative.com</strong> or call <strong>+234 803 406 7079</strong>.</p>
+        <h3 class="mt-12 mb-4">3. Detection and Prevention</h3>
+        <p>We utilize advanced verification processes, background checks, and continuous monitoring to detect and prevent fraudulent activities.</p>
 
-        <h3 class="text-xl font-semibold mt-10 mb-4">4. Consequences</h3>
-        <p>Any member or applicant found engaging in fraud will have their membership terminated, loans recalled immediately, and may face legal prosecution.</p>
+        <h3 class="mt-12 mb-4">4. Reporting Suspected Fraud</h3>
+        <p>If you suspect any fraudulent activity, please report immediately via:<br>
+        <strong>Email:</strong> info@harmonycooperative.com<br>
+        <strong>Phone:</strong> +234 803 406 7079 or +234 802 335 8340</p>
+
+        <h3 class="mt-12 mb-4">5. Consequences of Fraud</h3>
+        <p>Any person found engaging in fraudulent activities will face immediate membership termination, full loan recall, blacklisting, and possible criminal prosecution under Nigerian law.</p>
       </div>
     </div>
   </div>
 
   <!-- Footer -->
-  <footer class="bg-slate-900 text-white py-12">
+  <footer class="bg-slate-900 text-white py-16">
     <div class="max-w-5xl mx-auto px-6 text-center">
-      <p class="text-slate-400 text-sm">© 2026 Harmony Welfare Cooperative Society Limited. All Rights Reserved.</p>
-      <p class="text-slate-500 text-xs mt-4">Kaduna, Nigeria</p>
+      <img src="logo.jpg" alt="Harmony Logo" class="h-12 mx-auto mb-6 opacity-75">
+      <p class="text-slate-400">© 2026 Harmony Welfare Cooperative Society Limited. All Rights Reserved.</p>
+      <p class="text-slate-500 text-sm mt-3">Kaduna, Nigeria • RC: 8558526</p>
     </div>
   </footer>
 
   <script>
     function openTab(tabIndex) {
-      // Hide all contents
-      document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-      });
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-button').forEach(el => el.classList.remove('tab-active'));
       
-      // Remove active from all tabs
-      document.querySelectorAll('.tab-button').forEach(btn => {
-        btn.classList.remove('tab-active');
-      });
-      
-      // Show selected content
       document.getElementById('content' + tabIndex).classList.add('active');
-      
-      // Activate tab
       document.getElementById('tab' + tabIndex).classList.add('tab-active');
     }
   </script>
