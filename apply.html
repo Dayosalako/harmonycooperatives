@@ -347,6 +347,7 @@ document.getElementById('loanForm').onsubmit = async function(e) {
         date: new Date().toLocaleDateString('en-GB'),
         timestamp: new Date().toLocaleTimeString('en-GB'),
         status: "Pending"
+        loanReason: document.getElementById('loanReason').value,
     };
 
     try {
